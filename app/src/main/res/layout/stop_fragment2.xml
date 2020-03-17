@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_top_margin_from_header"
+        android:orientation="vertical">
+
+
+        <CheckBox
+            android:id="@+id/shelterId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/shelter" />
+
+        <CheckBox
+            android:id="@+id/advertisementId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/advertisement" />
+
+        <CheckBox
+            android:id="@+id/benchId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bench" />
+
+        <CheckBox
+            android:id="@+id/bikeRackId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bikeRack" />
+
+        <CheckBox
+            android:id="@+id/trashCanId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/trashCan" />
+
+        <CheckBox
+            android:id="@+id/timetableId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/timeTable" />
+
+        <CheckBox
+            android:id="@+id/systemMapId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/systemMap" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_route"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete" />
+
+        <TextView
+            android:id="@+id/add_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_add_a_photo"
+            android:text="@string/add_pictures" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comments"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/add_comments" />
+
+        <Button
+            android:id="@+id/fragment2Next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

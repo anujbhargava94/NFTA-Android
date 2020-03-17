@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_top_margin_from_header"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/stopId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/stop_id_hint"
+            android:inputType="textCapCharacters" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_direction"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/streetOn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/street_on_hint"
+            android:inputType="text" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nearestCrossStreet"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cross_street_hint"
+            android:inputType="text" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_position"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_fastened_to"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/latitude"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_location"
+            android:text="Latitude" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_location"
+            android:text="Longitude" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_county"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete" />
+
+        <Button
+            android:id="@+id/fragment1Next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/next" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

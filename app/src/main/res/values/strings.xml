@@ -1,0 +1,126 @@
+<resources>
+    <string name="app_name">NFTA Stops</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="menu_service_request">Service Requests</string>
+    <string name="menu_add_stop">Add Stop</string>
+    <string name="remove_stop">Remove Stop</string>
+    <string name="view_history">History</string>
+    <string name="update_stop">Update Stop</string>
+    <string name="app_description">NFTA Stop Transactions</string>
+    <string name="add_stop_fragment_home">Add Stop (Stop Location)</string>
+    <string name="add_stop_fragment_2">Add Stop (Stop Information)</string>
+    <string name="update_stop_fragment_home">Add Stop (Stop Location)</string>
+    <string name="update_stop_fragment_2">Add Stop (Stop Information)</string>
+    <string name="remove_stop_fragment">Remove Stop (Stop Information)</string>
+    <string name="history_fragment">Transaction History</string>
+    <string name="service_request_fragment">Service Requests</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="stop_id_hint">Stop Indentifier</string>
+    <string name="street_on_hint">Stop Street On</string>
+    <string name="cross_street_hint">Nearest Cross Street</string>
+    <string name="next"><![CDATA[Next>>]]></string>
+    <string name="shelter">Shelter</string>
+    <string name="advertisement">Advertisement</string>
+    <string name="bench">Bench</string>
+    <string name="bikeRack">Bike Rack</string>
+    <string name="trashCan">Trash Can</string>
+    <string name="timeTable">Time Table</string>
+    <string name="systemMap">System Map</string>
+    <string name="add_comments">Add additional comments here...!</string>
+    <string name="add_pictures">Add Pictures (Max 3)</string>
+    <string name="submit">Submit</string>
+    <string-array name="direction">
+        <item>North</item>
+        <item>South</item>
+        <item>East</item>
+        <item>West</item>
+        <item>Inbound</item>
+        <item>Outbound</item>
+        <item>Static</item>
+    </string-array>
+    <string-array name="position">
+        <item>Utility Pole</item>
+        <item>Shelter</item>
+        <item>Telspar</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="county">
+        <item>Erie</item>
+        <item>Niagara</item>
+    </string-array>
+    <string-array name="routes">
+        <item>#1 - William</item>
+        <item>#2 - Clinton</item>
+        <item>#3 - Grant</item>
+        <item>#4 - Broadway</item>
+        <item>#5 - Niagara-Kenmore</item>
+        <item>#6 - Sycamore</item>
+        <item>#7 – Baynes -Richmond</item>
+        <item>#8 - Main</item>
+        <item>#11 - Colvin</item>
+        <item>#12 - Utica</item>
+        <item>#13 - Kensington</item>
+        <item>#14 - Abbott</item>
+        <item>#15 - Seneca</item>
+        <item>#16 - South Park</item>
+        <item>#18 - Jefferson</item>
+        <item>#19 - Bailey</item>
+        <item>#20 - Elmwood</item>
+        <item>#22 - Porter-Best</item>
+        <item>#23 - Fillmore-Hertel</item>
+        <item>#24 - Genesee</item>
+        <item>#25 - Delaware</item>
+        <item>#26 - Delavan</item>
+        <item>#29 - Wohlers</item>
+        <item>#32 - Amherst</item>
+        <item>#34 - Niagara Falls Blvd</item>
+        <item>#35 - Sheridan</item>
+        <item>#40 - Buffalo/ Niagara Falls</item>
+        <item>#42 - Lackawanna</item>
+        <item>#44 - Lockport</item>
+        <item>#46 - Lancaster</item>
+        <item>#47 - Youngs Road</item>
+        <item>#48 - Williamsville</item>
+        <item>#49 - Millard Suburban</item>
+        <item>#50 - Main-Niagara</item>
+        <item>#52 - Hyde Park</item>
+        <item>#54 - Military</item>
+        <item>#55 - Pine Avenue</item>
+        <item>Trolley</item>
+        <item>#60 - Niagara Falls Express</item>
+        <item>#61 - North Tonawanda</item>
+        <item>#64 - Lockport Express</item>
+        <item>#66 - Williamsville</item>
+        <item>#67 - Cleveland Hill</item>
+        <item>#68 - George Urban</item>
+        <item>#69 - Alden</item>
+        <item>#70 - East Aurora</item>
+        <item>#72 - Orchard Park</item>
+        <item>#74 - Hamburg</item>
+        <item>#75 - West Seneca</item>
+        <item>#76 - Lotus Bay</item>
+        <item>#79 - Tonawanda</item>
+        <item>#81 - Eastside</item>
+        <item>#101 - North-South</item>
+        <item>#102 - Bailey-East</item>
+        <item>#103 - East-Suburban</item>
+        <item>#104 - South-Central</item>
+        <item>#106 - South-Suburban</item>
+        <item>#110 - West-North</item>
+        <item>#111 - South-Michigan</item>
+    </string-array>
+</resources>
