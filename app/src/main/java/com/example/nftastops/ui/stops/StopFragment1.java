@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,9 +141,15 @@ public class StopFragment1 extends Fragment {
             args.putString("stopTransaction", transaction);
 
             StopFragment2 stopFragment2 = new StopFragment2();
-            stopFragment2.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, stopFragment2).commit();
+            replaceFragment(stopFragment2);
         }
     };
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 }

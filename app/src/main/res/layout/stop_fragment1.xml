@@ -12,12 +12,29 @@
         android:orientation="vertical">
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/stopId"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:id="@+id/stopIDll"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/stop_id_hint"
-            android:inputType="textCapCharacters" />
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/stopId"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="@string/stop_id_hint"
+                android:inputType="textCapCharacters" />
+
+            <Button
+                android:id="@+id/fetchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/fetch_details"
+                android:visibility="visible" />
+        </LinearLayout>
 
         <Spinner
             android:id="@+id/autocomplete_direction"

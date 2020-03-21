@@ -43,6 +43,7 @@
     <string name="add_comments">Add additional comments here...!</string>
     <string name="add_pictures">Add Pictures (Max 3)</string>
     <string name="submit">Submit</string>
+    <string name="fetch_details">Fetch</string>
     <string-array name="fastenedTo">
         <item>Utility Pole</item>
         <item>Shelter</item>

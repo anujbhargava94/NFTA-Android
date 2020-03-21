@@ -5,6 +5,8 @@ import android.provider.Settings;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Date;
+
 public class StopTransactions {
     private String device_id;
     private String stop_id;
@@ -20,13 +22,40 @@ public class StopTransactions {
     private String status;
     private String comments;
     private String route;
-    private Boolean shelter;
-    private Boolean advertisement;
-    private Boolean bench;
-    private Boolean bike_rack;
-    private Boolean trash_can;
-    private Boolean time_table;
-    private Boolean system_map;
+    private boolean shelter;
+    private boolean advertisement;
+    private boolean bench;
+    private boolean bike_rack;
+    private boolean trash_can;
+    private boolean time_table;
+    private boolean system_map;
+    private int transaction_no;
+    private String date;
+    private String request_type;
+
+    public String getRequest_type() {
+        return request_type;
+    }
+
+    public void setRequest_type(String request_type) {
+        this.request_type = request_type;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getTransaction_no() {
+        return transaction_no;
+    }
+
+    public void setTransaction_no(int transaction_no) {
+        this.transaction_no = transaction_no;
+    }
 
     //private ServiceRequest work_request;
 
@@ -152,59 +181,59 @@ public class StopTransactions {
         this.status = status;
     }
 
-    public Boolean getShelter() {
+    public boolean getShelter() {
         return shelter;
     }
 
-    public void setShelter(Boolean shelter) {
+    public void setShelter(boolean shelter) {
         this.shelter = shelter;
     }
 
-    public Boolean getAdvertisement() {
+    public boolean getAdvertisement() {
         return advertisement;
     }
 
-    public void setAdvertisement(Boolean advertisement) {
+    public void setAdvertisement(boolean advertisement) {
         this.advertisement = advertisement;
     }
 
-    public Boolean getBench() {
+    public boolean getBench() {
         return bench;
     }
 
-    public void setBench(Boolean bench) {
+    public void setBench(boolean bench) {
         this.bench = bench;
     }
 
-    public Boolean getBike_rack() {
+    public boolean getBike_rack() {
         return bike_rack;
     }
 
-    public void setBike_rack(Boolean bike_rack) {
+    public void setBike_rack(boolean bike_rack) {
         this.bike_rack = bike_rack;
     }
 
-    public Boolean getTrash_can() {
+    public boolean getTrash_can() {
         return trash_can;
     }
 
-    public void setTrash_can(Boolean trash_can) {
+    public void setTrash_can(boolean trash_can) {
         this.trash_can = trash_can;
     }
 
-    public Boolean getTime_table() {
+    public boolean getTime_table() {
         return time_table;
     }
 
-    public void setTime_table(Boolean time_table) {
+    public void setTime_table(boolean time_table) {
         this.time_table = time_table;
     }
 
-    public Boolean getSystem_map() {
+    public boolean getSystem_map() {
         return system_map;
     }
 
-    public void setSystem_map(Boolean system_map) {
+    public void setSystem_map(boolean system_map) {
         this.system_map = system_map;
     }
 }

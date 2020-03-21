@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.CalendarContract;
 import android.view.LayoutInflater;
@@ -14,11 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -53,7 +57,7 @@ public class StopFragment2 extends Fragment {
     private CheckBox timeTable;
     private CheckBox systemMap;
     private TextInputEditText comments;
-    private AutoCompleteTextView acroutes;
+    private Spinner acroutes;
     private Button submitButton;
     StopTransactions stopTransactions;
     NetworkAPICall apiCAll;
@@ -130,7 +134,7 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setTime_table(timeTable.isChecked());
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setComments(comments.getText().toString());
-            stopTransactions.setRoute(acroutes.getText().toString());
+            stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
@@ -143,17 +147,32 @@ public class StopFragment2 extends Fragment {
             @Override
             public void onResponse(String response) {
 
-                String results = new String();
-                results = response;
-
+                String results = response;
+                Toast.makeText(
+                        getContext(),
+                        "Transaction added successfully", Toast.LENGTH_SHORT
+                ).show();
+                HomeFragment homeFragment = new HomeFragment();
+                replaceFragment(homeFragment);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error in fetching results");
+                String errorString = "Error in adding Transaction";
+                Toast.makeText(
+                        getContext(),
+                        errorString, Toast.LENGTH_SHORT
+                ).show();
+                System.out.println(errorString);
             }
         }, request);
+    }
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.commit();
     }
 
 }
