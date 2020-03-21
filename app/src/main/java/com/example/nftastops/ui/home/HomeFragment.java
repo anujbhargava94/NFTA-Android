@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,6 +18,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import com.example.nftastops.CustomExpandableListAdaptor;
 import com.example.nftastops.ExpandableListData;
 import com.example.nftastops.R;
+import com.example.nftastops.ui.history.HistoryFragment;
+import com.example.nftastops.ui.serviceRequest.ServiceRequestFragment;
+import com.example.nftastops.ui.stops.StopFragment1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,6 +78,29 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                if(expandableListDetail.get(
+                        expandableListTitle.get(i)).isEmpty()){
+                    Fragment fragment = null;
+                    switch (i) {
+                        case 1:
+                            fragment = new ServiceRequestFragment();
+                            replaceFragment(fragment);
+                            break;
+
+                        case 2:
+                            fragment = new HistoryFragment();
+                            replaceFragment(fragment);
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        });
+
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -86,11 +113,36 @@ public class HomeFragment extends Fragment {
                                 expandableListTitle.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT
                 ).show();
+
+                Fragment fragment = null;
+                String childName = expandableListDetail.get(
+                        expandableListTitle.get(groupPosition)).get(
+                        childPosition);
+                switch (childName) {
+                    case "Add stop":
+                        fragment = new StopFragment1();
+                        replaceFragment(fragment);
+                        break;
+
+                    case "Update stop":
+                        fragment = new StopFragment1();
+                        replaceFragment(fragment);
+                        break;
+                }
+
                 return false;
             }
         });
 
         return root;
+    }
+
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

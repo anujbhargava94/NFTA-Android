@@ -43,6 +43,12 @@
     <string name="add_comments">Add additional comments here...!</string>
     <string name="add_pictures">Add Pictures (Max 3)</string>
     <string name="submit">Submit</string>
+    <string-array name="fastenedTo">
+        <item>Utility Pole</item>
+        <item>Shelter</item>
+        <item>Telspar</item>
+        <item>Other</item>
+    </string-array>
     <string-array name="direction">
         <item>North</item>
         <item>South</item>
@@ -53,10 +59,10 @@
         <item>Static</item>
     </string-array>
     <string-array name="position">
-        <item>Utility Pole</item>
-        <item>Shelter</item>
-        <item>Telspar</item>
-        <item>Other</item>
+        <item>Nearside</item>
+        <item>Farside</item>
+        <item>Mid-Block</item>
+        <item>Static</item>
     </string-array>
     <string-array name="county">
         <item>Erie</item>

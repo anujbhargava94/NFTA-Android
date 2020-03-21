@@ -6,16 +6,31 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CheckBox;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StopFragment2.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link StopFragment2#newInstance} factory method to
  * create an instance of this fragment.
@@ -30,10 +45,22 @@ public class StopFragment2 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private CheckBox shelter;
+    private CheckBox advertisement;
+    private CheckBox bench;
+    private CheckBox bikeRack;
+    private CheckBox trashCan;
+    private CheckBox timeTable;
+    private CheckBox systemMap;
+    private TextInputEditText comments;
+    private AutoCompleteTextView acroutes;
+    private Button submitButton;
+    StopTransactions stopTransactions;
+    NetworkAPICall apiCAll;
 
     public StopFragment2() {
         // Required empty public constructor
+
     }
 
     /**
@@ -67,45 +94,66 @@ public class StopFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.stop_fragment2, container, false);
+        View root = inflater.inflate(R.layout.stop_fragment2, container, false);
+        shelter = root.findViewById(R.id.shelterId);
+        advertisement = root.findViewById(R.id.advertisementId);
+        bench = root.findViewById(R.id.benchId);
+        bikeRack = root.findViewById(R.id.bikeRackId);
+        trashCan = root.findViewById(R.id.trashCanId);
+        timeTable = root.findViewById(R.id.timetableId);
+        systemMap = root.findViewById(R.id.systemMapId);
+        comments = root.findViewById(R.id.comments);
+        acroutes = root.findViewById(R.id.autocomplete_route);
+        submitButton = root.findViewById(R.id.fragment2Next);
+        submitButton.setOnClickListener(submitClick);
+
+        String[] routes = getResources().getStringArray(R.array.routes);
+        ArrayAdapter<String> routesAdapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.simple_list_item_1, routes);
+        acroutes.setAdapter(routesAdapter);
+
+        String stopTransactionJson = getArguments().getString("stopTransaction");
+        Gson gson = new Gson();
+        stopTransactions = gson.fromJson(stopTransactionJson, StopTransactions.class);
+        apiCAll = NetworkAPICall.getInstance(getActivity());
+        return root;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    View.OnClickListener submitClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            stopTransactions.setShelter(shelter.isChecked());
+            stopTransactions.setAdvertisement(advertisement.isChecked());
+            stopTransactions.setBench(bench.isChecked());
+            stopTransactions.setBike_rack(bikeRack.isChecked());
+            stopTransactions.setTrash_can(trashCan.isChecked());
+            stopTransactions.setTime_table(timeTable.isChecked());
+            stopTransactions.setSystem_map(systemMap.isChecked());
+            stopTransactions.setComments(comments.getText().toString());
+            stopTransactions.setRoute(acroutes.getText().toString());
+
+            Gson gson = new Gson();
+            String transaction = gson.toJson(stopTransactions);
+            makeApiCall("add", transaction);
         }
+    };
+
+    private void makeApiCall(String url, String request) {
+        apiCAll.makePost(getActivity(), url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                String results = new String();
+                results = response;
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error in fetching results");
+            }
+        }, request);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
