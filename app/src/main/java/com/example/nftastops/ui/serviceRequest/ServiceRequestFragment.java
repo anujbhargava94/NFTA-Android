@@ -1,19 +1,19 @@
 package com.example.nftastops.ui.serviceRequest;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//import android.widget.Toolbar;
-
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.nftastops.R;
+
+//import android.widget.Toolbar;
 
 public class ServiceRequestFragment extends Fragment {
     //private SendViewModel sendViewModel;
@@ -28,7 +28,7 @@ public class ServiceRequestFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 //        sendViewModel =
 //                ViewModelProviders.of(this).get(SendViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_send, container, false);
+        View root = inflater.inflate(R.layout.fragment_service_request, container, false);
        // final TextView textView = root.findViewById(R.id.text_send);
 //        sendViewModel.getText().observe(this, new Observer<String>() {
 //            @Override
@@ -39,9 +39,9 @@ public class ServiceRequestFragment extends Fragment {
 
 
         //toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar = root.findViewById(R.id.tool_bar);
+        //toolbar = root.findViewById(R.id.tool_bar);
         //setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         //adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
         adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs);
@@ -49,7 +49,7 @@ public class ServiceRequestFragment extends Fragment {
 
 
         // Assigning ViewPager View and setting the adapter
-        //view_pager = (ViewPager) findViewById(R.id.pager);
+        view_pager = root.findViewById(R.id.pager);
         view_pager.setAdapter(adapter);
 
         // Assiging the Sliding Tab Layout View

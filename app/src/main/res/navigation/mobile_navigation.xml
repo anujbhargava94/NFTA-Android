@@ -27,7 +27,7 @@
         android:id="@+id/nav_history"
         android:name="com.example.nftastops.ui.history.HistoryFragment"
         android:label="@string/history_fragment"
-        tools:layout="@layout/stop_fragment1" />
+        tools:layout="@layout/recycler_view" />
     <fragment
         android:id="@+id/nav_stops_remove"
         android:name="com.example.nftastops.ui.stops.StopRemoveFragment"
@@ -37,6 +37,6 @@
         android:id="@+id/nav_service_request"
         android:name="com.example.nftastops.ui.serviceRequest.ServiceRequestFragment"
         android:label="@string/service_request_fragment"
-        tools:layout="@layout/stop_fragment1" />
+        tools:layout="@layout/fragment_service_request" />
 
 </navigation>
