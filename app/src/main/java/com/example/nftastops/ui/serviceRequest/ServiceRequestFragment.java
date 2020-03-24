@@ -44,10 +44,10 @@ public class ServiceRequestFragment extends Fragment {
     private List<StopTransactions> stopTransactions;
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
-    public ServiceRequestFragment(List<ServiceRequests> mServiceRequests) {
+    public ServiceRequestFragment() {
         //super(fm);
 
-        this.serviceRequests = mServiceRequests;
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

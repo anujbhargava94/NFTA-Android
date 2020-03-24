@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
                     Fragment fragment = null;
                     switch (i) {
                         case 1:
-                            fragment = new ServiceRequestFragment(serviceRequests);
+                            fragment = new ServiceRequestFragment();
                             replaceFragment(fragment);
                             break;
 

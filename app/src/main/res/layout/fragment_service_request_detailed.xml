@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:layout_margin="20dp"
+     >
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Request Details" />
+        android:text="Request Details"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
 
     <TextView
         android:id="@+id/stopid"
@@ -17,13 +19,17 @@
         android:layout_below="@id/name"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/times"
-        android:text="Stop ID"/>
+        android:text="Stop ID"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@id/times"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size" />
     <TextView
         android:id="@+id/direction"
         android:layout_width="0dp"
@@ -31,13 +37,17 @@
         android:layout_below="@id/times"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/times"
-        android:text="Direction"/>
+        android:text="Direction"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/directionval"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/times"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/location"
         android:layout_width="0dp"
@@ -45,13 +55,17 @@
         android:layout_below="@id/directionval"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/locationval"
-        android:text="Location"/>
+        android:text="Location"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/locationval"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/directionval"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/requesttype"
         android:layout_width="0dp"
@@ -59,13 +73,17 @@
         android:layout_below="@id/location"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/requesttypeval"
-        android:text="Request Type"/>
+        android:text="Request Type"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/requesttypeval"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationval"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/reason"
         android:layout_width="0dp"
@@ -73,13 +91,17 @@
         android:layout_below="@id/requesttype"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/reasonval"
-        android:text="Reason"/>
+        android:text="Reason"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/reasonval"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/requesttypeval"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/route"
         android:layout_width="0dp"
@@ -87,13 +109,17 @@
         android:layout_below="@id/reason"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/routeval"
-        android:text="Route"/>
+        android:text="Route"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/routeval"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/reasonval"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/additionalinformation"
         android:layout_width="0dp"
@@ -101,12 +127,22 @@
         android:layout_below="@id/route"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/additionalinformationval"
-        android:text="Additional Information"/>
+        android:text="Additional Information"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/additionalinformationval"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/routeval"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/layout_padding"
+        android:textSize="@dimen/text_size"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/additionalinformation"
+        android:layout_margin="@dimen/layout_padding"
+        android:text="@string/proceed"/>
 </RelativeLayout>

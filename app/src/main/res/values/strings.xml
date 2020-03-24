@@ -46,6 +46,7 @@
     <string name="fetch_details">Fetch</string>
     <string name="lat">Latitude</string>
     <string name="lon">Longitude</string>
+    <string name="proceed">Proceed</string>
     <string-array name="fastenedTo">
         <item>Utility Pole</item>
         <item>Shelter</item>
