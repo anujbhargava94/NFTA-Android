@@ -4,14 +4,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.ServiceRequests;
+import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 //import android.widget.Toolbar;
 
@@ -21,8 +37,18 @@ public class ServiceRequestFragment extends Fragment {
     ViewPager view_pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Home","Events"};
+    CharSequence Titles[]={"Open","Closed"};
     int Numboftabs =2;
+    private NetworkAPICall apiCAll;
+    private List<ServiceRequests> serviceRequests;
+    private List<StopTransactions> stopTransactions;
+
+    // Build a Constructor and assign the passed Values to appropriate values in the class
+    public ServiceRequestFragment(List<ServiceRequests> mServiceRequests) {
+        //super(fm);
+
+        this.serviceRequests = mServiceRequests;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +70,11 @@ public class ServiceRequestFragment extends Fragment {
         //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         //adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
-        adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs);
+
+
+        //stopTransactions.add();
+
+        adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs,stopTransactions);
 
 
 
@@ -67,6 +97,8 @@ public class ServiceRequestFragment extends Fragment {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(view_pager);
+
         return root;
     }
+
 }
