@@ -4,11 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/expandedListItem"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingTop="100dp"
-        android:paddingBottom="30dp" />
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/expandedListItem"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="100dp"-->
+<!--        android:paddingBottom="30dp">-->
+<!--        -->
+<!--    -->
+<!--    -->
+
+<!--    <com.google.android.material.textfield.TextInputEditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+
+
+        <TextView
+            android:id="@+id/expandedListItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+            android:paddingTop="100dp"
+            android:paddingBottom="30dp" />
 </LinearLayout>

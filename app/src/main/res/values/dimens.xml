@@ -7,4 +7,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="layout_top_margin_from_header">60dp</dimen>
+    <dimen name="layout_padding">10dp</dimen>
+    <dimen name="layout_padding_2">5dp</dimen>
+    <dimen name="layout_height">70dp</dimen>
+    <dimen name="layout_height_2">40dp</dimen>
+    <dimen name="text_size">20sp</dimen>
 </resources>

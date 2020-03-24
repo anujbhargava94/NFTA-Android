@@ -25,6 +25,7 @@ import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -56,7 +57,7 @@ public class StopFragment2 extends Fragment {
     private CheckBox trashCan;
     private CheckBox timeTable;
     private CheckBox systemMap;
-    private TextInputEditText comments;
+    private TextInputLayout comments;
     private Spinner acroutes;
     private Button submitButton;
     StopTransactions stopTransactions;
@@ -133,7 +134,7 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setTrash_can(trashCan.isChecked());
             stopTransactions.setTime_table(timeTable.isChecked());
             stopTransactions.setSystem_map(systemMap.isChecked());
-            stopTransactions.setComments(comments.getText().toString());
+            stopTransactions.setComments(comments.getEditText().getText().toString());
             stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
 
             Gson gson = new Gson();
