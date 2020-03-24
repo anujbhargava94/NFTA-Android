@@ -9,13 +9,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.GPSTracker;
+import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -48,7 +53,9 @@ public class StopFragment1 extends Fragment {
     private Spinner acounty;
     private ImageView ivLat;
     private ImageView ivLong;
+    private Button fetchButton;
     GPSTracker gpslocation;
+    NetworkAPICall apiCAll;
 
 
     public StopFragment1() {
@@ -105,9 +112,12 @@ public class StopFragment1 extends Fragment {
         stopTransactions = new StopTransactions(getActivity());
         ivLat = root.findViewById(R.id.icLat);
         ivLong = root.findViewById(R.id.icLong);
-
+        fetchButton = root.findViewById(R.id.fetchButton);
+        apiCAll = NetworkAPICall.getInstance(getActivity());
         ivLat.setOnClickListener(latOnclickListner);
         ivLong.setOnClickListener(longOnclickListner);
+        fetchButton.setOnClickListener(fetchOnClickListner);
+
 
         String[] directions = getResources().getStringArray(R.array.direction);
         ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>
@@ -128,6 +138,12 @@ public class StopFragment1 extends Fragment {
         acposition.setAdapter(positionsAdapter);
         gpslocation = new GPSTracker(getActivity());
 
+        latET.getEditText().setText(String.valueOf(gpslocation.getLatitude()));
+        longET.getEditText().setText(String.valueOf(gpslocation.getLongitude()));
+        if (mParam1 == null || mParam1.isEmpty() || mParam1.equals("new")) {
+            fetchButton.setVisibility(View.GONE);
+        }
+
         return root;
     }
 
@@ -143,6 +159,7 @@ public class StopFragment1 extends Fragment {
             stopTransactions.setFastened_to(String.valueOf(acfastenedTo.getSelectedItem()));
             stopTransactions.setCounty(String.valueOf(acounty.getSelectedItem()));
             stopTransactions.setPosition(String.valueOf(acposition.getSelectedItem()));
+            stopTransactions.setTransaction_type(mParam1);
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
@@ -150,6 +167,7 @@ public class StopFragment1 extends Fragment {
             args.putString("stopTransaction", transaction);
 
             StopFragment2 stopFragment2 = new StopFragment2();
+            stopFragment2.setArguments(args);
             replaceFragment(stopFragment2);
         }
     };
@@ -163,8 +181,7 @@ public class StopFragment1 extends Fragment {
 
 
                 latitude = gpslocation.getLatitude();
-            }
-            else{
+            } else {
                 gpslocation.showSettingsAlert();
             }
             latET.getEditText().setText(String.valueOf(latitude));
@@ -178,7 +195,7 @@ public class StopFragment1 extends Fragment {
             double longitude = 0.0;
             if (gpslocation.canGetLocation()) {
                 longitude = gpslocation.getLongitude();
-            }else{
+            } else {
                 gpslocation.showSettingsAlert();
             }
 
@@ -186,11 +203,48 @@ public class StopFragment1 extends Fragment {
         }
     };
 
+    View.OnClickListener fetchOnClickListner = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String stopIdFetched = stopIdET.getEditText().getText().toString();
+            makeApiCall("transaction", stopIdFetched);
+        }
+    };
+
+
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void makeApiCall(String url, String request) {
+        String finalRequest = url + "?id=" + request;
+        apiCAll.makeGet(getActivity(), finalRequest, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                String results = response;
+                Toast.makeText(
+                        getContext(),
+                        "Transaction added successfully", Toast.LENGTH_SHORT
+                ).show();
+                HomeFragment homeFragment = new HomeFragment();
+                replaceFragment(homeFragment);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String errorString = "Error in adding Transaction";
+                Toast.makeText(
+                        getContext(),
+                        errorString, Toast.LENGTH_SHORT
+                ).show();
+                System.out.println(errorString);
+            }
+        });
     }
 
 }

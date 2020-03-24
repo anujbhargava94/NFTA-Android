@@ -5,11 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/service_stop"
+            android:id="@+id/nav_service_request"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_service_request" />
         <item
-            android:id="@+id/add_stop"
+            android:id="@+id/nav_stops"
             android:icon="@drawable/ic_add_circle_24px"
             android:title="@string/menu_add_stop" />
         <item
@@ -18,11 +18,11 @@
             android:title="@string/remove_stop" />
 
         <item
-            android:id="@+id/update_stop"
+            android:id="@+id/nav_stops_update"
             android:icon="@drawable/ic_system_update_stop"
             android:title="@string/update_stop" />
         <item
-            android:id="@+id/view_history"
+            android:id="@+id/nav_history"
             android:icon="@drawable/ic_history"
             android:title="@string/view_history" />
     </group>

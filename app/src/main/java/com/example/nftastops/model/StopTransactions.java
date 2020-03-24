@@ -3,10 +3,6 @@ package com.example.nftastops.model;
 import android.content.Context;
 import android.provider.Settings;
 
-import com.google.gson.annotations.Expose;
-
-import java.util.Date;
-
 public class StopTransactions {
     private String device_id;
     private String stop_id;
@@ -32,6 +28,15 @@ public class StopTransactions {
     private int transaction_no;
     private String date;
     private String request_type;
+    private String transaction_type;
+
+    public String getTransaction_type() {
+        return transaction_type;
+    }
+
+    public void setTransaction_type(String transaction_type) {
+        this.transaction_type = transaction_type;
+    }
 
     public String getRequest_type() {
         return request_type;

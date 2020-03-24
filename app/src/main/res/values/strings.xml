@@ -41,7 +41,7 @@
     <string name="timeTable">Time Table</string>
     <string name="systemMap">System Map</string>
     <string name="add_comments">Add additional comments here...!</string>
-    <string name="add_pictures">Add Pictures (Max 3)</string>
+    <string name="add_pictures">Add Pictures</string>
     <string name="submit">Submit</string>
     <string name="fetch_details">Fetch</string>
     <string name="lat">Latitude</string>

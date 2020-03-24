@@ -34,7 +34,7 @@ public class HistoryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 //        sendViewModel =
 //                ViewModelProviders.of(this).get(SendViewModel.class);
-        View root = inflater.inflate(R.layout.recycler_view, container, false);
+        View root = inflater.inflate(R.layout.fragment_history, container, false);
         // final TextView textView = root.findViewById(R.id.text_send);
 //        sendViewModel.getText().observe(this, new Observer<String>() {
 //            @Override
