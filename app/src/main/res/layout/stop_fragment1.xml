@@ -9,91 +9,235 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/layout_top_margin_from_header"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/stopIDll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="@dimen/layout_height"
 
-            <com.google.android.material.textfield.TextInputEditText
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/stopId"
-                android:layout_width="fill_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:hint="@string/stop_id_hint"
-                android:inputType="textCapCharacters" />
+                android:layout_alignParentLeft="true"
+                android:hint="@string/stop_id_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--            <com.google.android.material.textfield.TextInputEditText-->
+            <!--                android:id="@+id/stopId"-->
+            <!--                style="@style/ITextInputLayoutStyle"-->
+            <!--                android:layout_width="fill_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="2"-->
+            <!--                android:hint="@string/stop_id_hint"-->
+            <!--                android:inputType="textCapCharacters"-->
+            <!--                android:textSize="@dimen/text_size"-->
+            <!--                android:theme="@style/ITextInputLayoutStyle" />-->
 
             <Button
                 android:id="@+id/fetchButton"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="@string/fetch_details"
-                android:visibility="visible" />
-        </LinearLayout>
+                android:textSize="@dimen/text_size"
+                android:visibility="visible"
 
-        <Spinner
-            android:id="@+id/autocomplete_direction"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/outlinedTextField"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:hint="@string/common_signin_button_text">-->
+
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content" />-->
+
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
+            <Spinner
+                android:id="@+id/autocomplete_direction"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/layout_height"
+                android:inputType="textAutoComplete"
+                android:padding="@dimen/layout_padding"
+                android:textSize="@dimen/text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/streetOn"
-            android:layout_width="fill_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/street_on_hint"
-            android:inputType="text" />
+            android:hint="@string/street_on_hint">
 
-        <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        <com.google.android.material.textfield.TextInputEditText-->
+        <!--            android:id="@+id/streetOn"-->
+        <!--            style="@style/ITextInputLayoutStyle"-->
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="@dimen/layout_height"-->
+        <!--            android:hint="@string/street_on_hint"-->
+        <!--            android:inputType="text"-->
+        <!--            android:padding="@dimen/layout_padding"-->
+        <!--            android:textSize="@dimen/text_size"-->
+        <!--            android:theme="@style/ITextInputLayoutStyle" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nearestCrossStreet"
-            android:layout_width="fill_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/cross_street_hint"
-            android:inputType="text" />
+            android:hint="@string/cross_street_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--        <com.google.android.material.textfield.TextInputEditText-->
+        <!--            android:id="@+id/nearestCrossStreet"-->
+        <!--            style="@style/ITextInputLayoutStyle"-->
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="@dimen/layout_height"-->
+        <!--            android:hint="@string/cross_street_hint"-->
+        <!--            android:inputType="text"-->
+        <!--            android:padding="@dimen/layout_padding"-->
+        <!--            android:textSize="@dimen/text_size"-->
+        <!--            android:theme="@style/ITextInputLayoutStyle" />-->
 
         <Spinner
             android:id="@+id/autocomplete_position"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
+            android:layout_height="@dimen/layout_height"
+            android:inputType="textAutoComplete"
+            android:padding="@dimen/layout_padding"
+            android:textSize="@dimen/text_size" />
 
         <Spinner
             android:id="@+id/autocomplete_fastened_to"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
+            android:layout_height="@dimen/layout_height"
+            android:inputType="textAutoComplete"
+            android:padding="@dimen/layout_padding"
+            android:textSize="@dimen/text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/latitude"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_location"
-            android:text="Latitude" />
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/longitude"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_location"
-            android:text="Longitude" />
+            android:layout_height="@dimen/layout_height"
+            android:orientation="horizontal"
+            android:textSize="@dimen/text_size"
+            android:weightSum="5">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/latitude"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:hint="@string/lat">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--            <com.google.android.material.textfield.TextInputEditText-->
+            <!--                android:id="@+id/latitude"-->
+            <!--                style="@style/ITextInputLayoutStyle"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_weight="3"-->
+            <!--                android:text="Latitude"-->
+            <!--                android:textSize="@dimen/text_size"-->
+            <!--                android:theme="@style/ITextInputLayoutStyle" />-->
+
+            <ImageView
+                android:id="@+id/icLat"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_location" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:orientation="horizontal"
+            android:textSize="@dimen/text_size"
+            android:weightSum="5">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/longitude"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:hint="@string/lon">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--            <com.google.android.material.textfield.TextInputEditText-->
+            <!--                android:id="@+id/longitude"-->
+            <!--                style="@style/ITextInputLayoutStyle"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="3"-->
+            <!--                android:text="Longitude"-->
+            <!--                android:textSize="@dimen/text_size"-->
+            <!--                android:theme="@style/ITextInputLayoutStyle" />-->
+
+            <ImageView
+                android:id="@+id/icLong"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_location" />
+        </LinearLayout>
 
         <Spinner
             android:id="@+id/autocomplete_county"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
+            android:layout_height="@dimen/layout_height"
+            android:inputType="textAutoComplete"
+            android:padding="@dimen/layout_padding"
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/fragment1Next"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/next" />
+            android:layout_height="@dimen/layout_height"
+            android:padding="@dimen/layout_padding"
+            android:text="@string/next"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

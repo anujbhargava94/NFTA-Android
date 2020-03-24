@@ -1,6 +1,12 @@
 package com.example.nftastops.ui.stops;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.CalendarContract;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -25,12 +34,16 @@ import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,11 +69,13 @@ public class StopFragment2 extends Fragment {
     private CheckBox trashCan;
     private CheckBox timeTable;
     private CheckBox systemMap;
-    private TextInputEditText comments;
+    private TextInputLayout comments;
     private Spinner acroutes;
     private Button submitButton;
     StopTransactions stopTransactions;
     NetworkAPICall apiCAll;
+    ImageView locPics;
+    private TextView addPhoto;
 
     public StopFragment2() {
         // Required empty public constructor
@@ -110,6 +125,10 @@ public class StopFragment2 extends Fragment {
         acroutes = root.findViewById(R.id.autocomplete_route);
         submitButton = root.findViewById(R.id.fragment2Next);
         submitButton.setOnClickListener(submitClick);
+        locPics = root.findViewById(R.id.mypics);
+        addPhoto = root.findViewById(R.id.add_photo);
+
+        addPhoto.setOnClickListener(addPhotoClickListner);
 
         String[] routes = getResources().getStringArray(R.array.routes);
         ArrayAdapter<String> routesAdapter = new ArrayAdapter<String>
@@ -133,12 +152,19 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setTrash_can(trashCan.isChecked());
             stopTransactions.setTime_table(timeTable.isChecked());
             stopTransactions.setSystem_map(systemMap.isChecked());
-            stopTransactions.setComments(comments.getText().toString());
+            stopTransactions.setComments(comments.getEditText().getText().toString());
             stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
             makeApiCall("add", transaction);
+        }
+    };
+
+    View.OnClickListener addPhotoClickListner = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            selectImage(getActivity());
         }
     };
 
@@ -175,4 +201,67 @@ public class StopFragment2 extends Fragment {
         transaction.commit();
     }
 
+    private void selectImage(Context context) {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choose your profile picture");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    startActivityForResult(pickPhoto, 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        locPics.setImageBitmap(selectedImage);
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                locPics.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                cursor.close();
+                            }
+                        }
+
+                    }
+                    break;
+            }
+        }
+    }
 }

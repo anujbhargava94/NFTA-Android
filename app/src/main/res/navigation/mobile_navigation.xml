@@ -11,11 +11,11 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.nftastops.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_gallery"-->
+    <!--        android:name="com.example.nftastops.ui.gallery.GalleryFragment"-->
+    <!--        android:label="@string/menu_gallery"-->
+    <!--        tools:layout="@layout/fragment_gallery" />-->
 
     <fragment
         android:id="@+id/nav_stops"
@@ -24,10 +24,16 @@
         tools:layout="@layout/stop_fragment1" />
 
     <fragment
+        android:id="@+id/nav_stops_update"
+        android:name="com.example.nftastops.ui.stops.StopFragment1"
+        android:label="@string/update_stop"
+        tools:layout="@layout/stop_fragment1" />
+
+    <fragment
         android:id="@+id/nav_history"
         android:name="com.example.nftastops.ui.history.HistoryFragment"
         android:label="@string/history_fragment"
-        tools:layout="@layout/recycler_view" />
+        tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/nav_stops_remove"
         android:name="com.example.nftastops.ui.stops.StopRemoveFragment"

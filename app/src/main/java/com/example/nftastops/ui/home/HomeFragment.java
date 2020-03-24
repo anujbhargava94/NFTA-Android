@@ -130,12 +130,12 @@ public class HomeFragment extends Fragment {
                         childPosition);
                 switch (childName) {
                     case "Add stop":
-                        fragment = new StopFragment1();
+                        fragment = StopFragment1.newInstance("new","");
                         replaceFragment(fragment);
                         break;
 
                     case "Update stop":
-                        fragment = new StopFragment1();
+                        fragment = StopFragment1.newInstance("update","");
                         replaceFragment(fragment);
                         break;
                 }

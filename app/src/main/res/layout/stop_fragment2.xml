@@ -10,75 +10,117 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/layout_top_margin_from_header"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
 
         <CheckBox
             android:id="@+id/shelterId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/shelter" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/shelter"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <CheckBox
             android:id="@+id/advertisementId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/advertisement" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/advertisement"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <CheckBox
             android:id="@+id/benchId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/bench" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/bench"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <CheckBox
             android:id="@+id/bikeRackId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/bikeRack" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/bikeRack"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <CheckBox
             android:id="@+id/trashCanId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/trashCan" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/trashCan"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <CheckBox
             android:id="@+id/timetableId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/timeTable" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/timeTable"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <CheckBox
             android:id="@+id/systemMapId"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/systemMap" />
+            android:layout_height="@dimen/layout_height_2"
+            android:hint="@string/systemMap"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <Spinner
             android:id="@+id/autocomplete_route"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
+            android:layout_height="@dimen/layout_height_2"
+            android:inputType="textAutoComplete"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
         <TextView
             android:id="@+id/add_photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/layout_height_2"
             android:drawableRight="@drawable/ic_add_a_photo"
-            android:text="@string/add_pictures" />
+            android:text="@string/add_pictures"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/comments"
+        <ImageView
+            android:id="@+id/mypics"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="@string/add_comments" />
+            android:layout_height="120dp"
+            android:adjustViewBounds="true"
+            app:layout_collapseMode="parallax"
+            app:layout_collapseParallaxMultiplier="0.7" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/comments"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_comments">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="80dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/comments"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:hint="@string/add_comments"-->
+<!--            android:textSize="@dimen/text_size"-->
+<!--            android:layout_margin="@dimen/layout_padding_2"/>-->
 
         <Button
             android:id="@+id/fragment2Next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/submit" />
+            android:text="@string/submit"
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/layout_padding_2"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
