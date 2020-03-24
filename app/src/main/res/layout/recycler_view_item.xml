@@ -27,29 +27,9 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/cvTransactionNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="1dp"
-                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/cvRequestType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="1dp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/cvDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="1dp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/cvlocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="1dp"
@@ -61,6 +41,15 @@
                 android:layout_height="wrap_content"
                 android:padding="1dp"
                 android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/cvAdminUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black" />
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
