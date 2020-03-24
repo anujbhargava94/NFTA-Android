@@ -18,8 +18,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
 
     List<StopTransactions> stopTransactions;
 
-    public RVAdapter(List<StopTransactions> stopTransactions) {
+    //private final List items;
+    private final OnItemClickListener listener;
+
+    public RVAdapter(List<StopTransactions> stopTransactions, OnItemClickListener mlistener) {
         this.stopTransactions = stopTransactions;
+        this.listener = mlistener;
+        //this.items = items;
+    }
+
+    public interface OnItemClickListener {
+        //void onItemClick(ContentItem item);
+        void onItemClick(StopTransactions transaction);
     }
 
     @NonNull
@@ -32,6 +42,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder holder, int i) {
+        holder.bind(stopTransactions.get(i), listener);
+
         holder.stopID.setText(stopTransactions.get(i).getStop_id());
         holder.transactionNo.setText(stopTransactions.get(i).getTransaction_no()+"");
         holder.requestType.setText(stopTransactions.get(i).getRequest_type()+"");
@@ -49,6 +61,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
 
     public static class RVViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -68,6 +81,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
             date = (TextView) itemView.findViewById(R.id.cvDate);
             location = (TextView) itemView.findViewById(R.id.cvlocation);
             direction = (TextView) itemView.findViewById(R.id.cvDirection);
+        }
+
+        public void bind(final StopTransactions item1, final OnItemClickListener listener) {
+            //name.setText(item.name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    //listener.onItemClick(item);
+                    listener.onItemClick(item1);
+                }
+            });
         }
     }
 

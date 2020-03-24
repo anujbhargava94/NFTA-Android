@@ -38,6 +38,63 @@ public class StopTransactions {
         this.transaction_type = transaction_type;
     }
 
+    private Integer request_id;
+
+    public Integer getRequest_id() {
+        return request_id;
+    }
+
+    public void setRequest_id(Integer request_id) {
+        this.request_id = request_id;
+    }
+
+    public Integer getAdmin_user_id() {
+        return admin_user_id;
+    }
+
+    public void setAdmin_user_id(Integer admin_user_id) {
+        this.admin_user_id = admin_user_id;
+    }
+
+    public String getRequested_user() {
+        return requested_user;
+    }
+
+    public void setRequested_user(String requested_user) {
+        this.requested_user = requested_user;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Integer getStopId() {
+        return stopId;
+    }
+
+    public void setStopId(Integer stopId) {
+        this.stopId = stopId;
+    }
+
+    public String getAdditional_information() {
+        return additional_information;
+    }
+
+    public void setAdditional_information(String additional_information) {
+        this.additional_information = additional_information;
+    }
+
+    private Integer admin_user_id;
+    private String requested_user;;
+    private String reason;
+    private Integer stopId;
+    private String additional_information;
+
+
     public String getRequest_type() {
         return request_type;
     }

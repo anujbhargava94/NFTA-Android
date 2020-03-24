@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.ui.stops.StopFragment1;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
 import com.google.gson.Gson;
@@ -46,7 +47,7 @@ public class HistoryFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
         stopTransactions = new ArrayList<>();
-        adapter = new RVAdapter(stopTransactions);
+        adapter = new RVAdapter(stopTransactions,onItemClickListener);
         rv.setAdapter(adapter);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         makeApiCall("transactions");
@@ -106,4 +107,20 @@ public class HistoryFragment extends Fragment {
             }
         });
     }
+
+    RVAdapter.OnItemClickListener onItemClickListener = new RVAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(StopTransactions transaction) {
+
+            /*Gson gson = new Gson();
+            String transactionItem = gson.toJson(stopTransactions);
+            Bundle args = new Bundle();
+            args.putString("stopTransaction", transactionItem);
+
+            StopFragment1 stopFragment1 = new StopFragment1();
+            stopFragment1.setArguments(args);
+            replaceFragment(stopFragment1); */
+
+        }
+    };
 }
