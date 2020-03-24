@@ -143,6 +143,7 @@ public class StopFragment1 extends Fragment {
         if (mParam1 == null || mParam1.isEmpty() || mParam1.equals("new")) {
             fetchButton.setVisibility(View.GONE);
         }
+        fetchButton.setVisibility(View.GONE);
 
         return root;
     }

@@ -178,8 +178,9 @@
             <ImageView
                 android:id="@+id/icLat"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_location" />
 
         </LinearLayout>
@@ -216,8 +217,9 @@
             <ImageView
                 android:id="@+id/icLong"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_location" />
         </LinearLayout>
 

@@ -71,7 +71,7 @@ public class StopTransactions {
     public StopTransactions(Context context) {
 
         this.device_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        this.status = "NEW";
+        this.status = "in progress";
     }
 
     public String getRoute() {
