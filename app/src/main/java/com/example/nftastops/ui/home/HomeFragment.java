@@ -176,7 +176,8 @@ public class HomeFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (results.isEmpty()) {
+                if (results ==null ||results.isEmpty()) {
+                    results = new ArrayList<>();
                     ServiceRequests e = new ServiceRequests();
                     e.setRequest_id(0);
                     e.setAdmin_user_id(0);

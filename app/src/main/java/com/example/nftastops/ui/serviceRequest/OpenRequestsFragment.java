@@ -111,7 +111,7 @@ public class OpenRequestsFragment extends Fragment {
         //Map serviceRequests with stopTransactions RVadaptor
         for (ServiceRequests serviceRequest : serviceRequests){
             StopTransactions stopTransaction = new StopTransactions();
-            if(serviceRequest.getStatus().equals("Open")) {
+            if(serviceRequest.getStatus().equals("open")) {
                 stopTransaction.setStop_id(serviceRequest.getStopId().toString());
                 stopTransaction.setRequest_type(serviceRequest.getRequest_type());
                 stopTransaction.setLocation(serviceRequest.getLocation());
@@ -150,6 +150,9 @@ public class OpenRequestsFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
+
 }
 
 

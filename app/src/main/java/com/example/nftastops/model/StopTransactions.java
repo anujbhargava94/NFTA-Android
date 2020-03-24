@@ -11,8 +11,8 @@ public class StopTransactions {
     private String nearest_cross_street;
     private String position;
     private String fastened_to;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private String location;
     private String county;
     private String status;
@@ -203,19 +203,19 @@ public class StopTransactions {
         this.fastened_to = fastened_to;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

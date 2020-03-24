@@ -154,8 +154,8 @@ public class StopFragment1 extends Fragment {
             stopTransactions.setStop_id(stopIdET.getEditText().getText().toString());
             stopTransactions.setStreet_on(streetOnET.getEditText().getText().toString());
             stopTransactions.setNearest_cross_street(nearestCSET.getEditText().getText().toString());
-            stopTransactions.setLatitude(latET.getEditText().getText().toString());
-            stopTransactions.setLongitude(longET.getEditText().getText().toString());
+            stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
+            stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
             stopTransactions.setDirection(String.valueOf(acdirection.getSelectedItem()));
             stopTransactions.setFastened_to(String.valueOf(acfastenedTo.getSelectedItem()));
             stopTransactions.setCounty(String.valueOf(acounty.getSelectedItem()));

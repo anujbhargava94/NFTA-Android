@@ -92,7 +92,7 @@ public class ServiceRequestDetailedFragment extends Fragment {
         reason = root.findViewById(R.id.reasonval);
         route = root.findViewById(R.id.routeval);
         additional_information = root.findViewById(R.id.additionalinformationval);
-        String serviceRequest = getArguments().getString("serviceRequest");
+        String serviceRequest = getArguments().getString("stopTransaction");
 
         try {
             Gson gson = new Gson();
