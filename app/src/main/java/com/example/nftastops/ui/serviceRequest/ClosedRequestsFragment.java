@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 //import android.support.annotation.Nullable;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.ui.stops.StopFragment1;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
 import com.google.gson.Gson;
@@ -49,7 +51,7 @@ public class ClosedRequestsFragment extends Fragment {
         rv.setLayoutManager(llm);
         stopTransactions = new ArrayList<>();
         serviceRequests = new ArrayList<>();
-        adapter = new RVAdapter(stopTransactions);
+        adapter = new RVAdapter(stopTransactions, onItemClickListener);
         rv.setAdapter(adapter);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         makeApiCall("serviceRequest");
@@ -111,8 +113,38 @@ public class ClosedRequestsFragment extends Fragment {
                 stopTransaction.setRequest_type(serviceRequest.getRequest_type());
                 stopTransaction.setLocation(serviceRequest.getLocation());
                 stopTransaction.setDirection(serviceRequest.getDirection());
+                stopTransaction.setRequest_id(serviceRequest.getRequest_id());
+                stopTransaction.setAdmin_user_id(serviceRequest.getAdmin_user_id());
+                stopTransaction.setRequested_user(serviceRequest.getRequested_user());
+                stopTransaction.setRoute(serviceRequest.getRoute());
+                stopTransaction.setReason(serviceRequest.getReason());
+                stopTransaction.setAdditional_information(serviceRequest.getAdditional_information());
                 stopTransactions.add(stopTransaction);
             }
         }
+    }
+
+    RVAdapter.OnItemClickListener onItemClickListener = new RVAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(StopTransactions transaction) {
+
+            Gson gson = new Gson();
+            String transactionItem = gson.toJson(transaction);
+            Bundle args = new Bundle();
+            args.putString("serviceRequest", transactionItem);
+
+            ServiceRequestDetailedFragment serviceRequestDetailedFragment = new ServiceRequestDetailedFragment();
+            serviceRequestDetailedFragment.setArguments(args);
+            replaceFragment(serviceRequestDetailedFragment);
+
+        }
+    };
+
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

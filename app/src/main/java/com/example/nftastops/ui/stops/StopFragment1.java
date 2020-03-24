@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
@@ -141,6 +142,7 @@ public class StopFragment1 extends Fragment {
             args.putString("stopTransaction", transaction);
 
             StopFragment2 stopFragment2 = new StopFragment2();
+            stopFragment2.setArguments(args);
             replaceFragment(stopFragment2);
         }
     };
