@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.example.nftastops.R;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.utilclasses.IOnBackPressed;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,7 +31,7 @@ import java.util.List;
  * Use the {@link ServiceRequestDetailedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ServiceRequestDetailedFragment extends Fragment {
+public class ServiceRequestDetailedFragment extends Fragment implements IOnBackPressed {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,6 +54,7 @@ public class ServiceRequestDetailedFragment extends Fragment {
 
     public ServiceRequestDetailedFragment() {
         // Required empty public constructor
+
     }
 
     /**
@@ -74,6 +78,10 @@ public class ServiceRequestDetailedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ServiceRequestDetailedFragment fragment = new ServiceRequestDetailedFragment();
+        FragmentTransaction t = getFragmentManager().beginTransaction();
+        t.add(fragment,"service_request_detailed_fragment");
+        //FragmentTransaction.add(ServiceRequestDetailedFragment fragment, String tag );
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -92,7 +100,7 @@ public class ServiceRequestDetailedFragment extends Fragment {
         reason = root.findViewById(R.id.reasonval);
         route = root.findViewById(R.id.routeval);
         additional_information = root.findViewById(R.id.additionalinformationval);
-        String serviceRequest = getArguments().getString("stopTransaction");
+        String serviceRequest = getArguments().getString("serviceRequest");
 
         try {
             Gson gson = new Gson();
@@ -116,5 +124,18 @@ public class ServiceRequestDetailedFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_service_request_detailed, container, false);
         return root;
     }
+
+    @Override
+    public boolean onBackPressed() {
+        //if (myCondition) {
+            //action not popBackStack
+            Log.d("custom", "onBackPressed");
+         //   return true;
+        //} else {
+        //    return false;
+        //}
+        return true;
+    }
+
 
 }

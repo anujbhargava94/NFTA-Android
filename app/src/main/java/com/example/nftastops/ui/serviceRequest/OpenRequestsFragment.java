@@ -134,7 +134,7 @@ public class OpenRequestsFragment extends Fragment {
             Gson gson = new Gson();
             String transactionItem = gson.toJson(transaction);
             Bundle args = new Bundle();
-            args.putString("stopTransaction", transactionItem);
+            args.putString("serviceRequest", transactionItem);
 
             ServiceRequestDetailedFragment serviceRequestDetailedFragment = new ServiceRequestDetailedFragment();
             serviceRequestDetailedFragment.setArguments(args);
