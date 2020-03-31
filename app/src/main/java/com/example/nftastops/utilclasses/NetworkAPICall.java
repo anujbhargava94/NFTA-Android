@@ -53,7 +53,7 @@ public class NetworkAPICall {
     }
 
     public static void makePost(Context ctx, String query, Response.Listener<String>
-            listener, Response.ErrorListener errorListener, final String mRequestBody ) {
+            listener, Response.ErrorListener errorListener, final String mRequestBody) {
         String url = baseURL + query;
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 listener, errorListener) {
@@ -72,6 +72,8 @@ public class NetworkAPICall {
                 }
             }
         };
+
+
 //            @Override
 //            protected Map<String, String> getParams() {
 ////                Map<String, String>  params = new HashMap<String, String>();
@@ -81,6 +83,33 @@ public class NetworkAPICall {
 //                return params;
 //            }
 
+        NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
+    }
+
+    public static void makeLogin(Context ctx, final String username, final String password, Response.Listener<String>
+            listener, Response.ErrorListener errorListener) {
+        String url = baseURL + "login";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                listener, errorListener) {
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String mRequestBody = null;
+                try {
+                    String un = username;
+                    String pw = password;
+                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                        un = "anuj2@gmail.com";
+                        pw = "anuj7";
+                    }
+                    mRequestBody = "username=" + un + "&password=" + pw;
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+        };
         NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
     }
 }

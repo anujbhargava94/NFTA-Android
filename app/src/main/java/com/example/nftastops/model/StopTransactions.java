@@ -2,6 +2,7 @@ package com.example.nftastops.model;
 
 import android.content.Context;
 import android.provider.Settings;
+import android.widget.Toast;
 
 public class StopTransactions {
     private String device_id;
@@ -89,7 +90,8 @@ public class StopTransactions {
     }
 
     private Integer admin_user_id;
-    private String requested_user;;
+    private String requested_user;
+    ;
     private String reason;
     private Integer stopId;
     private String additional_information;
@@ -129,6 +131,10 @@ public class StopTransactions {
 
         this.device_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         this.status = "In Progress";
+        Toast.makeText(
+                context,
+                this.device_id, Toast.LENGTH_SHORT
+        ).show();
     }
 
     public String getRoute() {
