@@ -6,11 +6,14 @@ import android.view.Menu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.nftastops.utilclasses.IOnBackPressed;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,10 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
 
+    @Override public void onBackPressed() {
+        //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_service_request);
+        /**Fragment value is null**/
+        Fragment fragment  = getSupportFragmentManager().findFragmentByTag("service_request_detailed_fragment");
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 
 }

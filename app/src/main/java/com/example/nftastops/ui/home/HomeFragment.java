@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
     private AppBarConfiguration mAppBarConfiguration;
     public List<ServiceRequests> serviceRequests;
     private NetworkAPICall apiCAll;
+    private int openServiceRequests;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -192,8 +193,12 @@ public class HomeFragment extends Fragment {
                 }
                 //IMPORTANT: set data here and notify
                 serviceRequests.addAll(results);
-                //Call constructor of ServiceRequestFragment
-                //new ServiceRequestFragment(serviceRequests);
+                for (ServiceRequests serviceRequest : serviceRequests) {
+                    if (serviceRequest.getStatus().equals("open")) {
+                        openServiceRequests += 1;
+                    }
+                }
+                /** Set the count to open requests bubble in navigation bar **/
 
             }
         }, new Response.ErrorListener() {
