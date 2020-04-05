@@ -3,11 +3,14 @@ package com.example.nftastops.utilclasses;
 //make the class non-extendable by adding final
 public final class Constants {
 
-    private Constants(){}
+    private Constants() {
+    }
+
     public static String baseURL = "http://192.168.1.78:8080/";
     //public static String baseURL = "https://nfta-app.herokuapp.com/";
-    public static String autoCompleteEndPoint="autosuggest?keyword=";
-    public static String searchEndPoint="test-event?";
+    //public static String baseURL = "https://nftainventory.herokuapp.com/";
+    public static String autoCompleteEndPoint = "autosuggest?keyword=";
+    public static String searchEndPoint = "test-event?";
     public static String CATEGORY = "category";
     public static String DISTANCE = "distance";
     public static String UNIT = "unit";

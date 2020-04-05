@@ -47,6 +47,7 @@
     <string name="lat">Latitude</string>
     <string name="lon">Longitude</string>
     <string name="proceed">Proceed</string>
+    <string name="reason">Reason for removal</string>
     <string-array name="fastenedTo">
         <item>Utility Pole</item>
         <item>Shelter</item>

@@ -25,6 +25,7 @@ import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.history.HistoryFragment;
 import com.example.nftastops.ui.serviceRequest.ServiceRequestFragment;
 import com.example.nftastops.ui.stops.StopFragment1;
+import com.example.nftastops.ui.stops.StopRemoveFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -135,10 +136,16 @@ public class HomeFragment extends Fragment {
                         replaceFragment(fragment);
                         break;
 
+                    case "Remove stop":
+                        fragment = StopRemoveFragment.newInstance("remove","");
+                        replaceFragment(fragment);
+                        break;
+
                     case "Update stop":
                         fragment = StopFragment1.newInstance("update","");
                         replaceFragment(fragment);
                         break;
+
                 }
 
                 return false;
@@ -171,7 +178,7 @@ public class HomeFragment extends Fragment {
                 List<ServiceRequests> results = new ArrayList<>();
                 try {
                     Gson gson = new Gson();
-                    Type type = new TypeToken<List<StopTransactions>>() {
+                    Type type = new TypeToken<List<ServiceRequests>>() {
                     }.getType();
                     results = gson.fromJson(response, type);
                 } catch (Exception e) {
