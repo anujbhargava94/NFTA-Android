@@ -4,8 +4,8 @@ package com.example.nftastops.utilclasses;
 public final class Constants {
 
     private Constants(){}
-    //public static String baseURL = "http://192.168.1.78:8080/";
-    public static String baseURL = "https://nfta-app.herokuapp.com/";
+    public static String baseURL = "http://192.168.1.78:8080/";
+    //public static String baseURL = "https://nfta-app.herokuapp.com/";
     public static String autoCompleteEndPoint="autosuggest?keyword=";
     public static String searchEndPoint="test-event?";
     public static String CATEGORY = "category";
@@ -15,4 +15,5 @@ public final class Constants {
     public static String LATITUDE = "latitude";
     public static String LONGITUDE = "longitude";
     public static String KEYWORD = "keyword";
+    public static String token;
 }

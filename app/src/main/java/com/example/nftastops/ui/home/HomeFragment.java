@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
     private AppBarConfiguration mAppBarConfiguration;
     public List<ServiceRequests> serviceRequests;
     private NetworkAPICall apiCAll;
+    private int openServiceRequests;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -145,9 +146,9 @@ public class HomeFragment extends Fragment {
         });
 
         //API call for service requests
-        serviceRequests = new ArrayList<>();
-        apiCAll = NetworkAPICall.getInstance(getActivity());
-        makeApiCall("serviceRequest");
+        //serviceRequests = new ArrayList<>();
+        //apiCAll = NetworkAPICall.getInstance(getActivity());
+        //makeApiCall("serviceRequest");
 
 
         return root;
@@ -191,9 +192,13 @@ public class HomeFragment extends Fragment {
                     results.add(e);
                 }
                 //IMPORTANT: set data here and notify
-                serviceRequests.addAll(results);
-                //Call constructor of ServiceRequestFragment
-                //new ServiceRequestFragment(serviceRequests);
+//                serviceRequests.addAll(results);
+//                for (ServiceRequests serviceRequest : serviceRequests) {
+//                    if (serviceRequest.getStatus().equals("open")) {
+//                        openServiceRequests += 1;
+//                    }
+//                }
+                /** Set the count to open requests bubble in navigation bar **/
 
             }
         }, new Response.ErrorListener() {
