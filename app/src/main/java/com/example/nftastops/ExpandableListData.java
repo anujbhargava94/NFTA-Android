@@ -10,7 +10,7 @@ public class ExpandableListData {
 
         List<String> stops = new ArrayList<String>();
         stops.add("Add stop");
-        //stops.add("Remove stop");
+        stops.add("Remove stop");
         stops.add("Update stop");
         List<String> service = new ArrayList<String>();
         List<String> history = new ArrayList<String>();

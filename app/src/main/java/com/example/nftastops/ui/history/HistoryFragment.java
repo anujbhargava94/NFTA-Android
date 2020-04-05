@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.ui.serviceRequest.ServiceRequestDetailedFragment;
 import com.example.nftastops.ui.stops.StopFragment1;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
@@ -109,6 +111,8 @@ public class HistoryFragment extends Fragment {
     }
 
     RVAdapter.OnItemClickListener onItemClickListener = new RVAdapter.OnItemClickListener() {
+
+
         @Override
         public void onItemClick(StopTransactions transaction) {
 
@@ -121,6 +125,22 @@ public class HistoryFragment extends Fragment {
             stopFragment1.setArguments(args);
             replaceFragment(stopFragment1); */
 
+
+            Gson gson = new Gson();
+            String transactionItem = gson.toJson(transaction);
+            Bundle args = new Bundle();
+            args.putString("stopTransaction", transactionItem);
+
+            HistoryDetailedFragment historyDetailedFragment = new HistoryDetailedFragment();
+            historyDetailedFragment.setArguments(args);
+            replaceFragment(historyDetailedFragment);
         }
     };
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }
