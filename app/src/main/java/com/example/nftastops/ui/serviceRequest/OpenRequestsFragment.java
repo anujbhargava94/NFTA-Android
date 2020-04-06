@@ -36,7 +36,6 @@ public class OpenRequestsFragment extends Fragment {
     public List<ServiceRequests> serviceRequests;
 
 
-
     // Build a Constructor and assign the passed Values to appropriate values in the class
     public OpenRequestsFragment(List<StopTransactions> mstopTransactions) {
         //super(fm);
@@ -54,7 +53,7 @@ public class OpenRequestsFragment extends Fragment {
         rv.setLayoutManager(llm);
         stopTransactions = new ArrayList<>();
         serviceRequests = new ArrayList<>();
-        adapter = new RVAdapter(stopTransactions,onItemClickListener);
+        adapter = new RVAdapter(stopTransactions,onItemClickListener,"serviceRequest");
         rv.setAdapter(adapter);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         makeApiCall("serviceRequest");
@@ -122,6 +121,7 @@ public class OpenRequestsFragment extends Fragment {
                 stopTransaction.setRoute(serviceRequest.getRoute());
                 stopTransaction.setReason(serviceRequest.getReason());
                 stopTransaction.setAdditional_information(serviceRequest.getAdditional_information());
+                stopTransaction.setStatus(serviceRequest.getStatus());
                 stopTransactions.add(stopTransaction);
             }
         }
@@ -130,7 +130,7 @@ public class OpenRequestsFragment extends Fragment {
     RVAdapter.OnItemClickListener onItemClickListener = new RVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(StopTransactions transaction) {
-
+            String requestStatus = transaction.getStatus();
             Gson gson = new Gson();
             String transactionItem = gson.toJson(transaction);
             Bundle args = new Bundle();

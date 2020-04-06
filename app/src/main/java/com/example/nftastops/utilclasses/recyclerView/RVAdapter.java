@@ -30,9 +30,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
     //private final List items;
     private final OnItemClickListener listener;
 
-    public RVAdapter(List<StopTransactions> stopTransactions, OnItemClickListener mlistener) {
+    private String cardType;
+
+    public RVAdapter(List<StopTransactions> stopTransactions, OnItemClickListener mlistener, String mcardType) {
         this.stopTransactions = stopTransactions;
         this.listener = mlistener;
+        this.cardType = mcardType;
         //this.items = items;
     }
 
@@ -104,6 +107,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
                 }
             });
         }
+//        if(cardType.equals("resolved")){
+//            requestType.setVisibility(View.GONE);
+//        }
     }
 
 }

@@ -49,7 +49,7 @@ public class HistoryFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
         stopTransactions = new ArrayList<>();
-        adapter = new RVAdapter(stopTransactions,onItemClickListener);
+        adapter = new RVAdapter(stopTransactions,onItemClickListener,"history");
         rv.setAdapter(adapter);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         makeApiCall("transactions");
