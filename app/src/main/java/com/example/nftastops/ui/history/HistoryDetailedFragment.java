@@ -111,7 +111,7 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         location.setText(stopTransactions.getLocation());
         request_type.setText(stopTransactions.getRequest_type());
         reason.setText(stopTransactions.getReason());
-        route.setText(stopTransactions.getRoute());
+        //route.setText(stopTransactions.getRoute());
         additional_information.setText(stopTransactions.getAdditional_information());
 
 

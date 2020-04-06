@@ -1,7 +1,6 @@
 package com.example.nftastops.ui.stops;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,7 +122,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             stopTransactions.setStop_id(stopIdET.getEditText().getText().toString());
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
-            stopTransactions.setComments(reason.getEditText().getText().toString());
+            stopTransactions.setAdmin_comments(reason.getEditText().getText().toString());
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);

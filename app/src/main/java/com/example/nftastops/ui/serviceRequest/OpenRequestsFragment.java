@@ -119,7 +119,7 @@ public class OpenRequestsFragment extends Fragment {
                 stopTransaction.setRequest_id(serviceRequest.getRequest_id());
                 stopTransaction.setAdmin_user_id(serviceRequest.getAdmin_user_id());
                 stopTransaction.setRequested_user(serviceRequest.getRequested_user());
-                stopTransaction.setRoute(serviceRequest.getRoute());
+                //stopTransaction.setRoute(serviceRequest.getRoute());
                 stopTransaction.setReason(serviceRequest.getReason());
                 stopTransaction.setAdditional_information(serviceRequest.getAdditional_information());
                 stopTransactions.add(stopTransaction);

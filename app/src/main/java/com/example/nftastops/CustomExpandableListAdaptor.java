@@ -75,14 +75,19 @@ public class CustomExpandableListAdaptor extends BaseExpandableListAdapter {
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String listTitle = (String) getGroup(listPosition);
+        TextView sr_no = null;
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
+            sr_no = convertView.findViewById(R.id.no_sr_id);
         }
         TextView listTitleTextView = (TextView) convertView
                 .findViewById(R.id.listTitle);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
+        if(listPosition == 1 && sr_no !=null){
+            sr_no.setVisibility(View.VISIBLE);
+        }
         listTitleTextView.setText(listTitle);
         return convertView;
     }
