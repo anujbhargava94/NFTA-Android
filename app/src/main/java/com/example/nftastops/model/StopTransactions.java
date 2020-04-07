@@ -26,7 +26,7 @@ public class StopTransactions {
     private boolean trash_can;
     private boolean time_table;
     private boolean system_map;
-    private int transaction_no;
+    //private int transaction_no;
     private String date;
     private String request_type;
     private String transaction_type;
@@ -113,13 +113,13 @@ public class StopTransactions {
         this.date = date;
     }
 
-    public int getTransaction_no() {
-        return transaction_no;
-    }
+//    public int getTransaction_no() {
+//        return transaction_no;
+//    }
 
-    public void setTransaction_no(int transaction_no) {
-        this.transaction_no = transaction_no;
-    }
+    //public void setTransaction_no(int transaction_no) {
+       // this.transaction_no = transaction_no;
+    //}
 
     //private ServiceRequest work_request;
 
