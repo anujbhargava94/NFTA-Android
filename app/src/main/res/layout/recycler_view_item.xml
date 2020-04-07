@@ -35,6 +35,21 @@
                 android:padding="1dp"
                 android:textColor="@color/black" />
 
+
+            <TextView
+                android:id="@+id/cvCounty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/cvlocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black" />
+
             <TextView
                 android:id="@+id/cvDirection"
                 android:layout_width="match_parent"

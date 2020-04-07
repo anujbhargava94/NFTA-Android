@@ -59,10 +59,20 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         holder.stopID.setText(stopTransactions.get(i).getStop_id());
         //holder.transactionNo.setText(stopTransactions.get(i).getTransaction_no()+"");
         holder.requestType.setText(stopTransactions.get(i).getRequest_type()+"");
+        //holder.county.setText(stopTransactions.get(i).getCounty()+"");
         //holder.date.setText(stopTransactions.get(i).getDate()+""); //TODO implement the toString()
-        //holder.location.setText(stopTransactions.get(i).getLocation()+"");
+        holder.location.setText(stopTransactions.get(i).getLocation()+"");
         holder.direction.setText(stopTransactions.get(i).getDirection()+"");
         holder.adminUser.setText(stopTransactions.get(i).getAdmin_user_id()+"");
+
+        if(cardType.equals("history")){
+            holder.requestType.setVisibility(View.GONE);
+            holder.adminUser.setVisibility(View.GONE);
+        }
+        if(cardType.equals("serviceRequest")){
+            holder.location.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -81,8 +91,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         TextView stopID;
         //TextView transactionNo;
         TextView requestType;
+        //TextView county;
         //TextView date;
-        //TextView location;
+        TextView location;
         TextView direction;
         TextView adminUser;
 
@@ -92,8 +103,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
             stopID = (TextView) itemView.findViewById(R.id.cvStopID);
             //transactionNo = (TextView) itemView.findViewById(R.id.cvTransactionNo);
             requestType = (TextView) itemView.findViewById(R.id.cvRequestType);
+            //county = (TextView) itemView.findViewById(R.id.county);
             //date = (TextView) itemView.findViewById(R.id.cvDate);
-            //location = (TextView) itemView.findViewById(R.id.cvlocation);
+            location = (TextView) itemView.findViewById(R.id.cvlocation);
             direction = (TextView) itemView.findViewById(R.id.cvDirection);
             adminUser = (TextView)itemView.findViewById(R.id.cvAdminUser);
         }
@@ -107,9 +119,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
                 }
             });
         }
-//        if(cardType.equals("resolved")){
-//            requestType.setVisibility(View.GONE);
-//        }
+
     }
 
 }
