@@ -158,8 +158,6 @@ public class HomeFragment extends Fragment {
                 }
                 if(results!=null){
                     count = results.size();
-                }else {
-                    count = 6;
                 }
                 expandableListAdapter.setRequestCount(count);
                 expandableListAdapter.notifyDataSetChanged();

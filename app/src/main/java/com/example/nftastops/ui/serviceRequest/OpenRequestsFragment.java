@@ -113,7 +113,7 @@ public class OpenRequestsFragment extends Fragment {
             StopTransactions stopTransaction = new StopTransactions();
             if (serviceRequest != null
                     && serviceRequest.getStatus() != null
-                    && serviceRequest.getStatus().equals("open")) {
+                    && serviceRequest.getStatus().equals("Open")) {
                 stopTransaction.setStop_id(serviceRequest.getStopId().toString());
                 stopTransaction.setRequest_type(serviceRequest.getRequest_type());
                 stopTransaction.setLocation(serviceRequest.getLocation());
