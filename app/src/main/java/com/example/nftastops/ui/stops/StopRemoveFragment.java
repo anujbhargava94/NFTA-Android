@@ -123,6 +123,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
             stopTransactions.setAdmin_comments(reason.getEditText().getText().toString());
+            stopTransactions.setTransaction_type("remove");
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);

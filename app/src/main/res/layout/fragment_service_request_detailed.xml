@@ -145,6 +145,5 @@
         android:layout_height="50dp"
         android:layout_below="@+id/additionalinformation"
         android:layout_margin="@dimen/layout_padding"
-        android:text="@string/proceed"
-        android:visibility="gone"/>
+        android:text="@string/proceed" />
 </RelativeLayout>

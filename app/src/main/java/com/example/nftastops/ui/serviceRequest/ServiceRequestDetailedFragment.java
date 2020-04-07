@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.example.nftastops.R;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
+import com.example.nftastops.ui.stops.StopFragment1;
+import com.example.nftastops.ui.stops.StopRemoveFragment;
 import com.example.nftastops.utilclasses.IOnBackPressed;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -103,6 +105,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         route = root.findViewById(R.id.routeval);
         additional_information = root.findViewById(R.id.additionalinformationval);
         proceedButton = root.findViewById(R.id.proceedbutton);
+        proceedButton.setOnClickListener(proceedOnClick);
         String serviceRequest = getArguments().getString("serviceRequest");
 
         try {
@@ -132,6 +135,38 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_service_request_detailed, container, false);
         return root;
+    }
+
+    View.OnClickListener proceedOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String request_type = stopTransactions.getRequest_type();
+            Fragment fragment = null;
+            switch (request_type) {
+                case "New":
+                    fragment = StopFragment1.newInstance("new", "");
+                    replaceFragment(fragment);
+                    break;
+
+                case "Remove":
+                    fragment = StopRemoveFragment.newInstance("remove", "");
+                    replaceFragment(fragment);
+                    break;
+
+                case "Update":
+                    fragment = StopFragment1.newInstance("update", "");
+                    replaceFragment(fragment);
+                    break;
+            }
+
+        }
+    };
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

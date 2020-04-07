@@ -149,6 +149,11 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
 //                route.append(strroute);
 //            }
 //        }
+        
+//        if (advertisement.getText().toString().isEmpty())
+//            advertisement.setVisibility(View.GONE);
+
+
 
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_service_request_detailed, container, false);

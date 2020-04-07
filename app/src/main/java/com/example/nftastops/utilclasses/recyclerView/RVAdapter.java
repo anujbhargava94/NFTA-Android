@@ -65,7 +65,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         //holder.date.setText(stopTransactions.get(i).getDate()+""); //TODO implement the toString()
         //holder.location.setText(stopTransactions.get(i).getLocation()+"");
         holder.direction.setText(stopTransactions.get(i).getDirection()+"");
-        holder.adminUser.setText(stopTransactions.get(i).getAdmin_user_id()+"");
+        holder.adminUser.setText(stopTransactions.get(i).getRequested_user()+"");
 
         if(cardType.equals("history")){
             holder.requestType.setVisibility(View.GONE);
@@ -75,6 +75,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
             holder.county.setVisibility(View.GONE);
             holder.transactionType.setVisibility(View.GONE);
         }
+
+        if(holder.transactionType.getText().toString().equals("remove")){
+         //if(stopTransactions.get(i).getTransaction_type().equals("remove")){
+            holder.county.setVisibility(View.GONE);
+            holder.direction.setVisibility(View.GONE);
+         }
 
     }
 
@@ -96,7 +102,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         TextView requestType;
         TextView county;
         //TextView date;
-        TextView location;
+        //TextView location;
         TextView direction;
         TextView adminUser;
 
