@@ -140,6 +140,7 @@
         android:textSize="@dimen/text_size"/>
 
     <Button
+        android:id="@+id/proceedbutton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/additionalinformation"

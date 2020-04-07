@@ -28,6 +28,7 @@ public class StopTransactions {
     private boolean trash_can;
     private boolean time_table;
     private boolean system_map;
+    //private int transaction_no;
     private String request_type;
     private String transaction_type;
     private String date;

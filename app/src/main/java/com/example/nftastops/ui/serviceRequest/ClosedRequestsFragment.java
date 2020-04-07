@@ -52,7 +52,7 @@ public class ClosedRequestsFragment extends Fragment {
         rv.setLayoutManager(llm);
         stopTransactions = new ArrayList<>();
         serviceRequests = new ArrayList<>();
-        adapter = new RVAdapter(stopTransactions, onItemClickListener);
+        adapter = new RVAdapter(stopTransactions, onItemClickListener,"serviceRequest");
         rv.setAdapter(adapter);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         makeApiCall("serviceRequest");
@@ -123,6 +123,7 @@ public class ClosedRequestsFragment extends Fragment {
                 //stopTransaction.setRoute(serviceRequest.getRoute());
                 stopTransaction.setReason(serviceRequest.getReason());
                 stopTransaction.setAdditional_information(serviceRequest.getAdditional_information());
+                stopTransaction.setStatus(serviceRequest.getStatus());
                 stopTransactions.add(stopTransaction);
             }
         }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nftastops.R;
@@ -50,6 +51,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
     private TextView stopId;
     private TextView additional_information;
     private TextView request_type;
+    private Button proceedButton;
 
 
     public ServiceRequestDetailedFragment() {
@@ -100,6 +102,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         reason = root.findViewById(R.id.reasonval);
         route = root.findViewById(R.id.routeval);
         additional_information = root.findViewById(R.id.additionalinformationval);
+        proceedButton = root.findViewById(R.id.proceedbutton);
         String serviceRequest = getArguments().getString("serviceRequest");
 
         try {
@@ -118,6 +121,12 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         reason.setText(stopTransactions.getReason());
         //route.setText(stopTransactions.getRoute());
         additional_information.setText(stopTransactions.getAdditional_information());
+
+        Log.d("custom", stopTransactions.getStatus());
+        if(stopTransactions.getStatus().equals("resolved")){
+            proceedButton.setVisibility(View.GONE);
+        }
+
 
 
         // Inflate the layout for this fragment

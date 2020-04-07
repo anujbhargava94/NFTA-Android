@@ -39,12 +39,20 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
 
     private TextView location;
     private TextView direction;
-    private TextView route;
-    private TextView reason;
+    private TextView position;
+    private TextView nearest_cross_street;
     private TextView stopId;
-    private TextView additional_information;
-    private TextView request_type;
-
+    private TextView fastened_to;
+    private TextView street_on;
+    private TextView county;
+    private TextView status;
+    private TextView shelter;
+    private TextView advertisement;
+    private TextView bench;
+    private TextView bike_rack;
+    private TextView trash_can;
+    private TextView time_table;
+    private TextView system_map;
 
     public HistoryDetailedFragment() {
         // Required empty public constructor
@@ -91,10 +99,21 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         stopId = root.findViewById(R.id.times);
         direction = root.findViewById(R.id.directionval);
         location = root.findViewById(R.id.locationval);
-        request_type = root.findViewById(R.id.requesttypeval);
-        reason = root.findViewById(R.id.reasonval);
-        route = root.findViewById(R.id.routeval);
-        additional_information = root.findViewById(R.id.additionalinformationval);
+        street_on = root.findViewById(R.id.streetonval);
+        nearest_cross_street = root.findViewById(R.id.nearestcrossstreetval);
+        position = root.findViewById(R.id.positionval);
+        fastened_to = root.findViewById(R.id.fastenedtoval);
+
+        county = root.findViewById(R.id.countyval);
+        status = root.findViewById(R.id.statusval);
+        shelter = root.findViewById(R.id.shelterval);
+        advertisement = root.findViewById(R.id.advertisementval);
+        bench = root.findViewById(R.id.benchval);
+        bike_rack = root.findViewById(R.id.bike_rackval);
+        trash_can = root.findViewById(R.id.trash_canval);
+        time_table = root.findViewById(R.id.time_tableval);
+        system_map = root.findViewById(R.id.system_mapval);
+
         String stopTransaction = getArguments().getString("stopTransaction");
 
         try {
@@ -109,11 +128,19 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         stopId.setText(stopTransactions.getStop_id());
         direction.setText(stopTransactions.getDirection());
         location.setText(stopTransactions.getLocation());
-        request_type.setText(stopTransactions.getRequest_type());
-        reason.setText(stopTransactions.getReason());
-        //route.setText(stopTransactions.getRoute());
-        additional_information.setText(stopTransactions.getAdditional_information());
-
+        street_on.setText(stopTransactions.getStreet_on());
+        nearest_cross_street.setText(stopTransactions.getNearest_cross_street());
+        position.setText(stopTransactions.getPosition());
+        fastened_to.setText(stopTransactions.getFastened_to());
+        county.setText(stopTransactions.getCounty());
+        status.setText(stopTransactions.getStatus());
+        shelter.setText(Boolean.toString(stopTransactions.getShelter()));
+        advertisement.setText(Boolean.toString(stopTransactions.getAdvertisement()));
+        bench.setText(Boolean.toString(stopTransactions.getBench()));
+        bike_rack.setText(Boolean.toString(stopTransactions.getBike_rack()));
+        trash_can.setText(Boolean.toString(stopTransactions.getTrash_can()));
+        time_table.setText(Boolean.toString(stopTransactions.getTime_table()));
+        system_map.setText(Boolean.toString(stopTransactions.getSystem_map()));
 
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_service_request_detailed, container, false);
