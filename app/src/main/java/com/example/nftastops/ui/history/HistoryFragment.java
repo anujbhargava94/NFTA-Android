@@ -1,6 +1,7 @@
 package com.example.nftastops.ui.history;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class HistoryFragment extends Fragment {
             public void onResponse(String response) {
 
                 //String results = response;
+                Log.d("login", "history response: "+response);
                 List<StopTransactions> results = new ArrayList<>();
                 try {
                     Gson gson = new Gson();
