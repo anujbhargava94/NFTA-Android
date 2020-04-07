@@ -119,7 +119,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         location.setText(stopTransactions.getLocation());
         request_type.setText(stopTransactions.getRequest_type());
         reason.setText(stopTransactions.getReason());
-        route.setText(stopTransactions.getRoute());
+        //route.setText(stopTransactions.getRoute());
         additional_information.setText(stopTransactions.getAdditional_information());
 
         Log.d("custom", stopTransactions.getStatus());

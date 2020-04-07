@@ -88,6 +88,7 @@ public class NetworkAPICall {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 try {
+                    Log.d("request", mRequestBody);
                     return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
                 } catch (UnsupportedEncodingException uee) {
                     VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
@@ -95,6 +96,7 @@ public class NetworkAPICall {
                 }
             }
         };
+
 
         NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
     }

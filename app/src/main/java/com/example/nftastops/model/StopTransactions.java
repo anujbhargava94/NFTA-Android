@@ -4,6 +4,8 @@ import android.content.Context;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class StopTransactions {
     private String device_id;
     private String stop_id;
@@ -17,8 +19,8 @@ public class StopTransactions {
     private String location;
     private String county;
     private String status;
-    private String comments;
-    private String route;
+    private String admin_comments;
+    private List<Routes> route;
     private boolean shelter;
     private boolean advertisement;
     private boolean bench;
@@ -27,9 +29,9 @@ public class StopTransactions {
     private boolean time_table;
     private boolean system_map;
     //private int transaction_no;
-    private String date;
     private String request_type;
     private String transaction_type;
+    private String date;
 
     public String getTransaction_type() {
         return transaction_type;
@@ -113,14 +115,6 @@ public class StopTransactions {
         this.date = date;
     }
 
-//    public int getTransaction_no() {
-//        return transaction_no;
-//    }
-
-    //public void setTransaction_no(int transaction_no) {
-       // this.transaction_no = transaction_no;
-    //}
-
     //private ServiceRequest work_request;
 
 
@@ -137,20 +131,20 @@ public class StopTransactions {
         ).show();
     }
 
-    public String getRoute() {
+    public List<Routes> getRoute() {
         return route;
     }
 
-    public void setRoute(String route) {
+    public void setRoute(List<Routes> route) {
         this.route = route;
     }
 
-    public String getComments() {
-        return comments;
+    public String getAdmin_comments() {
+        return admin_comments;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setAdmin_comments(String admin_comments) {
+        this.admin_comments = admin_comments;
     }
 
     public String getDevice_id() {

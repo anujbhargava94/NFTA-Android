@@ -1,7 +1,6 @@
 package com.example.nftastops.ui.stops;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,7 +122,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             stopTransactions.setStop_id(stopIdET.getEditText().getText().toString());
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
-            stopTransactions.setComments(reason.getEditText().getText().toString());
+            stopTransactions.setAdmin_comments(reason.getEditText().getText().toString());
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
@@ -163,14 +160,6 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             }
 
             longET.getEditText().setText(String.valueOf(longitude));
-        }
-    };
-
-    View.OnClickListener fetchOnClickListner = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String stopIdFetched = stopIdET.getEditText().getText().toString();
-            makeApiCall("transaction", stopIdFetched);
         }
     };
 
@@ -218,12 +207,12 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     }
 
     private void makeApiCall(String url, String request) {
-        String finalRequest = url + "?id=" + request;
-        apiCAll.makeGet(getActivity(), finalRequest, new Response.Listener<String>() {
+        apiCAll.makePost(getActivity(), url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 String results = response;
+                Log.d("response remove",response);
                 Toast.makeText(
                         getContext(),
                         "Transaction added successfully", Toast.LENGTH_SHORT
@@ -242,7 +231,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                 ).show();
                 System.out.println(errorString);
             }
-        });
+        }, request);
     }
 
     @Override

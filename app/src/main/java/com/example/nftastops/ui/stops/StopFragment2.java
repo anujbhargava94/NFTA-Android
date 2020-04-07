@@ -13,13 +13,11 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -33,14 +31,8 @@ import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -121,7 +113,7 @@ public class StopFragment2 extends Fragment {
         trashCan = root.findViewById(R.id.trashCanId);
         timeTable = root.findViewById(R.id.timetableId);
         systemMap = root.findViewById(R.id.systemMapId);
-        comments = root.findViewById(R.id.comments);
+        comments = root.findViewById(R.id.admin_comments);
         acroutes = root.findViewById(R.id.autocomplete_route);
         submitButton = root.findViewById(R.id.fragment2Next);
         submitButton.setOnClickListener(submitClick);
@@ -152,8 +144,8 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setTrash_can(trashCan.isChecked());
             stopTransactions.setTime_table(timeTable.isChecked());
             stopTransactions.setSystem_map(systemMap.isChecked());
-            stopTransactions.setComments(comments.getEditText().getText().toString());
-            stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
+            stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
+            //stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
