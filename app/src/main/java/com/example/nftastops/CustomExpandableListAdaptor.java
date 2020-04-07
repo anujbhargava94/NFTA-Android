@@ -100,6 +100,9 @@ public class CustomExpandableListAdaptor extends BaseExpandableListAdapter {
             sr_no.setVisibility(View.VISIBLE);
             sr_no.setText(count+"");
         }
+        else if(sr_no!=null){
+            sr_no.setVisibility(View.GONE);
+        }
         listTitleTextView.setText(listTitle);
         return convertView;
     }
