@@ -339,5 +339,25 @@
             android:layout_margin="@dimen/layout_padding"
             android:textSize="@dimen/text_size" />
 
+        <TextView
+            android:id="@+id/route"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/system_map"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/layout_padding"
+            android:layout_toLeftOf="@+id/routeval"
+            android:text="Route"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/routeval"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/system_mapval"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/layout_padding"
+            android:textSize="@dimen/text_size" />
+
     </RelativeLayout>
 </ScrollView>
