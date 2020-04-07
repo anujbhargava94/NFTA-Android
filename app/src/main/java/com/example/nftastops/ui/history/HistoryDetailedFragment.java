@@ -53,6 +53,7 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
     private TextView trash_can;
     private TextView time_table;
     private TextView system_map;
+    private TextView route;
 
     public HistoryDetailedFragment() {
         // Required empty public constructor
@@ -113,6 +114,7 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         trash_can = root.findViewById(R.id.trash_canval);
         time_table = root.findViewById(R.id.time_tableval);
         system_map = root.findViewById(R.id.system_mapval);
+        route = root.findViewById(R.id.routeval);
 
         String stopTransaction = getArguments().getString("stopTransaction");
 
@@ -141,6 +143,17 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         trash_can.setText(Boolean.toString(stopTransactions.getTrash_can()));
         time_table.setText(Boolean.toString(stopTransactions.getTime_table()));
         system_map.setText(Boolean.toString(stopTransactions.getSystem_map()));
+//        if (stopTransactions.getRoute() != null) {
+//            for (String strroute : stopTransactions.getRoute()) {
+//                //route.setText(strroute);
+//                route.append(strroute);
+//            }
+//        }
+        
+//        if (advertisement.getText().toString().isEmpty())
+//            advertisement.setVisibility(View.GONE);
+
+
 
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_service_request_detailed, container, false);

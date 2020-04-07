@@ -59,10 +59,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         holder.stopID.setText(stopTransactions.get(i).getStop_id());
         //holder.transactionNo.setText(stopTransactions.get(i).getTransaction_no()+"");
         holder.requestType.setText(stopTransactions.get(i).getRequest_type()+"");
+
+        holder.county.setText(stopTransactions.get(i).getCounty()+"");
+        holder.transactionType.setText(stopTransactions.get(i).getTransaction_type());
         //holder.date.setText(stopTransactions.get(i).getDate()+""); //TODO implement the toString()
         //holder.location.setText(stopTransactions.get(i).getLocation()+"");
         holder.direction.setText(stopTransactions.get(i).getDirection()+"");
-        holder.adminUser.setText(stopTransactions.get(i).getAdmin_user_id()+"");
+        holder.adminUser.setText(stopTransactions.get(i).getRequested_user()+"");
+
+        if(cardType.equals("history")){
+            holder.requestType.setVisibility(View.GONE);
+            holder.adminUser.setVisibility(View.GONE);
+        }
+        if(cardType.equals("serviceRequest")){
+            holder.county.setVisibility(View.GONE);
+            holder.transactionType.setVisibility(View.GONE);
+        }
+
+        if(holder.transactionType.getText().toString().equals("remove")){
+         //if(stopTransactions.get(i).getTransaction_type().equals("remove")){
+            holder.county.setVisibility(View.GONE);
+            holder.direction.setVisibility(View.GONE);
+         }
+
     }
 
     @Override
@@ -79,8 +98,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
     public static class RVViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView stopID;
-        //TextView transactionNo;
+        TextView transactionType;
         TextView requestType;
+        TextView county;
         //TextView date;
         //TextView location;
         TextView direction;
@@ -92,6 +112,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
             stopID = (TextView) itemView.findViewById(R.id.cvStopID);
             //transactionNo = (TextView) itemView.findViewById(R.id.cvTransactionNo);
             requestType = (TextView) itemView.findViewById(R.id.cvRequestType);
+            county = (TextView) itemView.findViewById(R.id.cvCounty);
+            transactionType = (TextView)itemView.findViewById(R.id.cvTransactionType);
             //date = (TextView) itemView.findViewById(R.id.cvDate);
             //location = (TextView) itemView.findViewById(R.id.cvlocation);
             direction = (TextView) itemView.findViewById(R.id.cvDirection);
@@ -107,9 +129,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
                 }
             });
         }
-//        if(cardType.equals("resolved")){
-//            requestType.setVisibility(View.GONE);
-//        }
+
     }
 
 }

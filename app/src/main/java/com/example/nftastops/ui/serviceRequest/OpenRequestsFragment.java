@@ -146,14 +146,12 @@ public class OpenRequestsFragment extends Fragment {
         }
     };
 
-
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 
 }
 
