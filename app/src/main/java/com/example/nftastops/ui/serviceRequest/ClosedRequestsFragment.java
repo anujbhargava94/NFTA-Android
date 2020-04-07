@@ -2,6 +2,7 @@ package com.example.nftastops.ui.serviceRequest;
 
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 //import android.support.annotation.Nullable;
 import androidx.annotation.Nullable;
@@ -44,7 +45,7 @@ public class ClosedRequestsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root =inflater.inflate(R.layout.closed_requests,container,false);
+        View root = inflater.inflate(R.layout.closed_requests, container, false);
 
         RecyclerView rv = root.findViewById(R.id.rv);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -74,7 +75,8 @@ public class ClosedRequestsFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (results.isEmpty()) {
+                if (results == null || results.isEmpty()) {
+                    results = new ArrayList<>();
                     ServiceRequests e = new ServiceRequests();
                     e.setRequest_id(0);
                     e.setAdmin_user_id(0);
@@ -104,11 +106,13 @@ public class ClosedRequestsFragment extends Fragment {
         });
     }
 
-    private void castToStopTransaction(List<ServiceRequests> serviceRequests){
+    private void castToStopTransaction(List<ServiceRequests> serviceRequests) {
         //Map serviceRequests with stopTransactions RVadaptor
-        for (ServiceRequests serviceRequest : serviceRequests){
+        for (ServiceRequests serviceRequest : serviceRequests) {
             StopTransactions stopTransaction = new StopTransactions();
-            if(serviceRequest.getStatus().equals("resolved")) {
+            if (serviceRequest != null
+                    && serviceRequest.getStatus() != null
+                    && serviceRequest.getStatus().equals("resolved")) {
                 stopTransaction.setStop_id(serviceRequest.getStopId().toString());
                 stopTransaction.setRequest_type(serviceRequest.getRequest_type());
                 stopTransaction.setLocation(serviceRequest.getLocation());

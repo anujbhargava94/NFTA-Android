@@ -36,7 +36,6 @@ public class OpenRequestsFragment extends Fragment {
     public List<ServiceRequests> serviceRequests;
 
 
-
     // Build a Constructor and assign the passed Values to appropriate values in the class
     public OpenRequestsFragment(List<StopTransactions> mstopTransactions) {
         //super(fm);
@@ -47,14 +46,14 @@ public class OpenRequestsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.open_requests,container,false);
+        View root = inflater.inflate(R.layout.open_requests, container, false);
 
         RecyclerView rv = root.findViewById(R.id.rv);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
         stopTransactions = new ArrayList<>();
         serviceRequests = new ArrayList<>();
-        adapter = new RVAdapter(stopTransactions,onItemClickListener);
+        adapter = new RVAdapter(stopTransactions, onItemClickListener);
         rv.setAdapter(adapter);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         makeApiCall("serviceRequest");
@@ -77,7 +76,8 @@ public class OpenRequestsFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (results.isEmpty()) {
+                if (results == null || results.isEmpty()) {
+                    results = new ArrayList<>();
                     ServiceRequests e = new ServiceRequests();
                     e.setRequest_id(0);
                     e.setAdmin_user_id(0);
@@ -107,11 +107,13 @@ public class OpenRequestsFragment extends Fragment {
         });
     }
 
-    private void castToStopTransaction(List<ServiceRequests> serviceRequests){
+    private void castToStopTransaction(List<ServiceRequests> serviceRequests) {
         //Map serviceRequests with stopTransactions RVadaptor
-        for (ServiceRequests serviceRequest : serviceRequests){
+        for (ServiceRequests serviceRequest : serviceRequests) {
             StopTransactions stopTransaction = new StopTransactions();
-            if(serviceRequest.getStatus().equals("open")) {
+            if (serviceRequest != null
+                    && serviceRequest.getStatus() != null
+                    && serviceRequest.getStatus().equals("open")) {
                 stopTransaction.setStop_id(serviceRequest.getStopId().toString());
                 stopTransaction.setRequest_type(serviceRequest.getRequest_type());
                 stopTransaction.setLocation(serviceRequest.getLocation());
@@ -150,7 +152,6 @@ public class OpenRequestsFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 
 
 }

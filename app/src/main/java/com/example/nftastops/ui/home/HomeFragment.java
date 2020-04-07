@@ -21,7 +21,6 @@ import com.example.nftastops.CustomExpandableListAdaptor;
 import com.example.nftastops.ExpandableListData;
 import com.example.nftastops.R;
 import com.example.nftastops.model.ServiceRequests;
-import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.history.HistoryFragment;
 import com.example.nftastops.ui.serviceRequest.ServiceRequestFragment;
 import com.example.nftastops.ui.stops.StopFragment1;
@@ -46,7 +45,7 @@ public class HomeFragment extends Fragment {
     public List<ServiceRequests> serviceRequests;
     private NetworkAPICall apiCAll;
     private int openServiceRequests;
-
+    Integer count = new Integer(0);
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,36 +62,14 @@ public class HomeFragment extends Fragment {
         expandableListView = (ExpandableListView) root.findViewById(R.id.expandableListView);
         expandableListDetail = ExpandableListData.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new CustomExpandableListAdaptor(getActivity(), expandableListTitle, expandableListDetail);
+        expandableListAdapter = new CustomExpandableListAdaptor(getActivity(), expandableListTitle, expandableListDetail, count);
+
         expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-//                Toast.makeText(getApplicationContext(),
-//                        expandableListTitle.get(groupPosition) + " List Expanded.",
-//                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-//        expandableListView.setOnGroupCollapseListener(
-//
-//        );
-
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-//                Toast.makeText(getApplicationContext(),
-//                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-//                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
                 if(expandableListDetail.get(
                         expandableListTitle.get(i)).isEmpty()){
                     Fragment fragment = null;
@@ -152,12 +129,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //API call for service requests
         //serviceRequests = new ArrayList<>();
-        //apiCAll = NetworkAPICall.getInstance(getActivity());
-        //makeApiCall("serviceRequest");
-
-
+        apiCAll = NetworkAPICall.getInstance(getActivity());
+        makeApiCall("serviceRequest");
         return root;
     }
 
@@ -173,8 +147,6 @@ public class HomeFragment extends Fragment {
         apiCAll.makeGet(getActivity(), url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                //String results = response;
                 List<ServiceRequests> results = new ArrayList<>();
                 try {
                     Gson gson = new Gson();
@@ -184,29 +156,13 @@ public class HomeFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (results ==null ||results.isEmpty()) {
-                    results = new ArrayList<>();
-                    ServiceRequests e = new ServiceRequests();
-                    e.setRequest_id(0);
-                    e.setAdmin_user_id(0);
-                    e.setRequested_user("Requested User");
-                    e.setAdditional_information("Additional Info");
-                    e.setDirection("Direction");
-                    e.setReason("Reason");
-                    e.setLocation("Location");
-                    e.setRoute("Route");
-                    e.setStopId(0);
-                    results.add(e);
+                if(results!=null){
+                    count = results.size();
+                }else {
+                    count = 6;
                 }
-                //IMPORTANT: set data here and notify
-//                serviceRequests.addAll(results);
-//                for (ServiceRequests serviceRequest : serviceRequests) {
-//                    if (serviceRequest.getStatus().equals("open")) {
-//                        openServiceRequests += 1;
-//                    }
-//                }
-                /** Set the count to open requests bubble in navigation bar **/
-
+                expandableListAdapter.setRequestCount(count);
+                expandableListAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override

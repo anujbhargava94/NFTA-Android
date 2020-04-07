@@ -163,14 +163,6 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         }
     };
 
-    View.OnClickListener fetchOnClickListner = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String stopIdFetched = stopIdET.getEditText().getText().toString();
-            makeApiCall("transaction", stopIdFetched);
-        }
-    };
-
     View.OnClickListener addPhotoClickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -215,12 +207,12 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     }
 
     private void makeApiCall(String url, String request) {
-        String finalRequest = url + "?id=" + request;
-        apiCAll.makeGet(getActivity(), finalRequest, new Response.Listener<String>() {
+        apiCAll.makePost(getActivity(), url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 String results = response;
+                Log.d("response remove",response);
                 Toast.makeText(
                         getContext(),
                         "Transaction added successfully", Toast.LENGTH_SHORT
@@ -239,7 +231,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                 ).show();
                 System.out.println(errorString);
             }
-        });
+        }, request);
     }
 
     @Override
