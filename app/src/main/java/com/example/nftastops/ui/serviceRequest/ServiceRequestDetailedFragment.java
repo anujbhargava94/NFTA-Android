@@ -1,12 +1,6 @@
 package com.example.nftastops.ui.serviceRequest;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.nftastops.R;
-import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.stops.StopFragment1;
 import com.example.nftastops.ui.stops.StopRemoveFragment;
@@ -23,10 +19,7 @@ import com.example.nftastops.utilclasses.IOnBackPressed;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Type;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

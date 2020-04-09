@@ -1,16 +1,17 @@
 package com.example.nftastops.ui.serviceRequest;
 
 //import android.support.v4.app.Fragment;
+
 import androidx.fragment.app.Fragment;
-//import android.support.v4.app.FragmentManager;
 import androidx.fragment.app.FragmentManager;
-//import android.support.v4.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 
 import java.util.List;
+
+//import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
