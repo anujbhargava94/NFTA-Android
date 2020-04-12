@@ -1,6 +1,7 @@
 package com.example.nftastops.ui.stops;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,12 +9,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +38,15 @@ import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -68,6 +82,12 @@ public class StopFragment2 extends Fragment {
     NetworkAPICall apiCAll;
     ImageView locPics;
     private TextView addPhoto;
+    ProgressDialog prgDialog;
+    String imgPath, fileName;
+    Bitmap bitmap;
+    String encodedString;
+    Bitmap selectedImage;
+
 
     public StopFragment2() {
         // Required empty public constructor
@@ -121,6 +141,9 @@ public class StopFragment2 extends Fragment {
         addPhoto = root.findViewById(R.id.add_photo);
 
         addPhoto.setOnClickListener(addPhotoClickListner);
+        prgDialog = new ProgressDialog(getActivity());
+        prgDialog.setCancelable(false);
+
 
         String[] routes = getResources().getStringArray(R.array.routes);
         ArrayAdapter<String> routesAdapter = new ArrayAdapter<String>
@@ -147,9 +170,10 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
             //stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
 
-            Gson gson = new Gson();
-            String transaction = gson.toJson(stopTransactions);
-            makeApiCall("add", transaction);
+//            Gson gson = new Gson();
+//            String transaction = gson.toJson(stopTransactions);
+            // makeApiCall("add", transaction);
+            new encodeImage().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     };
 
@@ -161,6 +185,8 @@ public class StopFragment2 extends Fragment {
     };
 
     private void makeApiCall(String url, String request) {
+
+
         apiCAll.makePost(getActivity(), url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -188,6 +214,7 @@ public class StopFragment2 extends Fragment {
     }
 
     public void replaceFragment(Fragment someFragment) {
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, someFragment);
         transaction.commit();
@@ -229,7 +256,7 @@ public class StopFragment2 extends Fragment {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        selectedImage = (Bitmap) data.getExtras().get("data");
                         locPics.setImageBitmap(selectedImage);
                     }
 
@@ -245,8 +272,8 @@ public class StopFragment2 extends Fragment {
                                 cursor.moveToFirst();
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                locPics.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                imgPath = cursor.getString(columnIndex);
+                                locPics.setImageBitmap(BitmapFactory.decodeFile(imgPath));
                                 cursor.close();
                             }
                         }
@@ -254,6 +281,78 @@ public class StopFragment2 extends Fragment {
                     }
                     break;
             }
+        }
+    }
+
+    public class encodeImage extends AsyncTask<Void, Void, String> {
+
+            @Override
+            protected String doInBackground(Void... params) {
+                BitmapFactory.Options options = null;
+                options = new BitmapFactory.Options();
+                options.inSampleSize = 3;
+                if(imgPath!=null )
+                {selectedImage = BitmapFactory.decodeFile(imgPath,
+                        options);}
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Must compress the Image to reduce image size to make upload easy
+                selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+                byte[] byte_arr = stream.toByteArray();
+                // Encode Image to String
+                encodedString = Base64.encodeToString(byte_arr, 0);
+                return "";
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                prgDialog.setMessage("Calling Upload");
+                // Put converted Image string into Async Http Post param
+                //params.put("image", encodedString);
+                // Trigger Image upload
+                triggerImageUpload();
+            }
+    }
+
+    private void triggerImageUpload() {
+        new OkHttpHandler().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
+    public class OkHttpHandler extends AsyncTask<String, Void, Void> {
+
+        OkHttpClient client = new OkHttpClient();
+
+        @Override
+        protected Void doInBackground(String...params) {
+
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("text/plain");
+            RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("upload_preset", "nftafolder")
+                    .addFormDataPart("file", encodedString)
+                    .build();
+            Request request = new Request.Builder()
+                    .url("https://api.cloudinary.com/v1_1/nftaproject/image/upload")
+                    .method("POST", body)
+                    .addHeader("X-Requested-With", "XMLHttpRequest")
+                    .build();
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                Log.d("response", "image response"+response.body().string());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void s) {
+            super.onPostExecute(s);
+            Gson gson = new Gson();
+            String transaction = gson.toJson(stopTransactions);
+            makeApiCall("add", transaction);
         }
     }
 }
