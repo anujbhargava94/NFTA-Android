@@ -5,11 +5,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,6 +23,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.model.LoginJwt;
+import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.navigation.NavigationView;
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private NetworkAPICall apiCAll;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        ImageView homeIcon = findViewById(R.id.icHome);
+        homeIcon.setOnClickListener(homeOnclickListner);
         //apiCAll = NetworkAPICall.getInstance(this);
         //Passing each menu ID as a set of Ids because each
         //menu should be considered as top level destinations.
@@ -126,6 +135,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private View.OnClickListener homeOnclickListner = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            replaceFragment(new HomeFragment());
+        }
+    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -138,5 +154,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void replaceFragment(Fragment someFragment) {
+        this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

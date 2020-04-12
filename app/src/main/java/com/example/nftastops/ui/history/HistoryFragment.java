@@ -93,10 +93,10 @@ public class HistoryFragment extends Fragment {
                 stopTransactions.addAll(results);
                 adapter.notifyDataSetChanged();
 
-                Toast.makeText(
-                        getContext(),
-                        "Showing history", Toast.LENGTH_SHORT
-                ).show();
+//                Toast.makeText(
+//                        getActivity(),
+//                        "Showing history", Toast.LENGTH_SHORT
+//                ).show();
 
             }
         }, new Response.ErrorListener() {

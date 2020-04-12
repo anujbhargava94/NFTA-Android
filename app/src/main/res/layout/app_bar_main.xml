@@ -18,7 +18,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             >
         <ImageView
-            android:id="@+id/icLong"
+            android:id="@+id/icHome"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
