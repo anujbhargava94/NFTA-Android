@@ -1,6 +1,7 @@
 package com.example.nftastops.utilclasses;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -11,6 +12,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nftastops.model.LoginRequest;
+import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
@@ -51,25 +53,26 @@ public class NetworkAPICall {
     public static void makeGet(Context ctx, String query, Response.Listener<String>
             listener, Response.ErrorListener errorListener) {
         String url = baseURL + query;
-        Log.d("login", "api called"+url);
+        Log.d("login", "api called" + url);
+        final String token = SharedPrefUtil.getRawTasksFromSharedPrefs(ctx, Constants.TOKEN);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                listener, errorListener)
-        {
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Log.d("login1", "map");
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Authorization","Bearer "+Constants.token);
-            return headers;
-        }}
-        ;
+                listener, errorListener) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Log.d("login1", "map");
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         NetworkAPICall.getInstance(ctx).addToRequestQueue(stringRequest);
     }
 
     public static void makePost(Context ctx, String query, Response.Listener<String>
             listener, Response.ErrorListener errorListener, final String mRequestBody) {
         String url = baseURL + query;
-        Log.d("login", "api called"+url);
+        Log.d("login", "api called" + url);
+        final String token = SharedPrefUtil.getRawTasksFromSharedPrefs(ctx, Constants.TOKEN);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 listener, errorListener) {
             @Override
@@ -80,8 +83,8 @@ public class NetworkAPICall {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Log.d("login1", "map");
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type","application/json");
-                headers.put("Authorization","Bearer "+Constants.token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
 
@@ -104,7 +107,7 @@ public class NetworkAPICall {
     public static void makeLoginJwt(Context ctx, final String username, final String password, Response.Listener<String>
             listener, Response.ErrorListener errorListener) {
         String url = baseURL + "authenticate";
-        Log.d("login1", "api called"+url);
+        Log.d("login1", "api called" + url);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 listener, errorListener) {
 
@@ -118,10 +121,9 @@ public class NetworkAPICall {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Log.d("login1", "map");
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type","application/json");
+                headers.put("Content-Type", "application/json");
                 return headers;
             }
-
 
 
             @Override
@@ -131,10 +133,10 @@ public class NetworkAPICall {
                     Log.d("login1", "credentials entered");
                     String un = username;
                     String pw = password;
-                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-                        un = "anujbhargava94@gmail.com";
-                        pw = "password1";
-                    }
+//                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+//                        un = "anujbhargava94@gmail.com";
+//                        pw = "password1";
+//                    }
                     LoginRequest lin = new LoginRequest();
                     lin.setUsername(un);
                     lin.setPassword(pw);
@@ -150,4 +152,5 @@ public class NetworkAPICall {
         Log.d("login1", "making call");
         NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
     }
+
 }

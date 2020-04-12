@@ -1,6 +1,5 @@
 package com.example.nftastops.utilclasses.recyclerView;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
-import com.example.nftastops.ui.stops.StopFragment1;
 
 import java.util.List;
 
@@ -58,29 +56,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
 
         holder.stopID.setText(stopTransactions.get(i).getStop_id());
         //holder.transactionNo.setText(stopTransactions.get(i).getTransaction_no()+"");
-        holder.requestType.setText(stopTransactions.get(i).getRequest_type()+"");
+        holder.requestType.setText(stopTransactions.get(i).getRequest_type() + "");
 
-        holder.county.setText(stopTransactions.get(i).getCounty()+"");
+        holder.county.setText(stopTransactions.get(i).getCounty() + "");
         holder.transactionType.setText(stopTransactions.get(i).getTransaction_type());
         //holder.date.setText(stopTransactions.get(i).getDate()+""); //TODO implement the toString()
         //holder.location.setText(stopTransactions.get(i).getLocation()+"");
-        holder.direction.setText(stopTransactions.get(i).getDirection()+"");
-        holder.adminUser.setText(stopTransactions.get(i).getRequested_user()+"");
+        holder.direction.setText(stopTransactions.get(i).getDirection() + "");
+        holder.adminUser.setText(stopTransactions.get(i).getRequested_user() + "");
 
-        if(cardType.equals("history")){
+        if (cardType.equals("history")) {
             holder.requestType.setVisibility(View.GONE);
             holder.adminUser.setVisibility(View.GONE);
         }
-        if(cardType.equals("serviceRequest")){
+        if (cardType.equals("serviceRequest")) {
             holder.county.setVisibility(View.GONE);
             holder.transactionType.setVisibility(View.GONE);
         }
 
-        if(holder.transactionType.getText().toString().equals("remove")){
-         //if(stopTransactions.get(i).getTransaction_type().equals("remove")){
+        if (holder.transactionType.getText().toString().equals("remove")) {
+            //if(stopTransactions.get(i).getTransaction_type().equals("remove")){
             holder.county.setVisibility(View.GONE);
             holder.direction.setVisibility(View.GONE);
-         }
+        }
 
     }
 
@@ -113,23 +111,30 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
             //transactionNo = (TextView) itemView.findViewById(R.id.cvTransactionNo);
             requestType = (TextView) itemView.findViewById(R.id.cvRequestType);
             county = (TextView) itemView.findViewById(R.id.cvCounty);
-            transactionType = (TextView)itemView.findViewById(R.id.cvTransactionType);
+            transactionType = (TextView) itemView.findViewById(R.id.cvTransactionType);
             //date = (TextView) itemView.findViewById(R.id.cvDate);
             //location = (TextView) itemView.findViewById(R.id.cvlocation);
             direction = (TextView) itemView.findViewById(R.id.cvDirection);
-            adminUser = (TextView)itemView.findViewById(R.id.cvAdminUser);
+            adminUser = (TextView) itemView.findViewById(R.id.cvAdminUser);
         }
 
         public void bind(final StopTransactions item1, final OnItemClickListener listener) {
             //name.setText(item.name);
             itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     //listener.onItemClick(item);
                     listener.onItemClick(item1);
                 }
             });
         }
 
+    }
+
+    public void setData(List<StopTransactions> stopTransactions) {
+        this.stopTransactions = stopTransactions;
+        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
 }
