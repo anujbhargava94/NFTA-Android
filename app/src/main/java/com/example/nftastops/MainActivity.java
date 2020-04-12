@@ -1,6 +1,7 @@
 package com.example.nftastops;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,16 +23,24 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.nftastops.model.BaseResponse;
 import com.example.nftastops.model.LoginJwt;
+import com.example.nftastops.model.PingModel;
+import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
+import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
+import okhttp3.CertificatePinner;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -66,55 +75,50 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
-        dologinJwt(this);
+        if (!isLoggedIn()) {
+            Intent startupIntent = new Intent(this, LoginActivity.class);
+            startActivityForResult(startupIntent, 100);
+        }
+        //dologinJwt(this);
+        callPingAPI(Constants.PING);
     }
 
-    private void dologinJwt(final Context context){
-        apiCAll.makeLoginJwt(this, "","", new Response.Listener<String>() {
+    private void callPingAPI(String url) {
+        apiCAll.makeGet(this, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 //String results = response;
-                Log.d("jwt","Login response"+response);
-                LoginJwt results = new LoginJwt();
+                Log.d("ping", "history response: "+response);
+                PingModel results = new PingModel();
                 try {
                     Gson gson = new Gson();
-                    Type type = new TypeToken<LoginJwt>() {
+                    Type type = new TypeToken<PingModel>() {
                     }.getType();
                     results = gson.fromJson(response, type);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if(results.getToken()!=null) {
-                    Log.d("login","Logged In");
-                    Constants.token = results.getToken();
-                    Toast.makeText(
-                            context,
-                            "Logged In", Toast.LENGTH_SHORT
-                    ).show();
-                }else {
-                    Log.d("login","Logged In unsuccess");
-                    Toast.makeText(
-                            context,
-                            "Log In unsuccessful", Toast.LENGTH_SHORT
-                    ).show();
+                if (results !=null && !results.getResult().equals(Constants.SUCCESS) && results.getError().equals(Constants.UNAUTH)) {
+                    openLogin();
                 }
-                //IMPORTANT: set data here and notify
-                //Call constructor of ServiceRequestFragment
-                //new ServiceRequestFragment(serviceRequests);
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errorString = "Error in Login";
-                System.out.println(errorString);
+                openLogin();
             }
         });
     }
 
-    private class UpdateTask extends AsyncTask<String, String,String> {
+    private boolean isLoggedIn() {
+        String token = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.TOKEN);
+        return (token != null && !token.isEmpty());
+    }
+
+
+
+    private class UpdateTask extends AsyncTask<String, String, String> {
         protected String doInBackground(String... urls) {
 
             OkHttpClient client = new OkHttpClient().newBuilder()
@@ -125,13 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     .url(Constants.baseURL + "login")
                     .method("POST", body)
                     .build();
-//            try {
-////                Response response = client.newCall(request).execute();
-////                response.body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        return "";
+            return "";
         }
     }
 
@@ -162,5 +160,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.nav_host_fragment, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void openLogin(){
+        Intent startupIntent = new Intent(this, LoginActivity.class);
+        startActivityForResult(startupIntent, 100);
     }
 }

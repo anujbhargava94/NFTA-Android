@@ -1,5 +1,6 @@
 package com.example.nftastops.ui.history;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.BaseResponse;
+import com.example.nftastops.model.LoginJwt;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.serviceRequest.ServiceRequestDetailedFragment;
 import com.example.nftastops.ui.stops.StopFragment1;
+import com.example.nftastops.ui.ui.login.LoginActivity;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
 import com.google.gson.Gson;
@@ -103,10 +108,10 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errorString = "Error in showing Transactions";
-                Toast.makeText(
-                        getContext(),
-                        errorString, Toast.LENGTH_SHORT
-                ).show();
+//                Toast.makeText(
+//                        getContext(),
+//                        errorString, Toast.LENGTH_SHORT
+//                ).show();
                 System.out.println(errorString);
             }
         });

@@ -1,5 +1,9 @@
 package com.example.nftastops.utilclasses;
 
+import com.example.nftastops.model.StopTransactions;
+
+import java.util.List;
+
 //make the class non-extendable by adding final
 public final class Constants {
 
@@ -7,6 +11,10 @@ public final class Constants {
     public static final String SRKEY = "SRKEY";
     public static final String OPENSRKEY = "OPENSRKEY";
     public static final String CLOSESRKEY = "CLOSESRKEY";
+    public static final String TOKEN = "TOKEN";
+    public static final String UNAUTH = "Unauthorized";
+    public static final String  PING = "ping";
+    public static final String SUCCESS = "success" ;
 
     private Constants() {
     }

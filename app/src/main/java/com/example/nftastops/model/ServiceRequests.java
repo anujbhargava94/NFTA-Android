@@ -1,6 +1,6 @@
 package com.example.nftastops.model;
 
-public class ServiceRequests {
+public class ServiceRequests extends BaseResponse{
     private Integer request_id;
     private Integer admin_user_id;
     private String requested_user;
