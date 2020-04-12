@@ -53,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.popBackStack();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
 
         dologinJwt(this);
     }
@@ -137,15 +139,4 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
-//    @Override public void onBackPressed() {
-//        //Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_service_request);
-//        /**Fragment value is null**/
-//        Fragment fragment  = getSupportFragmentManager().findFragmentByTag("service_request_detailed_fragment");
-//        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
-//            super.onBackPressed();
-//        }
-//    }
-
 }
