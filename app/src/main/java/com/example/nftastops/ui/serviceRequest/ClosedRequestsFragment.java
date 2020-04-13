@@ -81,6 +81,7 @@ public class ClosedRequestsFragment extends Fragment {
         Type type = new TypeToken<List<StopTransactions>>() {
         }.getType();
         List<StopTransactions> closeTransaction = gson.fromJson(results, type);
+
         if (closeTransaction != null) stopTransactions.addAll(closeTransaction);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
@@ -115,7 +116,7 @@ public class ClosedRequestsFragment extends Fragment {
 //                    e.setReason("Reason");
 //                    e.setLocation("Location");
 //                    e.setRoute("Route");
-//                    e.setStopId(0);
+//                    e.setStop_id(0);
 //                    results.add(e);
 //                }
 //                //IMPORTANT: set data here and notify
@@ -142,7 +143,7 @@ public class ClosedRequestsFragment extends Fragment {
 //            if (serviceRequest != null
 //                    && serviceRequest.getStatus() != null
 //                    && serviceRequest.getStatus().equals("resolved")) {
-//                stopTransaction.setStop_id(serviceRequest.getStopId().toString());
+//                stopTransaction.setStop_id(serviceRequest.getStop_id().toString());
 //                stopTransaction.setRequest_type(serviceRequest.getRequest_type());
 //                stopTransaction.setLocation(serviceRequest.getLocation());
 //                stopTransaction.setDirection(serviceRequest.getDirection());

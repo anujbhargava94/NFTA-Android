@@ -23,6 +23,9 @@ import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,7 +103,7 @@ public class StopFragment1 extends Fragment {
         View root = inflater.inflate(R.layout.stop_fragment1, container, false);
         Button nextButton = root.findViewById(R.id.fragment1Next);
         nextButton.setOnClickListener(nextOnClick);
-        stopIdET = root.findViewById(R.id.stopId);
+        stopIdET = root.findViewById(R.id.stop_id);
         streetOnET = root.findViewById(R.id.streetOn);
         nearestCSET = root.findViewById(R.id.nearestCrossStreet);
         latET = root.findViewById(R.id.latitude);
@@ -144,6 +147,24 @@ public class StopFragment1 extends Fragment {
             fetchButton.setVisibility(View.GONE);
         }
         fetchButton.setVisibility(View.GONE);
+
+        if (mParam2 != "") {
+            String stopTransaction = mParam2;
+
+            try {
+                Gson gson = new Gson();
+                Type type = new TypeToken<StopTransactions>() {
+                }.getType();
+                stopTransactions = gson.fromJson(stopTransaction, type);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            stopIdET.getEditText().setText(stopTransactions.getStop_id());
+            acdirection.setSelection(((ArrayAdapter<String>) acdirection.getAdapter()).getPosition(stopTransactions.getDirection()));
+
+        }
+
 
         return root;
     }

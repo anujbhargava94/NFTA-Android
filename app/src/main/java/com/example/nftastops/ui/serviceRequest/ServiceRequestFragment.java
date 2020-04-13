@@ -95,15 +95,21 @@ public class ServiceRequestFragment extends Fragment {
                     e.setReason("Reason");
                     e.setLocation("Location");
                     e.setRoute("Route");
-                    e.setStopId(0);
+                    e.setStop_id(0);
                     results.add(e);
                 }
                 //IMPORTANT: set data here and notify
                 serviceRequests.addAll(results);
                 castToStopTransaction(serviceRequests);
-                SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), serviceRequests, Constants.SRKEY);
-                SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), openStopTransactions, Constants.OPENSRKEY);
-                SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), closedStopTransactions, Constants.CLOSESRKEY);
+
+                Gson gson = new Gson();
+                String serviceRequests_str = gson.toJson(serviceRequests);
+                String openStopTransactions_str = gson.toJson(openStopTransactions);
+                String closedStopTransactions_str = gson.toJson(closedStopTransactions);
+
+                SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), serviceRequests_str, Constants.SRKEY);
+                SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), openStopTransactions_str, Constants.OPENSRKEY);
+                SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), closedStopTransactions_str, Constants.CLOSESRKEY);
                 //adapter.notifyCustomAdapterChange();
                 //adapter.notifyDataSetChanged();
                 //Call constructor of ServiceRequestFragment
@@ -123,7 +129,7 @@ public class ServiceRequestFragment extends Fragment {
         //Map serviceRequests with stopTransactions RVadaptor
         for (ServiceRequests serviceRequest : serviceRequests) {
             StopTransactions stopTransaction = new StopTransactions();
-            stopTransaction.setStop_id(serviceRequest.getStopId().toString());
+            stopTransaction.setStop_id(serviceRequest.getStop_id().toString());
             stopTransaction.setRequest_type(serviceRequest.getRequest_type());
             stopTransaction.setLocation(serviceRequest.getLocation());
             stopTransaction.setDirection(serviceRequest.getDirection());

@@ -92,7 +92,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         View root = inflater.inflate(R.layout.fragment_remove_stop, container, false);
         Button nextButton = root.findViewById(R.id.fragmentSubmit);
         nextButton.setOnClickListener(nextOnClick);
-        stopIdET = root.findViewById(R.id.stopId);
+        stopIdET = root.findViewById(R.id.stop_id);
         latET = root.findViewById(R.id.latitude);
         longET = root.findViewById(R.id.longitude);
         stopTransactions = new StopTransactions(getActivity());

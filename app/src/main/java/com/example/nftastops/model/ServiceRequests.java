@@ -8,7 +8,7 @@ public class ServiceRequests extends BaseResponse{
     private String direction;
     private String route;
     private String reason;
-    private Integer stopId;
+    private Integer stop_id;
     private String additional_information;
     private String status;
     private String request_type;
@@ -69,12 +69,12 @@ public class ServiceRequests extends BaseResponse{
         this.reason = reason;
     }
 
-    public Integer getStopId() {
-        return stopId;
+    public Integer getStop_id() {
+        return stop_id;
     }
 
-    public void setStopId(Integer stopId) {
-        this.stopId = stopId;
+    public void setStop_id(Integer stop_id) {
+        this.stop_id = stop_id;
     }
 
     public String getAdditional_information() {

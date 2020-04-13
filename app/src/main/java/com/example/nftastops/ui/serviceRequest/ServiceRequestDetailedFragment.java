@@ -135,19 +135,29 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         public void onClick(View view) {
             String request_type = stopTransactions.getRequest_type();
             Fragment fragment = null;
+            Gson gson = new Gson();
+            String transactionItem = gson.toJson(stopTransactions);
             switch (request_type) {
-                case "New":
-                    fragment = StopFragment1.newInstance("new", "");
+                //case "New":
+                case "new":
+                    //fragment = StopFragment1.newInstance("new", "");
+                    //replaceFragment(fragment);
+                    //Gson gson = new Gson();
+                    //String transactionItem = gson.toJson(stopTransactions);
+                    fragment = StopFragment1.newInstance("new", transactionItem);
                     replaceFragment(fragment);
                     break;
 
-                case "Remove":
-                    fragment = StopRemoveFragment.newInstance("remove", "");
+                //case "Remove":
+                case "remove":
+                    fragment = StopRemoveFragment.newInstance("remove", transactionItem);
                     replaceFragment(fragment);
+
                     break;
 
-                case "Update":
-                    fragment = StopFragment1.newInstance("update", "");
+                //case "Update":
+                case "update":
+                    fragment = StopFragment1.newInstance("update", transactionItem);
                     replaceFragment(fragment);
                     break;
             }

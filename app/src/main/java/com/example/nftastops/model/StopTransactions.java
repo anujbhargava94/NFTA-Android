@@ -75,13 +75,13 @@ public class StopTransactions extends BaseResponse{
         this.reason = reason;
     }
 
-    public Integer getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(Integer stopId) {
-        this.stopId = stopId;
-    }
+//    public Integer getStop_id() {
+//        return stop_id;
+//    }
+//
+//    public void setStop_id(Integer stop_id) {
+//        this.stop_id = stop_id;
+//    }
 
     public String getAdditional_information() {
         return additional_information;

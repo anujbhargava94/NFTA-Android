@@ -11,16 +11,17 @@ import java.util.Map;
 
 public class SharedPrefUtil {
 
-    public static <E> void saveTasksToSharedPrefs(Context context, E obj, String key) {
+    public static <E> void saveTasksToSharedPrefs(Context context, String obj, String key) {
         if (context == null) return;
         SharedPreferences appSharedPrefs = context.getSharedPreferences(key, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-        String json = (String) obj;
+        //String json = (String) obj;
+        //String json = obj;
         if (!key.equals(Constants.TOKEN)) {
-            Gson gson = new Gson();
-            json = gson.toJson(obj); //tasks is an ArrayList instance variable
+            //Gson gson = new Gson();
+            //json = gson.toJson(obj); //tasks is an ArrayList instance variable
         }
-        prefsEditor.putString(key, json);
+        prefsEditor.putString(key, obj);
         prefsEditor.commit();
     }
 
