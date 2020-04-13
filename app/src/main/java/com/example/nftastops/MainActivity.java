@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 //String results = response;
-                Log.d("ping", "history response: "+response);
+                Log.d("ping", "history response: " + response);
                 PingModel results = new PingModel();
                 try {
                     Gson gson = new Gson();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (results !=null && !results.getResult().equals(Constants.SUCCESS) && results.getError().equals(Constants.UNAUTH)) {
+                if (results != null && !results.getResult().equals(Constants.SUCCESS) && results.getError().equals(Constants.UNAUTH)) {
                     openLogin();
                 }
             }
@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         String token = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.TOKEN);
         return (token != null && !token.isEmpty());
     }
-
 
 
     private class UpdateTask extends AsyncTask<String, String, String> {
@@ -157,14 +156,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment someFragment) {
-        this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment, someFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        int count = 3;
+        while (count > 0) {
+            this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            count -= 1;
+        }
     }
 
-    private void openLogin(){
+    private void openLogin() {
         Intent startupIntent = new Intent(this, LoginActivity.class);
         startActivityForResult(startupIntent, 100);
     }
