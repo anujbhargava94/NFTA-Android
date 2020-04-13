@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.NetworkAPICall;
@@ -146,6 +147,9 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
             //stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
+            ServiceRequests serviceRequests = new ServiceRequests();
+            serviceRequests.setRequest_id(stopTransactions.getRequest_id());
+            stopTransactions.setWork_request(serviceRequests);
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
