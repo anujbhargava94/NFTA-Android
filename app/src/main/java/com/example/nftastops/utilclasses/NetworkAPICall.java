@@ -132,7 +132,7 @@ public class NetworkAPICall {
                     String un = username;
                     String pw = password;
                     if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-                        un = "anujbhargava94@gmail.com";
+                        un = "manalips30@gmail.com";
                         pw = "password1";
                     }
                     LoginRequest lin = new LoginRequest();

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errorString = "Error in showing Service Requests";
+                String errorString = "Error in Log in";
                 System.out.println(errorString);
             }
         });
