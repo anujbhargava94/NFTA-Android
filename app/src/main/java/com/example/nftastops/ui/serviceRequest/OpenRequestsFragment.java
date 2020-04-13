@@ -79,6 +79,7 @@ public class OpenRequestsFragment extends Fragment {
         Type type = new TypeToken<List<StopTransactions>>() {
         }.getType();
         List<StopTransactions> openTransaction = gson.fromJson(results, type);
+
         if (openTransaction != null) stopTransactions.addAll(openTransaction);
         if (adapter != null) {
             adapter.setData(stopTransactions);
@@ -112,7 +113,7 @@ public class OpenRequestsFragment extends Fragment {
 //                    e.setReason("Reason");
 //                    e.setLocation("Location");
 //                    e.setRoute("Route");
-//                    e.setStopId(0);
+//                    e.setStop_id(0);
 //                    results.add(e);
 //                }
 //                //IMPORTANT: set data here and notify
@@ -139,7 +140,7 @@ public class OpenRequestsFragment extends Fragment {
 //            if (serviceRequest != null
 //                    && serviceRequest.getStatus() != null
 //                    && serviceRequest.getStatus().equals("Open")) {
-//                stopTransaction.setStop_id(serviceRequest.getStopId().toString());
+//                stopTransaction.setStop_id(serviceRequest.getStop_id().toString());
 //                stopTransaction.setRequest_type(serviceRequest.getRequest_type());
 //                stopTransaction.setLocation(serviceRequest.getLocation());
 //                stopTransaction.setDirection(serviceRequest.getDirection());
