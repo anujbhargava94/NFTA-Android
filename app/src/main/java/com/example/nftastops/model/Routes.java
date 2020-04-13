@@ -1,6 +1,6 @@
 package com.example.nftastops.model;
 
-class Routes {
+class Routes extends BaseResponse{
     int route_id;
     String routeInfo;
 

@@ -2,7 +2,7 @@ package com.example.nftastops.model;
 
 public class BaseResponse {
     private String timestamp;
-    private int status;
+    //private int status;
     private String error;
     private String message;
     private String path;
@@ -13,14 +13,6 @@ public class BaseResponse {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getError() {

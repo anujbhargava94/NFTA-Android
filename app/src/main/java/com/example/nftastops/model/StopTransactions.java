@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class StopTransactions {
+public class StopTransactions extends BaseResponse{
     private String device_id;
     private String stop_id;
     private String direction;

@@ -11,25 +11,31 @@ import java.util.Map;
 
 public class SharedPrefUtil {
 
-   /* public static void saveTasksToSharedPrefs(Context context, Map<String, T> favEvents) {
-        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    public static <E> void saveTasksToSharedPrefs(Context context, E obj, String key) {
+        if (context == null) return;
+        SharedPreferences appSharedPrefs = context.getSharedPreferences(key, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(favEvents); //tasks is an ArrayList instance variable
-        prefsEditor.putString("fav", json);
+        String json = (String) obj;
+        if (!key.equals(Constants.TOKEN)) {
+            Gson gson = new Gson();
+            json = gson.toJson(obj); //tasks is an ArrayList instance variable
+        }
+        prefsEditor.putString(key, json);
         prefsEditor.commit();
     }
 
-    public static Map<String, T> getTasksFromSharedPrefs(Context context) {
+    public static <E> E getTasksFromSharedPrefs(Context context, String key) {
+        if (context == null) return null;
         Gson gson = new Gson();
-        String json = getRawTasksFromSharedPrefs(context);
-        Map<String, T> favEvents = gson.fromJson(json, new TypeToken<Map<String, T>>() {
+        String json = getRawTasksFromSharedPrefs(context, key);
+        E value = gson.fromJson(json, new TypeToken<E>() {
         }.getType());
-        return favEvents;
+        return value;
     }
 
-    public static String getRawTasksFromSharedPrefs(Context context) {
-        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        return appSharedPrefs.getString("fav", "");
-    }*/
+    public static String getRawTasksFromSharedPrefs(Context context, String key) {
+        if (context == null) return "";
+        SharedPreferences appSharedPrefs = context.getSharedPreferences(key, Context.MODE_PRIVATE);
+        return appSharedPrefs.getString(key, "");
+    }
 }
