@@ -33,6 +33,16 @@ public class StopTransactions extends BaseResponse{
     private String transaction_type;
     private String date;
 
+    public ServiceRequests getWork_request() {
+        return work_request;
+    }
+
+    public void setWork_request(ServiceRequests work_request) {
+        this.work_request = work_request;
+    }
+
+    private ServiceRequests work_request;
+
     public String getTransaction_type() {
         return transaction_type;
     }
