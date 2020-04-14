@@ -48,10 +48,24 @@
                     android:visibility="visible" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="6"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Direction"
+                    android:textSize="@dimen/text_size"
+                    android:layout_weight="2"
+                    android:gravity="fill"
+                    android:layout_marginLeft="4dp"/>
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
 
                 <Spinner
                     android:id="@+id/autocomplete_direction"
@@ -61,6 +75,7 @@
                     android:padding="@dimen/layout_padding"
                     android:textSize="@dimen/text_size" />
             </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -88,22 +103,51 @@
                     android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="6"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Position"
+                android:textSize="@dimen/text_size"
+                android:layout_weight="2"
+                android:gravity="fill"
+                android:layout_marginLeft="4dp"/>
             <Spinner
                 android:id="@+id/autocomplete_position"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/layout_height"
                 android:inputType="textAutoComplete"
                 android:padding="@dimen/layout_padding"
-                android:textSize="@dimen/text_size" />
+                android:textSize="@dimen/text_size"
+                android:layout_weight="4"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="6"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="FastenedTo"
+                android:textSize="@dimen/text_size"
+                android:layout_weight="2"
+                android:gravity="fill"
+                android:layout_marginLeft="4dp"/>
             <Spinner
                 android:id="@+id/autocomplete_fastened_to"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/layout_height"
                 android:inputType="textAutoComplete"
                 android:padding="@dimen/layout_padding"
-                android:textSize="@dimen/text_size" />
+                android:textSize="@dimen/text_size"
+                android:layout_weight="4"/>
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,13 +208,28 @@
                     android:src="@drawable/ic_location" />
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="6"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="County"
+                android:textSize="@dimen/text_size"
+                android:layout_weight="2"
+                android:gravity="fill"
+                android:layout_marginLeft="4dp"/>
             <Spinner
                 android:id="@+id/autocomplete_county"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/layout_height"
                 android:inputType="textAutoComplete"
                 android:padding="@dimen/layout_padding"
-                android:textSize="@dimen/text_size" />
+                android:textSize="@dimen/text_size"
+                android:layout_weight="4"/>
+        </LinearLayout>
 
             <Button
                 android:id="@+id/fragment1Next"

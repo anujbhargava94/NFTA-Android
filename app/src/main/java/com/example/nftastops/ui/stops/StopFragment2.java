@@ -244,10 +244,12 @@ public class StopFragment2 extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
+
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         locPics.setImageBitmap(selectedImage);
+                        locPics.setVisibility(View.VISIBLE);
                     }
 
                     break;
@@ -264,6 +266,7 @@ public class StopFragment2 extends Fragment {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
                                 locPics.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                locPics.setVisibility(View.VISIBLE);
                                 cursor.close();
                             }
                         }
