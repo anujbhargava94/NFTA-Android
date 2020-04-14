@@ -53,7 +53,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder holder, int i) {
         holder.bind(stopTransactions.get(i), listener);
-
+        holder.stopIDText.setText("Stop ID");
+        holder.countyText.setText("County");
+        holder.transactionTypeText.setText("Transaction Type");
+        holder.requestTypeText.setText("Request Type");
+        holder.adminUserText.setText("Admin User");
+        holder.directionText.setText("Direction");
         holder.stopID.setText(stopTransactions.get(i).getStop_id());
         //holder.transactionNo.setText(stopTransactions.get(i).getTransaction_no()+"");
         holder.requestType.setText(stopTransactions.get(i).getRequest_type() + "");
@@ -66,11 +71,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         holder.adminUser.setText(stopTransactions.get(i).getRequested_user() + "");
 
         if (cardType.equals("history")) {
+            holder.requestTypeText.setVisibility(View.GONE);
             holder.requestType.setVisibility(View.GONE);
+            holder.adminUserText.setVisibility(View.GONE);
             holder.adminUser.setVisibility(View.GONE);
         }
         if (cardType.equals("serviceRequest")) {
+            holder.countyText.setVisibility(View.GONE);
             holder.county.setVisibility(View.GONE);
+            holder.transactionTypeText.setVisibility(View.GONE);
             holder.transactionType.setVisibility(View.GONE);
         }
 
@@ -95,26 +104,38 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
 
     public static class RVViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
+        TextView stopIDText;
         TextView stopID;
+        TextView transactionTypeText;
         TextView transactionType;
+        TextView requestTypeText;
         TextView requestType;
+        TextView countyText;
         TextView county;
         //TextView date;
         //TextView location;
+        TextView directionText;
         TextView direction;
+        TextView adminUserText;
         TextView adminUser;
 
         RVViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            stopID = (TextView) itemView.findViewById(R.id.cvStopID);
+            stopID = (TextView) itemView.findViewById(R.id.times);
+            stopIDText = (TextView) itemView.findViewById(R.id.cvStopID);
             //transactionNo = (TextView) itemView.findViewById(R.id.cvTransactionNo);
+            requestTypeText = (TextView) itemView.findViewById(R.id.cvRequestTypetext);
             requestType = (TextView) itemView.findViewById(R.id.cvRequestType);
+            countyText = (TextView) itemView.findViewById(R.id.cvCountytext);
             county = (TextView) itemView.findViewById(R.id.cvCounty);
+            transactionTypeText = (TextView)itemView.findViewById(R.id.cvTransactionTypetext);
             transactionType = (TextView) itemView.findViewById(R.id.cvTransactionType);
             //date = (TextView) itemView.findViewById(R.id.cvDate);
             //location = (TextView) itemView.findViewById(R.id.cvlocation);
+            directionText = (TextView) itemView.findViewById(R.id.cvDirectiontext);
             direction = (TextView) itemView.findViewById(R.id.cvDirection);
+            adminUserText = (TextView) itemView.findViewById(R.id.cvAdminUsertext);
             adminUser = (TextView) itemView.findViewById(R.id.cvAdminUser);
         }
 
