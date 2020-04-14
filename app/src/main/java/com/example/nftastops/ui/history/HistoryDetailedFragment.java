@@ -150,12 +150,17 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
 //            }
 //        }
 
-//        if (advertisement.getText().toString().isEmpty())
-//            advertisement.setVisibility(View.GONE);
-//         if(stopTransactions.getTransaction_type().equals("remove")){
-//             direction.setVisibility(View.GONE);
-//             advertisement.setVisibility(View.GONE);
-//         }
+
+        //if(stopTransactions.getTransaction_type().equals("remove"))
+//        if(stopTransactions.getRequest_type().equals("New")){
+                shelter.setVisibility(View.GONE);
+                advertisement.setVisibility(View.GONE);
+                bench.setVisibility(View.GONE);
+                bike_rack.setVisibility(View.GONE);
+                trash_can.setVisibility(View.GONE);
+                time_table.setVisibility(View.GONE);
+                system_map.setVisibility(View.GONE);
+//        }
 
 
         // Inflate the layout for this fragment
