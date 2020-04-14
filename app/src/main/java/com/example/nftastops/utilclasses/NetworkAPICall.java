@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -100,7 +101,10 @@ public class NetworkAPICall {
             }
         };
 
-
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(
+                Constants.MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
     }
 

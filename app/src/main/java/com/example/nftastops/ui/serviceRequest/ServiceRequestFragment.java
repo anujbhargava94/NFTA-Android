@@ -91,10 +91,8 @@ public class ServiceRequestFragment extends Fragment {
                     e.setAdmin_user_id(0);
                     e.setRequested_user("Requested User");
                     e.setAdditional_information("Additional Info");
-                    e.setDirection("Direction");
                     e.setReason("Reason");
                     e.setLocation("Location");
-                    e.setRoute("Route");
                     e.setStop_id(0);
                     results.add(e);
                 }

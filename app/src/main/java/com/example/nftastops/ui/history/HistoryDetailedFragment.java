@@ -128,13 +128,17 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         }
 
         stopId.setText(stopTransactions.getStop_id());
-        direction.setText(stopTransactions.getDirection());
+        if(stopTransactions.getDirection()!=null)
+            direction.setText(stopTransactions.getDirection().getDisplay_name());
         location.setText(stopTransactions.getLocation());
         street_on.setText(stopTransactions.getStreet_on());
         nearest_cross_street.setText(stopTransactions.getNearest_cross_street());
-        position.setText(stopTransactions.getPosition());
-        fastened_to.setText(stopTransactions.getFastened_to());
-        county.setText(stopTransactions.getCounty());
+        if(stopTransactions.getPosition()!=null)
+            position.setText(stopTransactions.getPosition().getDisplay_name());
+        if(stopTransactions.getFastened_to()!=null)
+            fastened_to.setText(stopTransactions.getFastened_to().getDisplay_name());
+        if(stopTransactions.getCounty()!=null)
+            county.setText(stopTransactions.getCounty().getDisplay_name());
         status.setText(stopTransactions.getStatus());
         shelter.setText(Boolean.toString(stopTransactions.getShelter()));
         advertisement.setText(Boolean.toString(stopTransactions.getAdvertisement()));
@@ -143,12 +147,8 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         trash_can.setText(Boolean.toString(stopTransactions.getTrash_can()));
         time_table.setText(Boolean.toString(stopTransactions.getTime_table()));
         system_map.setText(Boolean.toString(stopTransactions.getSystem_map()));
-//        if (stopTransactions.getRoute() != null) {
-//            for (String strroute : stopTransactions.getRoute()) {
-//                //route.setText(strroute);
-//                route.append(strroute);
-//            }
-//        }
+        if(stopTransactions.getRoute()!=null && !stopTransactions.getRoute().isEmpty())
+            route.setText(stopTransactions.getRoutesString());
 
 
         //if(stopTransactions.getTransaction_type().equals("remove"))

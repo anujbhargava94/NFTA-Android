@@ -15,6 +15,7 @@ import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.stops.StopFragment1;
 import com.example.nftastops.ui.stops.StopRemoveFragment;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.IOnBackPressed;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +24,7 @@ import java.lang.reflect.Type;
 
 /**
  * A simple {@link Fragment} subclass.
-
+ * <p>
  * Use the {@link ServiceRequestDetailedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -77,7 +78,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         super.onCreate(savedInstanceState);
         ServiceRequestDetailedFragment fragment = new ServiceRequestDetailedFragment();
         FragmentTransaction t = getFragmentManager().beginTransaction();
-        t.add(fragment,"service_request_detailed_fragment");
+        t.add(fragment, "service_request_detailed_fragment");
         //FragmentTransaction.add(ServiceRequestDetailedFragment fragment, String tag );
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -111,17 +112,21 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         }
 
         stopId.setText(stopTransactions.getStop_id());
-        direction.setText(stopTransactions.getDirection());
+        if (stopTransactions.getDirection() != null) {
+            direction.setText(stopTransactions.getDirection().getDisplay_name());
+        }
         location.setText(stopTransactions.getLocation());
         request_type.setText(stopTransactions.getRequest_type());
         reason.setText(stopTransactions.getReason());
-        //route.setText(stopTransactions.getRoute());
+        route.setText(stopTransactions.getRoutesString());
         additional_information.setText(stopTransactions.getAdditional_information());
 
-        if(stopTransactions.getStatus().equals("resolved")){
-            proceedButton.setVisibility(View.GONE);
-        }
 
+        if (stopTransactions.getStatus() != null
+                && stopTransactions.getStatus().equals(Constants.OPEN)) {
+            proceedButton.setVisibility(View.VISIBLE);
+
+        }
 
 
         // Inflate the layout for this fragment
@@ -174,9 +179,9 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
     @Override
     public boolean onBackPressed() {
         //if (myCondition) {
-            //action not popBackStack
-            Log.d("custom", "onBackPressed");
-         //   return true;
+        //action not popBackStack
+        Log.d("custom", "onBackPressed");
+        //   return true;
         //} else {
         //    return false;
         //}

@@ -28,12 +28,19 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.Dropdowns;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -69,6 +76,7 @@ public class StopFragment2 extends Fragment {
     NetworkAPICall apiCAll;
     ImageView locPics;
     private TextView addPhoto;
+    List<Dropdowns> routesDN;
 
     public StopFragment2() {
         // Required empty public constructor
@@ -123,13 +131,21 @@ public class StopFragment2 extends Fragment {
 
         addPhoto.setOnClickListener(addPhotoClickListner);
 
-        String[] routes = getResources().getStringArray(R.array.routes);
-        ArrayAdapter<String> routesAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_list_item_1, routes);
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Dropdowns>>() {
+        }.getType();
+        String routesR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.ROUTE);
+
+        routesDN = gson.fromJson(routesR, type);
+        if (routesDN != null) {
+            routesDN.add(0, new Dropdowns("--Select--"));
+        }
+
+        ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, routesDN);
         acroutes.setAdapter(routesAdapter);
 
         String stopTransactionJson = getArguments().getString("stopTransaction");
-        Gson gson = new Gson();
         stopTransactions = gson.fromJson(stopTransactionJson, StopTransactions.class);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         return root;
@@ -147,10 +163,33 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
             //stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
-            ServiceRequests serviceRequests = new ServiceRequests();
-            serviceRequests.setRequest_id(stopTransactions.getRequest_id());
-            stopTransactions.setWork_request(serviceRequests);
+            if (stopTransactions.getRequest_id() != null) {
+                ServiceRequests serviceRequests = new ServiceRequests();
+                serviceRequests.setRequest_id(stopTransactions.getRequest_id());
+                stopTransactions.setWork_request(serviceRequests);
+            } else {
+                stopTransactions.setWork_request(null);
+            }
 
+
+            if (stopTransactions.getDirection().getDropdown_id() == null) {
+                stopTransactions.setDirection(null);
+            }
+            if (stopTransactions.getRoute() == null
+                    || stopTransactions.getRoute().isEmpty()
+                    || stopTransactions.getRoute().get(0) == null
+                    || stopTransactions.getRoute().get(0).getDropdown_id() == null) {
+                stopTransactions.setRoute(null);
+            }
+            if (stopTransactions.getPosition().getDropdown_id() == null) {
+                stopTransactions.setPosition(null);
+            }
+            if (stopTransactions.getCounty().getDropdown_id() == null) {
+                stopTransactions.setCounty(null);
+            }
+            if (stopTransactions.getFastened_to().getDropdown_id() == null) {
+                stopTransactions.setFastened_to(null);
+            }
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
             makeApiCall("add", transaction);
@@ -231,10 +270,12 @@ public class StopFragment2 extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
+
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         locPics.setImageBitmap(selectedImage);
+                        locPics.setVisibility(View.VISIBLE);
                     }
 
                     break;
@@ -251,6 +292,7 @@ public class StopFragment2 extends Fragment {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
                                 locPics.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                locPics.setVisibility(View.VISIBLE);
                                 cursor.close();
                             }
                         }

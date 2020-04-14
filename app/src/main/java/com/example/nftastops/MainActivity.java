@@ -8,14 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,10 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.nftastops.model.BaseResponse;
-import com.example.nftastops.model.LoginJwt;
 import com.example.nftastops.model.PingModel;
-import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.example.nftastops.utilclasses.Constants;
@@ -37,10 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.CertificatePinner;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -81,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         }
         //dologinJwt(this);
         callPingAPI(Constants.PING);
+        getDropDowns(this, Constants.DIRECTION);
+        getDropDowns(this, Constants.POSITION);
+        getDropDowns(this, Constants.FASTENED);
+        getDropDowns(this, Constants.COUNTY);
+        getDropDowns(this, Constants.ROUTE);
     }
 
     private void callPingAPI(String url) {
@@ -166,5 +163,24 @@ public class MainActivity extends AppCompatActivity {
     private void openLogin() {
         Intent startupIntent = new Intent(this, LoginActivity.class);
         startActivityForResult(startupIntent, 100);
+    }
+
+
+    private void getDropDowns(final Context context, final String url) {
+        String dropDownUrl = "dropdown?dropdownType=" + url;
+        apiCAll.makeGet(this, dropDownUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response != null || !response.isEmpty()) {
+                    SharedPrefUtil.saveTasksToSharedPrefs(context, response, url);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String errorString = "Error in showing Service Requests";
+                System.out.println(errorString);
+            }
+        });
     }
 }
