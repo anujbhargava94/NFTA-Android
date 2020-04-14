@@ -28,12 +28,19 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.Dropdowns;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -69,6 +76,7 @@ public class StopFragment2 extends Fragment {
     NetworkAPICall apiCAll;
     ImageView locPics;
     private TextView addPhoto;
+    List<Dropdowns> routesDN;
 
     public StopFragment2() {
         // Required empty public constructor
@@ -123,13 +131,18 @@ public class StopFragment2 extends Fragment {
 
         addPhoto.setOnClickListener(addPhotoClickListner);
 
-        String[] routes = getResources().getStringArray(R.array.routes);
-        ArrayAdapter<String> routesAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_list_item_1, routes);
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Dropdowns>>() {
+        }.getType();
+        String routesR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.ROUTE);
+
+        routesDN = gson.fromJson(routesR, type);
+
+        ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, routesDN);
         acroutes.setAdapter(routesAdapter);
 
         String stopTransactionJson = getArguments().getString("stopTransaction");
-        Gson gson = new Gson();
         stopTransactions = gson.fromJson(stopTransactionJson, StopTransactions.class);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         return root;

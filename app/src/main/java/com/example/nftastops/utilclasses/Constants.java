@@ -15,6 +15,11 @@ public final class Constants {
     public static final String UNAUTH = "Unauthorized";
     public static final String  PING = "ping";
     public static final String SUCCESS = "success" ;
+    public static final String DIRECTION = "direction";
+    public static final String POSITION = "position";
+    public static final String FASTENED = "fastenedTo";
+    public static final String COUNTY = "county";
+    public static final String ROUTE = "route";
 
     private Constants() {
     }

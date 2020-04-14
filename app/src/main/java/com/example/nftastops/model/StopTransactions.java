@@ -6,21 +6,21 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class StopTransactions extends BaseResponse{
+public class StopTransactions extends BaseResponse {
     private String device_id;
     private String stop_id;
-    private String direction;
+    private Dropdowns direction;
     private String street_on;
     private String nearest_cross_street;
-    private String position;
-    private String fastened_to;
+    private Dropdowns position;
+    private Dropdowns fastened_to;
     private double latitude;
     private double longitude;
     private String location;
-    private String county;
+    private Dropdowns county;
     private String status;
     private String admin_comments;
-    private List<Routes> route;
+    private List<Dropdowns> route;
     private boolean shelter;
     private boolean advertisement;
     private boolean bench;
@@ -32,6 +32,7 @@ public class StopTransactions extends BaseResponse{
     private String request_type;
     private String transaction_type;
     private String date;
+    private List<Dropdowns> dropdowns;
 
     public ServiceRequests getWork_request() {
         return work_request;
@@ -141,13 +142,6 @@ public class StopTransactions extends BaseResponse{
         ).show();
     }
 
-    public List<Routes> getRoute() {
-        return route;
-    }
-
-    public void setRoute(List<Routes> route) {
-        this.route = route;
-    }
 
     public String getAdmin_comments() {
         return admin_comments;
@@ -173,13 +167,6 @@ public class StopTransactions extends BaseResponse{
         this.stop_id = stop_id;
     }
 
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
 
     public String getStreet_on() {
         return street_on;
@@ -195,22 +182,6 @@ public class StopTransactions extends BaseResponse{
 
     public void setNearest_cross_street(String nearest_cross_street) {
         this.nearest_cross_street = nearest_cross_street;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getFastened_to() {
-        return fastened_to;
-    }
-
-    public void setFastened_to(String fastened_to) {
-        this.fastened_to = fastened_to;
     }
 
     public double getLatitude() {
@@ -235,14 +206,6 @@ public class StopTransactions extends BaseResponse{
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
     }
 
     public String getStatus() {
@@ -308,4 +271,99 @@ public class StopTransactions extends BaseResponse{
     public void setSystem_map(boolean system_map) {
         this.system_map = system_map;
     }
+
+    public Dropdowns getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Dropdowns direction) {
+        this.direction = direction;
+    }
+
+    public Dropdowns getPosition() {
+        return position;
+    }
+
+    public void setPosition(Dropdowns position) {
+        this.position = position;
+    }
+
+    public Dropdowns getFastened_to() {
+        return fastened_to;
+    }
+
+    public void setFastened_to(Dropdowns fastened_to) {
+        this.fastened_to = fastened_to;
+    }
+
+    public Dropdowns getCounty() {
+        return county;
+    }
+
+    public void setCounty(Dropdowns county) {
+        this.county = county;
+    }
+
+    public List<Dropdowns> getRoute() {
+        return route;
+    }
+
+    public void setRoute(List<Dropdowns> route) {
+        this.route = route;
+    }
+
+    public boolean isShelter() {
+        return shelter;
+    }
+
+    public boolean isAdvertisement() {
+        return advertisement;
+    }
+
+    public boolean isBench() {
+        return bench;
+    }
+
+    public boolean isBike_rack() {
+        return bike_rack;
+    }
+
+    public boolean isTrash_can() {
+        return trash_can;
+    }
+
+    public boolean isTime_table() {
+        return time_table;
+    }
+
+    public boolean isSystem_map() {
+        return system_map;
+    }
+
+    public Integer getStopId() {
+        return stopId;
+    }
+
+    public void setStopId(Integer stopId) {
+        this.stopId = stopId;
+    }
+
+    public List<Dropdowns> getDropdowns() {
+        return dropdowns;
+    }
+
+    public void setDropdowns(List<Dropdowns> dropdowns) {
+        this.dropdowns = dropdowns;
+    }
+
+    public String getRoutesString(){
+        String result = "";
+        if(route!=null && !route.isEmpty()){
+            for(Dropdowns ele:route){
+                result+=ele+",";
+            }
+        }
+        return result;
+    }
 }
+
