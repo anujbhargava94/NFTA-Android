@@ -26,6 +26,7 @@ import com.example.nftastops.ui.history.HistoryFragment;
 import com.example.nftastops.ui.serviceRequest.ServiceRequestFragment;
 import com.example.nftastops.ui.stops.StopFragment1;
 import com.example.nftastops.ui.stops.StopRemoveFragment;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -71,8 +72,8 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
 
-                if(expandableListDetail.get(
-                        expandableListTitle.get(i)).isEmpty()){
+                if (expandableListDetail.get(
+                        expandableListTitle.get(i)).isEmpty()) {
                     Fragment fragment = null;
                     switch (i) {
                         case 1:
@@ -110,17 +111,17 @@ public class HomeFragment extends Fragment {
                         childPosition);
                 switch (childName) {
                     case "Add stop":
-                        fragment = StopFragment1.newInstance("new","");
+                        fragment = StopFragment1.newInstance("new", "");
                         replaceFragment(fragment);
                         break;
 
                     case "Remove stop":
-                        fragment = StopRemoveFragment.newInstance("remove","");
+                        fragment = StopRemoveFragment.newInstance("remove", "");
                         replaceFragment(fragment);
                         break;
 
                     case "Update stop":
-                        fragment = StopFragment1.newInstance("update","");
+                        fragment = StopFragment1.newInstance("update", "");
                         replaceFragment(fragment);
                         break;
 
@@ -157,8 +158,14 @@ public class HomeFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if(results!=null){
-                    count = results.size();
+                if (results != null && !results.isEmpty()) {
+                    count = 0;
+                    for (ServiceRequests ele : results) {
+                        if (ele.getStatus() != null && ele.getStatus().equals(Constants.OPEN)) {
+                            count += 1;
+                        }
+                    }
+
                 }
                 expandableListAdapter.setRequestCount(count);
                 expandableListAdapter.notifyDataSetChanged();

@@ -10,13 +10,21 @@ public class ServiceRequests extends BaseResponse{
     private Dropdowns direction;
     private List<Dropdowns> route;
     private String reason;
-    private Integer stop_id;
+    private String stop_id;
     private String additional_information;
     private String status;
     private String request_type;
     private Dropdowns position;
     private Dropdowns fastened_to;
     private Dropdowns county;
+
+    public String getStop_id() {
+        return stop_id;
+    }
+
+    public void setStop_id(String stop_id) {
+        this.stop_id = stop_id;
+    }
 
     public Dropdowns getDirection() {
         return direction;
@@ -96,14 +104,6 @@ public class ServiceRequests extends BaseResponse{
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public Integer getStop_id() {
-        return stop_id;
-    }
-
-    public void setStop_id(Integer stop_id) {
-        this.stop_id = stop_id;
     }
 
     public String getAdditional_information() {

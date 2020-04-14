@@ -93,7 +93,6 @@ public class ServiceRequestFragment extends Fragment {
                     e.setAdditional_information("Additional Info");
                     e.setReason("Reason");
                     e.setLocation("Location");
-                    e.setStop_id(0);
                     results.add(e);
                 }
                 //IMPORTANT: set data here and notify
