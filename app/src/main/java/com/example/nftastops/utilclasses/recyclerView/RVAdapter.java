@@ -63,11 +63,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolder> {
         //holder.transactionNo.setText(stopTransactions.get(i).getTransaction_no()+"");
         holder.requestType.setText(stopTransactions.get(i).getRequest_type() + "");
 
-        holder.county.setText(stopTransactions.get(i).getCounty() + "");
+        if (stopTransactions.get(i).getCounty()!= null){
+        holder.county.setText(stopTransactions.get(i).getCounty().getDisplay_name() + "");}
         holder.transactionType.setText(stopTransactions.get(i).getTransaction_type());
         //holder.date.setText(stopTransactions.get(i).getDate()+""); //TODO implement the toString()
         //holder.location.setText(stopTransactions.get(i).getLocation()+"");
-        holder.direction.setText(stopTransactions.get(i).getDirection() + "");
+        if(stopTransactions.get(i).getDirection() != null){
+        holder.direction.setText(stopTransactions.get(i).getDirection().getDisplay_name() + "");}
         holder.adminUser.setText(stopTransactions.get(i).getRequested_user() + "");
 
         if (cardType.equals("history")) {

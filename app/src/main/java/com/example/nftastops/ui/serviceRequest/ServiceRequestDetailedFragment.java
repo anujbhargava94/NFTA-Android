@@ -121,9 +121,11 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         route.setText(stopTransactions.getRoutesString());
         additional_information.setText(stopTransactions.getAdditional_information());
 
+
         if (stopTransactions.getStatus() != null
                 && stopTransactions.getStatus().equals(Constants.OPEN)) {
             proceedButton.setVisibility(View.VISIBLE);
+
         }
 
 

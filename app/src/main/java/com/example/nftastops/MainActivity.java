@@ -1,7 +1,10 @@
 package com.example.nftastops;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +29,7 @@ import com.example.nftastops.model.PingModel;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.example.nftastops.utilclasses.Constants;
+import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.navigation.NavigationView;
@@ -44,10 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
     private NetworkAPICall apiCAll;
 
+    private static MainActivity instance;
+    GPSTracker gpslocation;
+    Location location;
+    private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 1;
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(startupIntent, 100);
         }
         //dologinJwt(this);
+
+        gpslocation = new GPSTracker(this);
+        location = gpslocation.getLocation();
+
         callPingAPI(Constants.PING);
         getDropDowns(this, Constants.DIRECTION);
         getDropDowns(this, Constants.POSITION);
@@ -182,5 +200,34 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(errorString);
             }
         });
+    }
+
+    public void requestPermission(){
+        ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                MY_PERMISSIONS_REQUEST_READ_LOCATION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Log.d("custom","Permission granted");
+                    //isGPSEnabled = true;
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }
