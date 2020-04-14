@@ -144,6 +144,18 @@ public class StopFragment1 extends Fragment {
         positionDN = gson.fromJson(positionR, type);
         fastenedToDN = gson.fromJson(fastenedToR, type);
 
+        if(directionDN!=null){
+            directionDN.add(0,new Dropdowns("--Select--"));
+        }
+        if(countyDN!=null){
+            countyDN.add(0,new Dropdowns("--Select--"));
+        }
+        if(positionDN!=null){
+            positionDN.add(0,new Dropdowns("--Select--"));
+        }
+        if(fastenedToDN!=null){
+            fastenedToDN.add(0,new Dropdowns("--Select--"));
+        }
 
         //String[] directions = getResources().getStringArray(R.array.direction);
 
@@ -163,6 +175,7 @@ public class StopFragment1 extends Fragment {
         ArrayAdapter<Dropdowns> positionsAdapter = new ArrayAdapter<>
                 (getActivity(), android.R.layout.simple_list_item_1, positionDN);
         acposition.setAdapter(positionsAdapter);
+
         gpslocation = new GPSTracker(getActivity());
 
         latET.getEditText().setText(String.valueOf(gpslocation.getLatitude()));

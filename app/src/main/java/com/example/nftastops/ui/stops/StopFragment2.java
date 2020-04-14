@@ -137,6 +137,9 @@ public class StopFragment2 extends Fragment {
         String routesR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.ROUTE);
 
         routesDN = gson.fromJson(routesR, type);
+        if (routesDN != null) {
+            routesDN.add(0, new Dropdowns("--Select--"));
+        }
 
         ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
                 (getActivity(), android.R.layout.simple_list_item_1, routesDN);
@@ -160,10 +163,33 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
             //stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
-            ServiceRequests serviceRequests = new ServiceRequests();
-            serviceRequests.setRequest_id(stopTransactions.getRequest_id());
-            stopTransactions.setWork_request(serviceRequests);
+            if (stopTransactions.getRequest_id() != null) {
+                ServiceRequests serviceRequests = new ServiceRequests();
+                serviceRequests.setRequest_id(stopTransactions.getRequest_id());
+                stopTransactions.setWork_request(serviceRequests);
+            } else {
+                stopTransactions.setWork_request(null);
+            }
 
+
+            if (stopTransactions.getDirection().getDropdown_id() == null) {
+                stopTransactions.setDirection(null);
+            }
+            if (stopTransactions.getRoute() == null
+                    || stopTransactions.getRoute().isEmpty()
+                    || stopTransactions.getRoute().get(0) == null
+                    || stopTransactions.getRoute().get(0).getDropdown_id() == null) {
+                stopTransactions.setRoute(null);
+            }
+            if (stopTransactions.getPosition().getDropdown_id() == null) {
+                stopTransactions.setPosition(null);
+            }
+            if (stopTransactions.getCounty().getDropdown_id() == null) {
+                stopTransactions.setCounty(null);
+            }
+            if (stopTransactions.getFastened_to().getDropdown_id() == null) {
+                stopTransactions.setFastened_to(null);
+            }
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);
             makeApiCall("add", transaction);

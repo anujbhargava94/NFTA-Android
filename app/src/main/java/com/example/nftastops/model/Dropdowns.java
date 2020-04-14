@@ -6,6 +6,10 @@ public class Dropdowns {
     private Integer dropdown_value;
     private String display_name;
 
+    public Dropdowns(String display_name) {
+        this.display_name = display_name;
+    }
+
     public Integer getDropdown_id() {
         return dropdown_id;
     }

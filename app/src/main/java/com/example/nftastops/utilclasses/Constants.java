@@ -20,12 +20,13 @@ public final class Constants {
     public static final String FASTENED = "fastenedTo";
     public static final String COUNTY = "county";
     public static final String ROUTE = "route";
+    public static final int MY_SOCKET_TIMEOUT_MS = 5000;
 
     private Constants() {
     }
 
-    //public static String baseURL = "http://192.168.1.78:8080/";
+    public static String baseURL = "http://192.168.1.78:8080/";
     //public static String baseURL = "https://nfta-app.herokuapp.com/";
-    public static String baseURL = "https://nftainventory.herokuapp.com/";
+    //public static String baseURL = "https://nftainventory.herokuapp.com/";
     public static String token;
 }
