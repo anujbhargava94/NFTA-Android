@@ -128,15 +128,18 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         stopId.setText(stopTransactions.getStop_id());
         if(stopTransactions.getDirection()!=null)
             direction.setText(stopTransactions.getDirection().getDisplay_name());
-        street_on.setText(stopTransactions.getStreet_on());
-        nearest_cross_street.setText(stopTransactions.getNearest_cross_street());
+        if(stopTransactions.getStreet_on() != null){
+        street_on.setText(stopTransactions.getStreet_on());}
+        if(stopTransactions.getNearest_cross_street() != null){
+        nearest_cross_street.setText(stopTransactions.getNearest_cross_street());}
         if(stopTransactions.getPosition()!=null)
             position.setText(stopTransactions.getPosition().getDisplay_name());
         if(stopTransactions.getFastened_to()!=null)
             fastened_to.setText(stopTransactions.getFastened_to().getDisplay_name());
         if(stopTransactions.getCounty()!=null)
             county.setText(stopTransactions.getCounty().getDisplay_name());
-        status.setText(stopTransactions.getStatus());
+        if(stopTransactions.getStatus() != null){
+        status.setText(stopTransactions.getStatus());}
         shelter.setText(Boolean.toString(stopTransactions.getShelter()));
         advertisement.setText(Boolean.toString(stopTransactions.getAdvertisement()));
         bench.setText(Boolean.toString(stopTransactions.getBench()));
