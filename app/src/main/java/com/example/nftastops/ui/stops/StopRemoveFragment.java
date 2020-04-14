@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,12 +26,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.Dropdowns;
+import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -39,13 +45,13 @@ import static android.app.Activity.RESULT_OK;
 public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
 
     // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
+    private String mParam1;
+    private String mParam2;
     private TextInputLayout stopIdET;
     private TextInputLayout latET;
     private TextInputLayout longET;
@@ -76,12 +82,20 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     // TODO: Rename and change types and number of parameters
     public static StopRemoveFragment newInstance(String param1, String param2) {
         StopRemoveFragment fragment = new StopRemoveFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
@@ -112,6 +126,22 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
 
         latET.getEditText().setText(String.valueOf(gpslocation.getLatitude()));
         longET.getEditText().setText(String.valueOf(gpslocation.getLongitude()));
+        Gson gson = new Gson();
+
+        if (mParam2 != "") {
+            String stopTransaction = mParam2;
+
+            try {
+                Type type2 = new TypeToken<StopTransactions>() {
+                }.getType();
+                stopTransactions = gson.fromJson(stopTransaction, type2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            stopIdET.getEditText().setText(stopTransactions.getStop_id());
+
+        }
 
         return root;
     }
@@ -124,6 +154,14 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
             stopTransactions.setAdmin_comments(reason.getEditText().getText().toString());
             stopTransactions.setTransaction_type("remove");
+
+            if (stopTransactions.getRequest_id() != null) {
+                ServiceRequests serviceRequests = new ServiceRequests();
+                serviceRequests.setRequest_id(stopTransactions.getRequest_id());
+                stopTransactions.setWork_request(serviceRequests);
+            } else {
+                stopTransactions.setWork_request(null);
+            }
 
             Gson gson = new Gson();
             String transaction = gson.toJson(stopTransactions);

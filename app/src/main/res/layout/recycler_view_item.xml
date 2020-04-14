@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@id/times"
-                android:layout_width="180dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/layout_padding"
@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/cvRequestType"
-                android:layout_width="180dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/layout_padding"
@@ -81,7 +81,7 @@
                 android:textSize="@dimen/text_size" />
             <TextView
                 android:id="@+id/cvTransactionType"
-                android:layout_width="180dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/layout_padding"
@@ -104,7 +104,7 @@
 
             <TextView
                 android:id="@+id/cvCounty"
-                android:layout_width="180dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/layout_padding"
@@ -126,7 +126,7 @@
                 android:textSize="@dimen/text_size"/>
             <TextView
                 android:id="@+id/cvDirection"
-                android:layout_width="180dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/layout_padding"
@@ -148,7 +148,7 @@
                 android:textSize="@dimen/text_size" />
             <TextView
                 android:id="@+id/cvAdminUser"
-                android:layout_width="180dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/layout_padding"

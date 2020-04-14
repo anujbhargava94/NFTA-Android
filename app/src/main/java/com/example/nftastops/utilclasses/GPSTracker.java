@@ -93,6 +93,9 @@ public class GPSTracker extends Service implements LocationListener {
                                 }
                             }
                         }
+                        else{
+
+                        }
                     }
                 }
                 // If GPS enabled, get latitude/longitude using GPS Services
