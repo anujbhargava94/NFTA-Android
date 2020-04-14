@@ -111,15 +111,21 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
             e.printStackTrace();
         }
 
-        stopId.setText(stopTransactions.getStop_id());
+        if(stopTransactions.getStop_id() != null){
+        stopId.setText(stopTransactions.getStop_id());}
         if (stopTransactions.getDirection() != null) {
             direction.setText(stopTransactions.getDirection().getDisplay_name());
         }
-        location.setText(stopTransactions.getLocation());
-        request_type.setText(stopTransactions.getRequest_type());
-        reason.setText(stopTransactions.getReason());
-        route.setText(stopTransactions.getRoutesString());
-        additional_information.setText(stopTransactions.getAdditional_information());
+        if(!stopTransactions.getLocation().equals("")){
+        location.setText(stopTransactions.getLocation());}
+        if(!stopTransactions.getRequest_type().equals("")){
+        request_type.setText(stopTransactions.getRequest_type());}
+        if(stopTransactions.getReason() != null){
+        reason.setText(stopTransactions.getReason());}
+        if(!stopTransactions.getRoutesString().equals("")){
+        route.setText(stopTransactions.getRoutesString());}
+        if(!stopTransactions.getAdditional_information().equals("")){
+        additional_information.setText(stopTransactions.getAdditional_information());}
 
 
         if (stopTransactions.getStatus() != null
