@@ -154,6 +154,7 @@ public class StopFragment2 extends Fragment {
     View.OnClickListener submitClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            submitButton.setEnabled(false);
             stopTransactions.setShelter(shelter.isChecked());
             stopTransactions.setAdvertisement(advertisement.isChecked());
             stopTransactions.setBench(bench.isChecked());
@@ -221,6 +222,7 @@ public class StopFragment2 extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                submitButton.setEnabled(true);
                 String errorString = "Error in adding Transaction";
                 Toast.makeText(
                         getContext(),
