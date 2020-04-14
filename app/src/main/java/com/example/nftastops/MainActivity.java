@@ -87,15 +87,15 @@ public class MainActivity extends AppCompatActivity {
         }
         //dologinJwt(this);
 
-        gpslocation = new GPSTracker(this);
-        location = gpslocation.getLocation();
 
-        callPingAPI(Constants.PING);
         getDropDowns(this, Constants.DIRECTION);
         getDropDowns(this, Constants.POSITION);
         getDropDowns(this, Constants.FASTENED);
         getDropDowns(this, Constants.COUNTY);
         getDropDowns(this, Constants.ROUTE);
+        gpslocation = new GPSTracker(this);
+        location = gpslocation.getLocation();
+        callPingAPI(Constants.PING);
     }
 
     private void callPingAPI(String url) {
