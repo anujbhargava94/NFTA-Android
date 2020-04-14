@@ -163,6 +163,7 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setTime_table(timeTable.isChecked());
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
+            stopTransactions.setStatus(Constants.INPROGRESS);
             //stopTransactions.setRoute(String.valueOf(acroutes.getSelectedItem()));
             if (stopTransactions.getRequest_id() != null) {
                 ServiceRequests serviceRequests = new ServiceRequests();

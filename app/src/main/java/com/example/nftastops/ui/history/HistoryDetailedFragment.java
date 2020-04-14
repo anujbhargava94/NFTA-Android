@@ -37,7 +37,6 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
     private String mParam1;
     private String mParam2;
 
-    private TextView location;
     private TextView direction;
     private TextView position;
     private TextView nearest_cross_street;
@@ -99,7 +98,6 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         View root = inflater.inflate(R.layout.fragment_history_detailed, container, false);
         stopId = root.findViewById(R.id.times);
         direction = root.findViewById(R.id.directionval);
-        location = root.findViewById(R.id.locationval);
         street_on = root.findViewById(R.id.streetonval);
         nearest_cross_street = root.findViewById(R.id.nearestcrossstreetval);
         position = root.findViewById(R.id.positionval);
@@ -130,7 +128,6 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         stopId.setText(stopTransactions.getStop_id());
         if(stopTransactions.getDirection()!=null)
             direction.setText(stopTransactions.getDirection().getDisplay_name());
-        location.setText(stopTransactions.getLocation());
         street_on.setText(stopTransactions.getStreet_on());
         nearest_cross_street.setText(stopTransactions.getNearest_cross_street());
         if(stopTransactions.getPosition()!=null)
@@ -150,12 +147,16 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         if(stopTransactions.getRoute()!=null && !stopTransactions.getRoute().isEmpty())
             route.setText(stopTransactions.getRoutesString());
 
-//        if (advertisement.getText().toString().isEmpty())
-//            advertisement.setVisibility(View.GONE);
-//         if(stopTransactions.getTransaction_type().equals("remove")){
-//             direction.setVisibility(View.GONE);
-//             advertisement.setVisibility(View.GONE);
-//         }
+
+        if(stopTransactions.getTransaction_type()!= null  && stopTransactions.getTransaction_type().equals("remove")){
+                shelter.setVisibility(View.GONE);
+                advertisement.setVisibility(View.GONE);
+                bench.setVisibility(View.GONE);
+                bike_rack.setVisibility(View.GONE);
+                trash_can.setVisibility(View.GONE);
+                time_table.setVisibility(View.GONE);
+                system_map.setVisibility(View.GONE);
+        }
 
 
         // Inflate the layout for this fragment

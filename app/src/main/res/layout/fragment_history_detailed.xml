@@ -60,30 +60,10 @@
             android:textSize="@dimen/text_size" />
 
         <TextView
-            android:id="@+id/location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/directionval"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/layout_padding"
-            android:layout_toLeftOf="@+id/locationval"
-            android:text="Location"
-            android:textSize="@dimen/text_size" />
-
-        <TextView
-            android:id="@+id/locationval"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/directionval"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
-
-        <TextView
             android:id="@+id/streeton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/location"
+            android:layout_below="@id/directionval"
             android:layout_alignParentLeft="true"
             android:layout_margin="@dimen/layout_padding"
             android:layout_toLeftOf="@+id/streetonval"
@@ -94,7 +74,7 @@
             android:id="@+id/streetonval"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/locationval"
+            android:layout_below="@id/directionval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
             android:textSize="@dimen/text_size" />
