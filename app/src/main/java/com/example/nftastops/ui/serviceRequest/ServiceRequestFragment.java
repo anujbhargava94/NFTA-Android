@@ -126,7 +126,8 @@ public class ServiceRequestFragment extends Fragment {
         //Map serviceRequests with stopTransactions RVadaptor
         for (ServiceRequests serviceRequest : serviceRequests) {
             StopTransactions stopTransaction = new StopTransactions();
-            stopTransaction.setStop_id(serviceRequest.getStop_id().toString());
+            if(serviceRequest.getStop_id() != null){
+            stopTransaction.setStop_id(serviceRequest.getStop_id().toString());}
             stopTransaction.setRequest_type(serviceRequest.getRequest_type());
             stopTransaction.setLocation(serviceRequest.getLocation());
             stopTransaction.setDirection(serviceRequest.getDirection());

@@ -8,6 +8,7 @@ import java.util.List;
 public final class Constants {
 
     public static final String OPEN = "Open";
+    public static final String INPROGRESS = "In Progress";
     public static final String SRKEY = "SRKEY";
     public static final String OPENSRKEY = "OPENSRKEY";
     public static final String CLOSESRKEY = "CLOSESRKEY";

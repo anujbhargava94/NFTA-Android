@@ -30,6 +30,7 @@ import com.example.nftastops.model.Dropdowns;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.google.android.material.textfield.TextInputLayout;
@@ -153,6 +154,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
             stopTransactions.setAdmin_comments(reason.getEditText().getText().toString());
+            stopTransactions.setStatus(Constants.INPROGRESS);
             stopTransactions.setTransaction_type("remove");
 
             if (stopTransactions.getRequest_id() != null) {
