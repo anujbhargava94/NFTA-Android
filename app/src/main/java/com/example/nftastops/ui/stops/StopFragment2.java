@@ -11,11 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -30,6 +26,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
@@ -40,6 +41,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -87,7 +89,11 @@ public class StopFragment2 extends Fragment {
     Bitmap bitmap;
     String encodedString;
     Bitmap selectedImage;
-
+    String currentPhotoPath;
+    String imageFileName;
+    String cloudImageUrl0;
+    String cloudImageUrl1;
+    String cloudImageUrl2;
 
     public StopFragment2() {
         // Required empty public constructor
@@ -173,7 +179,8 @@ public class StopFragment2 extends Fragment {
 //            Gson gson = new Gson();
 //            String transaction = gson.toJson(stopTransactions);
             // makeApiCall("add", transaction);
-            new encodeImage().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+           // new encodeImage().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            triggerImageUpload();
         }
     };
 
@@ -220,6 +227,8 @@ public class StopFragment2 extends Fragment {
         transaction.commit();
     }
 
+    File photoFile = null;
+    Uri photoURI;
     private void selectImage(Context context) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
@@ -232,8 +241,36 @@ public class StopFragment2 extends Fragment {
             public void onClick(DialogInterface dialog, int item) {
 
                 if (options[item].equals("Take Photo")) {
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
+//                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    if (takePicture.resolveActivity(getActivity().getPackageManager()) != null) {
+//                        startActivityForResult(takePicture, 0);
+//                    }
+
+
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    // Ensure that there's a camera activity to handle the intent
+                    if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        // Create the File where the photo should go
+
+                        try {
+                            photoFile = createImageFile();
+                        } catch (IOException ex) {
+                            // Error occurred while creating the File
+                        }
+                        // Continue only if the File was successfully created
+                        if (photoFile != null) {
+                           photoURI = FileProvider.getUriForFile(getActivity(),
+                                    "com.example.nftastops.fileprovider",
+                                    photoFile);
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                            startActivityForResult(takePictureIntent, 0);
+                        }
+                    }
+
+
+
+
+
 
                 } else if (options[item].equals("Choose from Gallery")) {
 
@@ -256,8 +293,22 @@ public class StopFragment2 extends Fragment {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        selectedImage = (Bitmap) data.getExtras().get("data");
-                        locPics.setImageBitmap(selectedImage);
+
+//                        File file = new File(Environment.getExternalStorageDirectory().getPath(),imageFileName);
+//                        Uri uri = Uri.fromFile(file);
+                        Bitmap bitmap;
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoURI);
+                            bitmap = cropAndScale(bitmap, 300); // if you mind scaling
+                            locPics.setImageBitmap(bitmap);
+                        }catch (Exception e){
+                            Log.d("image","not working");
+                        }
+
+//                        Bundle extras = data.getExtras();
+//                         selectedImage = (Bitmap) extras.get("data");
+//                        //selectedImage = (Bitmap) data.getExtras().get("data");
+                        //locPics.setImageBitmap(selectedImage);
                     }
 
                     break;
@@ -282,6 +333,16 @@ public class StopFragment2 extends Fragment {
                     break;
             }
         }
+    }
+
+    public static  Bitmap cropAndScale (Bitmap source, int scale){
+        int factor = source.getHeight() <= source.getWidth() ? source.getHeight(): source.getWidth();
+        int longer = source.getHeight() >= source.getWidth() ? source.getHeight(): source.getWidth();
+        int x = source.getHeight() >= source.getWidth() ?0:(longer-factor)/2;
+        int y = source.getHeight() <= source.getWidth() ?0:(longer-factor)/2;
+        source = Bitmap.createBitmap(source, x, y, factor, factor);
+        source = Bitmap.createScaledBitmap(source, scale, scale, false);
+        return source;
     }
 
     public class encodeImage extends AsyncTask<Void, Void, String> {
@@ -327,10 +388,12 @@ public class StopFragment2 extends Fragment {
 
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
+
             MediaType mediaType = MediaType.parse("text/plain");
             RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                     .addFormDataPart("upload_preset", "nftafolder")
-                    .addFormDataPart("file", encodedString)
+                    .addFormDataPart("file", imageFileName,
+                            RequestBody.create(mediaType, photoFile))
                     .build();
             Request request = new Request.Builder()
                     .url("https://api.cloudinary.com/v1_1/nftaproject/image/upload")
@@ -340,6 +403,7 @@ public class StopFragment2 extends Fragment {
             try {
                 okhttp3.Response response = client.newCall(request).execute();
                 Log.d("response", "image response"+response.body().string());
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -355,4 +419,28 @@ public class StopFragment2 extends Fragment {
             makeApiCall("add", transaction);
         }
     }
+
+
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String stop_id = "";
+        if(stopTransactions!=null && stopTransactions.getStop_id()!=null){
+            stop_id = stopTransactions.getStop_id();
+        }
+        imageFileName = "Android_JPEG_" + "_"+stop_id;
+        imageFileName = imageFileName.replace(" ","");
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
 }
