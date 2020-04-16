@@ -85,7 +85,7 @@
                 android:text="Route"
                 android:textSize="@dimen/text_size" />
 
-            <Spinner
+            <com.example.nftastops.utilclasses.MultiSpinner
                 android:id="@+id/autocomplete_route"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/layout_height"
@@ -93,6 +93,7 @@
                 android:layout_weight="4"
                 android:inputType="textAutoComplete"
                 android:textSize="@dimen/text_size" />
+
         </LinearLayout>
 
         <TextView

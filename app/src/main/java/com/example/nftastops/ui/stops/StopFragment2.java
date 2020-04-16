@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.Constants;
+import com.example.nftastops.utilclasses.MultiSpinner;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.textfield.TextInputLayout;
@@ -124,7 +126,9 @@ public class StopFragment2 extends Fragment {
         timeTable = root.findViewById(R.id.timetableId);
         systemMap = root.findViewById(R.id.systemMapId);
         comments = root.findViewById(R.id.admin_comments);
-        acroutes = root.findViewById(R.id.autocomplete_route);
+        MultiSpinner acroutes = (MultiSpinner)root.findViewById(R.id.autocomplete_route);
+
+
         submitButton = root.findViewById(R.id.fragment2Next);
         submitButton.setOnClickListener(submitClick);
         locPics = root.findViewById(R.id.mypics);
@@ -143,9 +147,15 @@ public class StopFragment2 extends Fragment {
         }
         routesDN.add(0, new Dropdowns("--Select--"));
 
-        ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
-                (getActivity(), android.R.layout.simple_list_item_1, routesDN);
-        acroutes.setAdapter(routesAdapter);
+        //ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
+        //        (getActivity(), android.R.layout.simple_list_item_1, routesDN);
+        //acroutes.setAdapter(routesAdapter);
+
+        List<String> routeNames = new ArrayList<String>();
+        for (int i = 0; i < routesDN.size(); i++){
+            routeNames.add(routesDN.get(i).getDisplay_name());
+        }
+        acroutes.setItems(routeNames);
 
         String stopTransactionJson = getArguments().getString("stopTransaction");
         stopTransactions = gson.fromJson(stopTransactionJson, StopTransactions.class);
