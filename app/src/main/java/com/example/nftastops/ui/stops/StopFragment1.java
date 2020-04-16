@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,9 +66,9 @@ public class StopFragment1 extends Fragment {
     GPSTracker gpslocation;
     NetworkAPICall apiCAll;
     List<Dropdowns> directionDN;
-    List<Dropdowns>  countyDN;
-    List<Dropdowns>  positionDN;
-    List<Dropdowns>  fastenedToDN;
+    List<Dropdowns> countyDN;
+    List<Dropdowns> positionDN;
+    List<Dropdowns> fastenedToDN;
 
 
     public StopFragment1() {
@@ -144,18 +145,25 @@ public class StopFragment1 extends Fragment {
         positionDN = gson.fromJson(positionR, type);
         fastenedToDN = gson.fromJson(fastenedToR, type);
 
-        if(directionDN!=null){
-            directionDN.add(0,new Dropdowns("--Select--"));
+        if (directionDN == null) {
+            directionDN = new ArrayList<>();
         }
-        if(countyDN!=null){
-            countyDN.add(0,new Dropdowns("--Select--"));
+        directionDN.add(0, new Dropdowns("--Select--"));
+
+        if (countyDN == null) {
+            countyDN = new ArrayList<>();
         }
-        if(positionDN!=null){
-            positionDN.add(0,new Dropdowns("--Select--"));
+        countyDN.add(0, new Dropdowns("--Select--"));
+
+        if (positionDN == null) {
+            positionDN = new ArrayList<>();
         }
-        if(fastenedToDN!=null){
-            fastenedToDN.add(0,new Dropdowns("--Select--"));
+        positionDN.add(0, new Dropdowns("--Select--"));
+        if (fastenedToDN == null) {
+            fastenedToDN = new ArrayList<>();
         }
+        fastenedToDN.add(0, new Dropdowns("--Select--"));
+
 
         //String[] directions = getResources().getStringArray(R.array.direction);
 
@@ -214,9 +222,9 @@ public class StopFragment1 extends Fragment {
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
             stopTransactions.setDirection((Dropdowns) acdirection.getSelectedItem());
-            stopTransactions.setFastened_to((Dropdowns)acfastenedTo.getSelectedItem());
-            stopTransactions.setCounty((Dropdowns)acounty.getSelectedItem());
-            stopTransactions.setPosition((Dropdowns)acposition.getSelectedItem());
+            stopTransactions.setFastened_to((Dropdowns) acfastenedTo.getSelectedItem());
+            stopTransactions.setCounty((Dropdowns) acounty.getSelectedItem());
+            stopTransactions.setPosition((Dropdowns) acposition.getSelectedItem());
             stopTransactions.setTransaction_type(mParam1);
 
             Gson gson = new Gson();
@@ -234,30 +242,30 @@ public class StopFragment1 extends Fragment {
         @Override
         public void onClick(View view) {
             Location loc = null;
-            double latitude = 0.0;
-            if (gpslocation.canGetLocation()) {
-
-
-                latitude = gpslocation.getLatitude();
-            } else {
-                gpslocation.showSettingsAlert();
-            }
-            latET.getEditText().setText(String.valueOf(latitude));
+//            double latitude = 0.0;
+//            if (gpslocation.canGetLocation()) {
+//
+//
+//                latitude = gpslocation.getLatitude();
+//            } else {
+//                gpslocation.showSettingsAlert();
+//            }
+            latET.getEditText().setText(String.valueOf(gpslocation.getLatitude()));
         }
     };
 
     View.OnClickListener longOnclickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location loc = null;
-            double longitude = 0.0;
-            if (gpslocation.canGetLocation()) {
-                longitude = gpslocation.getLongitude();
-            } else {
-                gpslocation.showSettingsAlert();
-            }
+//            Location loc = null;
+//            double longitude = 0.0;
+//            if (gpslocation.canGetLocation()) {
+//                longitude = gpslocation.getLongitude();
+//            } else {
+//                gpslocation.showSettingsAlert();
+//            }
 
-            longET.getEditText().setText(String.valueOf(longitude));
+            longET.getEditText().setText(String.valueOf(gpslocation.getLongitude()));
         }
     };
 

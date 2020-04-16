@@ -72,7 +72,7 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+        return password != null && password.trim().length() > 2;
     }
 
     private void dologinJwt(final Context context, final String username, final String password) {

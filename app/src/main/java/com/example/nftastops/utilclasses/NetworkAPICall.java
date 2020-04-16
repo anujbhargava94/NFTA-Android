@@ -1,7 +1,6 @@
 package com.example.nftastops.utilclasses;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -13,7 +12,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nftastops.model.LoginRequest;
-import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;

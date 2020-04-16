@@ -65,6 +65,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     ImageView locPics;
     private TextView addPhoto;
     NetworkAPICall apiCAll;
+    Button nextButton;
 
 
     public StopRemoveFragment() {
@@ -105,7 +106,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         // Inflate the layout for this fragment
 
         View root = inflater.inflate(R.layout.fragment_remove_stop, container, false);
-        Button nextButton = root.findViewById(R.id.fragmentSubmit);
+        nextButton = root.findViewById(R.id.fragmentSubmit);
         nextButton.setOnClickListener(nextOnClick);
         stopIdET = root.findViewById(R.id.stop_id);
         latET = root.findViewById(R.id.latitude);
@@ -150,6 +151,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     View.OnClickListener nextOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            nextButton.setEnabled(false);
             stopTransactions.setStop_id(stopIdET.getEditText().getText().toString());
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
@@ -265,6 +267,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                nextButton.setEnabled(true);
                 String errorString = "Error in adding Transaction";
                 Toast.makeText(
                         getContext(),

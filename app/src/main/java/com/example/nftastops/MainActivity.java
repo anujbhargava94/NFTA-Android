@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     GPSTracker gpslocation;
     Location location;
     private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 1;
+    boolean loginInit = false;
 
     public static MainActivity getInstance() {
         return instance;
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (results != null && !results.getResult().equals(Constants.SUCCESS) && results.getError().equals(Constants.UNAUTH)) {
-                    openLogin();
+                    if (isLoggedIn()) {openLogin();}
                 }
             }
         }, new Response.ErrorListener() {
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 String errorString = "Error in Log in";
                 System.out.println(errorString);
-                openLogin();
+                if (isLoggedIn()) {
+                openLogin();}
             }
         });
     }

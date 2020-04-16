@@ -142,9 +142,10 @@ public class StopFragment2 extends Fragment {
         String routesR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.ROUTE);
 
         routesDN = gson.fromJson(routesR, type);
-        if (routesDN != null) {
-            routesDN.add(0, new Dropdowns("--Select--"));
+        if (routesDN == null) {
+            routesDN = new ArrayList<>();
         }
+        routesDN.add(0, new Dropdowns("--Select--"));
 
         //ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
         //        (getActivity(), android.R.layout.simple_list_item_1, routesDN);
@@ -263,7 +264,9 @@ public class StopFragment2 extends Fragment {
 
                 if (options[item].equals("Take Photo")) {
                     Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
+                    if (takePicture.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivityForResult(takePicture, 0);
+                    }
 
                 } else if (options[item].equals("Choose from Gallery")) {
 
