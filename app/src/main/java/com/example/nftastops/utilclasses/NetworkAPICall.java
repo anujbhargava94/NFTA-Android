@@ -18,6 +18,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 import static com.example.nftastops.utilclasses.Constants.baseURL;
 
 public class NetworkAPICall {
@@ -97,12 +100,14 @@ public class NetworkAPICall {
                     return null;
                 }
             }
+
+
         };
 
         postRequest.setRetryPolicy(new DefaultRetryPolicy(
                 Constants.MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                0,
+                0));
         NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
     }
 
