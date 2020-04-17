@@ -18,6 +18,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.example.nftastops.MainActivity;
 
 public class GPSTracker extends Service implements LocationListener {
 
@@ -35,6 +38,8 @@ public class GPSTracker extends Service implements LocationListener {
     Location location; // Location
     double latitude; // Latitude
     double longitude; // Longitude
+
+    //private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 1;
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -65,11 +70,12 @@ public class GPSTracker extends Service implements LocationListener {
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // No network provider is enabled
+                Log.d("custom","GPS disabled");
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ContextCompat.checkSelfPermission(MainActivity.getInstance(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(MainActivity.getInstance(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
                             //    Activity#requestPermissions
                             // here to request the missing permissions, and then overriding
@@ -78,6 +84,10 @@ public class GPSTracker extends Service implements LocationListener {
                             // to handle the case where the user grants the permission. See the documentation
                             // for Activity#requestPermissions for more details.
                             //return TODO;
+
+//                            ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                                    MY_PERMISSIONS_REQUEST_READ_LOCATION);
+                            MainActivity.getInstance().requestPermission();
 
                             locationManager.requestLocationUpdates(
                                     LocationManager.NETWORK_PROVIDER,
@@ -92,6 +102,9 @@ public class GPSTracker extends Service implements LocationListener {
                                     longitude = location.getLongitude();
                                 }
                             }
+                        }
+                        else{
+
                         }
                     }
                 }
@@ -121,6 +134,30 @@ public class GPSTracker extends Service implements LocationListener {
 
         return location;
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           String[] permissions, int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // permission was granted, yay! Do the
+//                    // contacts-related task you need to do.
+//                    Log.d("custom","Permission granted");
+//                    isGPSEnabled = true;
+//                } else {
+//                    // permission denied, boo! Disable the
+//                    // functionality that depends on this permission.
+//                }
+//                return;
+//            }
+//
+//            // other 'case' lines to check for other
+//            // permissions this app might request.
+//        }
+//    }
 
 
     /**

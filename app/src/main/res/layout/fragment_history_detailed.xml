@@ -37,7 +37,8 @@
             android:layout_below="@id/name"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/direction"
@@ -57,33 +58,14 @@
             android:layout_below="@id/times"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
-
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/directionval"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/layout_padding"
-            android:layout_toLeftOf="@+id/locationval"
-            android:text="Location"
-            android:textSize="@dimen/text_size" />
-
-        <TextView
-            android:id="@+id/locationval"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/directionval"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/streeton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/location"
+            android:layout_below="@id/directionval"
             android:layout_alignParentLeft="true"
             android:layout_margin="@dimen/layout_padding"
             android:layout_toLeftOf="@+id/streetonval"
@@ -94,10 +76,11 @@
             android:id="@+id/streetonval"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/locationval"
+            android:layout_below="@id/directionval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/nearestcrossstreet"
@@ -117,7 +100,8 @@
             android:layout_below="@id/streetonval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/position"
@@ -137,7 +121,8 @@
             android:layout_below="@id/nearestcrossstreetval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/fastenedto"
@@ -157,7 +142,8 @@
             android:layout_below="@id/positionval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/county"
@@ -177,7 +163,8 @@
             android:layout_below="@id/fastenedtoval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/status"
@@ -197,7 +184,8 @@
             android:layout_below="@id/countyval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
         <TextView
             android:id="@+id/shelter"
@@ -357,7 +345,8 @@
             android:layout_below="@id/system_mapval"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/layout_padding"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size"
+            android:text="--"/>
 
     </RelativeLayout>
 </ScrollView>

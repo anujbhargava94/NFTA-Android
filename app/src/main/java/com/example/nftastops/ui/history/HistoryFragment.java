@@ -1,12 +1,10 @@
 package com.example.nftastops.ui.history;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,13 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
-import com.example.nftastops.model.BaseResponse;
-import com.example.nftastops.model.LoginJwt;
 import com.example.nftastops.model.StopTransactions;
-import com.example.nftastops.ui.serviceRequest.ServiceRequestDetailedFragment;
-import com.example.nftastops.ui.stops.StopFragment1;
-import com.example.nftastops.ui.ui.login.LoginActivity;
-import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
 import com.google.gson.Gson;
@@ -81,13 +73,11 @@ public class HistoryFragment extends Fragment {
                 if (results.isEmpty()) {
                     StopTransactions e = new StopTransactions();
                     e.setStop_id("Stop Id1");
-                    e.setDirection("Direction 1");
                     e.setDate("14th Dec 2018");
                     e.setLocation("location 1");
                     e.setRequest_type("New");
                     StopTransactions e2 = new StopTransactions();
                     e2.setStop_id("Stop Id2");
-                    e2.setDirection("Direction 2");
                     e2.setDate("15th Dec 2019");
                     e2.setLocation("location 2");
                     e2.setRequest_type("Update");

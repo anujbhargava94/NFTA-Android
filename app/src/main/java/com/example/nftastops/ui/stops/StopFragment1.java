@@ -17,12 +17,21 @@ import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
+import com.example.nftastops.model.Dropdowns;
+import com.example.nftastops.model.PingModel;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
+import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +65,10 @@ public class StopFragment1 extends Fragment {
     private Button fetchButton;
     GPSTracker gpslocation;
     NetworkAPICall apiCAll;
+    List<Dropdowns> directionDN;
+    List<Dropdowns> countyDN;
+    List<Dropdowns> positionDN;
+    List<Dropdowns> fastenedToDN;
 
 
     public StopFragment1() {
@@ -100,7 +113,7 @@ public class StopFragment1 extends Fragment {
         View root = inflater.inflate(R.layout.stop_fragment1, container, false);
         Button nextButton = root.findViewById(R.id.fragment1Next);
         nextButton.setOnClickListener(nextOnClick);
-        stopIdET = root.findViewById(R.id.stopId);
+        stopIdET = root.findViewById(R.id.stop_id);
         streetOnET = root.findViewById(R.id.streetOn);
         nearestCSET = root.findViewById(R.id.nearestCrossStreet);
         latET = root.findViewById(R.id.latitude);
@@ -118,24 +131,59 @@ public class StopFragment1 extends Fragment {
         ivLong.setOnClickListener(longOnclickListner);
         fetchButton.setOnClickListener(fetchOnClickListner);
 
+        String directionsR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.DIRECTION);
+        String countyR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.COUNTY);
+        String positionR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.POSITION);
+        String fastenedToR = SharedPrefUtil.getRawTasksFromSharedPrefs(getActivity(), Constants.FASTENED);
 
-        String[] directions = getResources().getStringArray(R.array.direction);
-        ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_list_item_1, directions);
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Dropdowns>>() {
+        }.getType();
+
+        directionDN = gson.fromJson(directionsR, type);
+        countyDN = gson.fromJson(countyR, type);
+        positionDN = gson.fromJson(positionR, type);
+        fastenedToDN = gson.fromJson(fastenedToR, type);
+
+        if (directionDN == null) {
+            directionDN = new ArrayList<>();
+        }
+        directionDN.add(0, new Dropdowns("--Select--"));
+
+        if (countyDN == null) {
+            countyDN = new ArrayList<>();
+        }
+        countyDN.add(0, new Dropdowns("--Select--"));
+
+        if (positionDN == null) {
+            positionDN = new ArrayList<>();
+        }
+        positionDN.add(0, new Dropdowns("--Select--"));
+        if (fastenedToDN == null) {
+            fastenedToDN = new ArrayList<>();
+        }
+        fastenedToDN.add(0, new Dropdowns("--Select--"));
+
+
+        //String[] directions = getResources().getStringArray(R.array.direction);
+
+        ArrayAdapter<Dropdowns> directionsAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, directionDN);
         acdirection.setAdapter(directionsAdapter);
 
-        String[] fastenedTo = getResources().getStringArray(R.array.fastenedTo);
-        ArrayAdapter<String> fastenedToAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_list_item_1, fastenedTo);
+        //String[] fastenedTo = getResources().getStringArray(R.array.fastenedTo);
+        ArrayAdapter<Dropdowns> fastenedToAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, fastenedToDN);
         acfastenedTo.setAdapter(fastenedToAdapter);
-        String[] acounties = getResources().getStringArray(R.array.county);
-        ArrayAdapter<String> acountiesAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_list_item_1, acounties);
+        //String[] acounties = getResources().getStringArray(R.array.county);
+        ArrayAdapter<Dropdowns> acountiesAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, countyDN);
         acounty.setAdapter(acountiesAdapter);
-        String[] positions = getResources().getStringArray(R.array.position);
-        ArrayAdapter<String> positionsAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_list_item_1, positions);
+        //String[] positions = getResources().getStringArray(R.array.position);
+        ArrayAdapter<Dropdowns> positionsAdapter = new ArrayAdapter<>
+                (getActivity(), android.R.layout.simple_list_item_1, positionDN);
         acposition.setAdapter(positionsAdapter);
+
         gpslocation = new GPSTracker(getActivity());
 
         latET.getEditText().setText(String.valueOf(gpslocation.getLatitude()));
@@ -144,6 +192,23 @@ public class StopFragment1 extends Fragment {
             fetchButton.setVisibility(View.GONE);
         }
         fetchButton.setVisibility(View.GONE);
+
+        if (mParam2 != "") {
+            String stopTransaction = mParam2;
+
+            try {
+                Type type2 = new TypeToken<StopTransactions>() {
+                }.getType();
+                stopTransactions = gson.fromJson(stopTransaction, type2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            stopIdET.getEditText().setText(stopTransactions.getStop_id());
+            acdirection.setSelection(((ArrayAdapter<Dropdowns>) acdirection.getAdapter()).getPosition(stopTransactions.getDirection()));
+
+        }
+
 
         return root;
     }
@@ -156,10 +221,10 @@ public class StopFragment1 extends Fragment {
             stopTransactions.setNearest_cross_street(nearestCSET.getEditText().getText().toString());
             stopTransactions.setLatitude(Double.valueOf(latET.getEditText().getText().toString()));
             stopTransactions.setLongitude(Double.valueOf(longET.getEditText().getText().toString()));
-            stopTransactions.setDirection(String.valueOf(acdirection.getSelectedItem()));
-            stopTransactions.setFastened_to(String.valueOf(acfastenedTo.getSelectedItem()));
-            stopTransactions.setCounty(String.valueOf(acounty.getSelectedItem()));
-            stopTransactions.setPosition(String.valueOf(acposition.getSelectedItem()));
+            stopTransactions.setDirection((Dropdowns) acdirection.getSelectedItem());
+            stopTransactions.setFastened_to((Dropdowns) acfastenedTo.getSelectedItem());
+            stopTransactions.setCounty((Dropdowns) acounty.getSelectedItem());
+            stopTransactions.setPosition((Dropdowns) acposition.getSelectedItem());
             stopTransactions.setTransaction_type(mParam1);
 
             Gson gson = new Gson();
@@ -177,30 +242,30 @@ public class StopFragment1 extends Fragment {
         @Override
         public void onClick(View view) {
             Location loc = null;
-            double latitude = 0.0;
-            if (gpslocation.canGetLocation()) {
-
-
-                latitude = gpslocation.getLatitude();
-            } else {
-                gpslocation.showSettingsAlert();
-            }
-            latET.getEditText().setText(String.valueOf(latitude));
+//            double latitude = 0.0;
+//            if (gpslocation.canGetLocation()) {
+//
+//
+//                latitude = gpslocation.getLatitude();
+//            } else {
+//                gpslocation.showSettingsAlert();
+//            }
+            latET.getEditText().setText(String.valueOf(gpslocation.getLatitude()));
         }
     };
 
     View.OnClickListener longOnclickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location loc = null;
-            double longitude = 0.0;
-            if (gpslocation.canGetLocation()) {
-                longitude = gpslocation.getLongitude();
-            } else {
-                gpslocation.showSettingsAlert();
-            }
+//            Location loc = null;
+//            double longitude = 0.0;
+//            if (gpslocation.canGetLocation()) {
+//                longitude = gpslocation.getLongitude();
+//            } else {
+//                gpslocation.showSettingsAlert();
+//            }
 
-            longET.getEditText().setText(String.valueOf(longitude));
+            longET.getEditText().setText(String.valueOf(gpslocation.getLongitude()));
         }
     };
 

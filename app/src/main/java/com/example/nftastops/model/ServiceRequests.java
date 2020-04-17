@@ -1,17 +1,70 @@
 package com.example.nftastops.model;
 
+import java.util.List;
+
 public class ServiceRequests extends BaseResponse{
     private Integer request_id;
     private Integer admin_user_id;
     private String requested_user;
     private String location;
-    private String direction;
-    private String route;
+    private Dropdowns direction;
+    private List<Dropdowns> route;
     private String reason;
-    private Integer stopId;
+    private String stop_id;
     private String additional_information;
     private String status;
     private String request_type;
+    private Dropdowns position;
+    private Dropdowns fastened_to;
+    private Dropdowns county;
+
+    public String getStop_id() {
+        return stop_id;
+    }
+
+    public void setStop_id(String stop_id) {
+        this.stop_id = stop_id;
+    }
+
+    public Dropdowns getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Dropdowns direction) {
+        this.direction = direction;
+    }
+
+    public List<Dropdowns> getRoute() {
+        return route;
+    }
+
+    public void setRoute(List<Dropdowns> route) {
+        this.route = route;
+    }
+
+    public Dropdowns getPosition() {
+        return position;
+    }
+
+    public void setPosition(Dropdowns position) {
+        this.position = position;
+    }
+
+    public Dropdowns getFastened_to() {
+        return fastened_to;
+    }
+
+    public void setFastened_to(Dropdowns fastened_to) {
+        this.fastened_to = fastened_to;
+    }
+
+    public Dropdowns getCounty() {
+        return county;
+    }
+
+    public void setCounty(Dropdowns county) {
+        this.county = county;
+    }
 
     public Integer getRequest_id() {
         return request_id;
@@ -45,36 +98,12 @@ public class ServiceRequests extends BaseResponse{
         this.location = location;
     }
 
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
-    public String getRoute() {
-        return route;
-    }
-
-    public void setRoute(String route) {
-        this.route = route;
-    }
-
     public String getReason() {
         return reason;
     }
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public Integer getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(Integer stopId) {
-        this.stopId = stopId;
     }
 
     public String getAdditional_information() {

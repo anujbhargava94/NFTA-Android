@@ -37,7 +37,6 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
     private String mParam1;
     private String mParam2;
 
-    private TextView location;
     private TextView direction;
     private TextView position;
     private TextView nearest_cross_street;
@@ -99,7 +98,6 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         View root = inflater.inflate(R.layout.fragment_history_detailed, container, false);
         stopId = root.findViewById(R.id.times);
         direction = root.findViewById(R.id.directionval);
-        location = root.findViewById(R.id.locationval);
         street_on = root.findViewById(R.id.streetonval);
         nearest_cross_street = root.findViewById(R.id.nearestcrossstreetval);
         position = root.findViewById(R.id.positionval);
@@ -128,14 +126,20 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         }
 
         stopId.setText(stopTransactions.getStop_id());
-        direction.setText(stopTransactions.getDirection());
-        location.setText(stopTransactions.getLocation());
-        street_on.setText(stopTransactions.getStreet_on());
-        nearest_cross_street.setText(stopTransactions.getNearest_cross_street());
-        position.setText(stopTransactions.getPosition());
-        fastened_to.setText(stopTransactions.getFastened_to());
-        county.setText(stopTransactions.getCounty());
-        status.setText(stopTransactions.getStatus());
+        if(stopTransactions.getDirection()!=null)
+            direction.setText(stopTransactions.getDirection().getDisplay_name());
+        if(stopTransactions.getStreet_on() != null){
+        street_on.setText(stopTransactions.getStreet_on());}
+        if(stopTransactions.getNearest_cross_street() != null){
+        nearest_cross_street.setText(stopTransactions.getNearest_cross_street());}
+        if(stopTransactions.getPosition()!=null)
+            position.setText(stopTransactions.getPosition().getDisplay_name());
+        if(stopTransactions.getFastened_to()!=null)
+            fastened_to.setText(stopTransactions.getFastened_to().getDisplay_name());
+        if(stopTransactions.getCounty()!=null)
+            county.setText(stopTransactions.getCounty().getDisplay_name());
+        if(stopTransactions.getStatus() != null){
+        status.setText(stopTransactions.getStatus());}
         shelter.setText(Boolean.toString(stopTransactions.getShelter()));
         advertisement.setText(Boolean.toString(stopTransactions.getAdvertisement()));
         bench.setText(Boolean.toString(stopTransactions.getBench()));
@@ -143,16 +147,19 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         trash_can.setText(Boolean.toString(stopTransactions.getTrash_can()));
         time_table.setText(Boolean.toString(stopTransactions.getTime_table()));
         system_map.setText(Boolean.toString(stopTransactions.getSystem_map()));
-//        if (stopTransactions.getRoute() != null) {
-//            for (String strroute : stopTransactions.getRoute()) {
-//                //route.setText(strroute);
-//                route.append(strroute);
-//            }
-//        }
-        
-//        if (advertisement.getText().toString().isEmpty())
-//            advertisement.setVisibility(View.GONE);
+        if(stopTransactions.getRoute()!=null && !stopTransactions.getRoute().isEmpty())
+            route.setText(stopTransactions.getRoutesString());
 
+
+        if(stopTransactions.getTransaction_type()!= null  && stopTransactions.getTransaction_type().equals("remove")){
+                shelter.setVisibility(View.GONE);
+                advertisement.setVisibility(View.GONE);
+                bench.setVisibility(View.GONE);
+                bike_rack.setVisibility(View.GONE);
+                trash_can.setVisibility(View.GONE);
+                time_table.setVisibility(View.GONE);
+                system_map.setVisibility(View.GONE);
+        }
 
 
         // Inflate the layout for this fragment

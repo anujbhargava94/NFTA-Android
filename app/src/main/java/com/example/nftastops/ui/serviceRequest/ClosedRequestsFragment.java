@@ -3,11 +3,15 @@ package com.example.nftastops.ui.serviceRequest;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 //import android.support.annotation.Nullable;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +37,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+//import android.support.annotation.Nullable;
+//import android.support.v4.app.Fragment;
 
 public class ClosedRequestsFragment extends Fragment {
     public List<StopTransactions> stopTransactions;
@@ -74,6 +81,7 @@ public class ClosedRequestsFragment extends Fragment {
         Type type = new TypeToken<List<StopTransactions>>() {
         }.getType();
         List<StopTransactions> closeTransaction = gson.fromJson(results, type);
+
         if (closeTransaction != null) stopTransactions.addAll(closeTransaction);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
@@ -108,7 +116,7 @@ public class ClosedRequestsFragment extends Fragment {
 //                    e.setReason("Reason");
 //                    e.setLocation("Location");
 //                    e.setRoute("Route");
-//                    e.setStopId(0);
+//                    e.setStop_id(0);
 //                    results.add(e);
 //                }
 //                //IMPORTANT: set data here and notify
@@ -135,7 +143,7 @@ public class ClosedRequestsFragment extends Fragment {
 //            if (serviceRequest != null
 //                    && serviceRequest.getStatus() != null
 //                    && serviceRequest.getStatus().equals("resolved")) {
-//                stopTransaction.setStop_id(serviceRequest.getStopId().toString());
+//                stopTransaction.setStop_id(serviceRequest.getStop_id().toString());
 //                stopTransaction.setRequest_type(serviceRequest.getRequest_type());
 //                stopTransaction.setLocation(serviceRequest.getLocation());
 //                stopTransaction.setDirection(serviceRequest.getDirection());

@@ -49,12 +49,14 @@
     <string name="proceed">Proceed</string>
     <string name="reason">Reason for removal</string>
     <string-array name="fastenedTo">
+        <item>Select FastenedTo</item>
         <item>Utility Pole</item>
         <item>Shelter</item>
         <item>Telspar</item>
         <item>Other</item>
     </string-array>
     <string-array name="direction">
+        <item>Select Direction</item>
         <item>North</item>
         <item>South</item>
         <item>East</item>
@@ -64,16 +66,19 @@
         <item>Static</item>
     </string-array>
     <string-array name="position">
+        <item>Select Position</item>
         <item>Nearside</item>
         <item>Farside</item>
         <item>Mid-Block</item>
         <item>Static</item>
     </string-array>
     <string-array name="county">
+        <item>Select County</item>
         <item>Erie</item>
         <item>Niagara</item>
     </string-array>
     <string-array name="routes">
+        <item>Select Routes</item>
         <item>#1 - William</item>
         <item>#2 - Clinton</item>
         <item>#3 - Grant</item>
@@ -141,6 +146,6 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Password must be >2 characters</string>
     <string name="login_failed">"Login failed"</string>
 </resources>

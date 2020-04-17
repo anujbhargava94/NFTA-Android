@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="5">
+    android:layout_margin="50dp"
+    android:padding="16dp"
 
-    <TextView
-        android:id="@+id/listTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:paddingTop="100dp"
-        android:paddingBottom="30dp"
-        android:textColor="@android:color/black"
-        android:textAllCaps="true"
-        android:textSize="20dp"
-        android:layout_weight="5"/>
-    <TextView
-        android:id="@+id/no_sr_id"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right"
-        android:background="@drawable/text_view_circle"
-        android:gravity="center"
-        android:text="0"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:layout_marginTop="15dp"
-        android:visibility="gone"/>
-</LinearLayout>
+    app:cardCornerRadius="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/listTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="10dp"
+            android:paddingTop="100dp"
+            android:paddingBottom="30dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/no_sr_id"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/text_view_circle"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

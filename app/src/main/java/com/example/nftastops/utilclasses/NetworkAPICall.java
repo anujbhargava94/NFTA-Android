@@ -1,10 +1,10 @@
 package com.example.nftastops.utilclasses;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,7 +12,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.nftastops.model.LoginRequest;
-import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
@@ -105,7 +104,10 @@ public class NetworkAPICall {
 
         };
 
-
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(
+                Constants.MY_SOCKET_TIMEOUT_MS,
+                0,
+                0));
         NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
     }
 
@@ -138,6 +140,11 @@ public class NetworkAPICall {
                     Log.d("login1", "credentials entered");
                     String un = username;
                     String pw = password;
+
+                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                        un = "manalips30@gmail.com";
+                        pw = "password1";
+                    }
 //                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
 //                        un = "anujbhargava94@gmail.com";
 //                        pw = "password1";

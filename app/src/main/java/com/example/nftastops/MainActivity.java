@@ -1,21 +1,23 @@
 package com.example.nftastops;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,13 +25,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.nftastops.model.BaseResponse;
-import com.example.nftastops.model.LoginJwt;
 import com.example.nftastops.model.PingModel;
-import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.ui.ui.login.LoginActivity;
 import com.example.nftastops.utilclasses.Constants;
+import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.google.android.material.navigation.NavigationView;
@@ -37,10 +37,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.CertificatePinner;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,10 +49,20 @@ public class MainActivity extends AppCompatActivity {
 
     private NetworkAPICall apiCAll;
 
+    private static MainActivity instance;
+    GPSTracker gpslocation;
+    Location location;
+    private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 1;
+    boolean loginInit = false;
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +87,15 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(startupIntent, 100);
         }
         //dologinJwt(this);
+
+
+        getDropDowns(this, Constants.DIRECTION);
+        getDropDowns(this, Constants.POSITION);
+        getDropDowns(this, Constants.FASTENED);
+        getDropDowns(this, Constants.COUNTY);
+        getDropDowns(this, Constants.ROUTE);
+        gpslocation = new GPSTracker(this);
+        location = gpslocation.getLocation();
         callPingAPI(Constants.PING);
     }
 
@@ -89,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 //String results = response;
-                Log.d("ping", "history response: "+response);
+                Log.d("ping", "history response: " + response);
                 PingModel results = new PingModel();
                 try {
                     Gson gson = new Gson();
@@ -99,14 +115,17 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (results !=null && !results.getResult().equals(Constants.SUCCESS) && results.getError().equals(Constants.UNAUTH)) {
-                    openLogin();
+                if (results != null && !results.getResult().equals(Constants.SUCCESS) && results.getError().equals(Constants.UNAUTH)) {
+                    if (isLoggedIn()) {openLogin();}
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                openLogin();
+                String errorString = "Error in Log in";
+                System.out.println(errorString);
+                if (isLoggedIn()) {
+                openLogin();}
             }
         });
     }
@@ -115,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         String token = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.TOKEN);
         return (token != null && !token.isEmpty());
     }
-
 
 
     private class UpdateTask extends AsyncTask<String, String, String> {
@@ -155,15 +173,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment someFragment) {
-        this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment, someFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        int count = 3;
+        while (count > 0) {
+            this.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            count -= 1;
+        }
     }
 
-    private void openLogin(){
+    private void openLogin() {
         Intent startupIntent = new Intent(this, LoginActivity.class);
         startActivityForResult(startupIntent, 100);
+    }
+
+
+    private void getDropDowns(final Context context, final String url) {
+        String dropDownUrl = "dropdown?dropdownType=" + url;
+        apiCAll.makeGet(this, dropDownUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response != null || !response.isEmpty()) {
+                    SharedPrefUtil.saveTasksToSharedPrefs(context, response, url);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String errorString = "Error in showing Service Requests";
+                System.out.println(errorString);
+            }
+        });
+    }
+
+    public void requestPermission(){
+        ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                MY_PERMISSIONS_REQUEST_READ_LOCATION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Log.d("custom","Permission granted");
+                    //isGPSEnabled = true;
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }
