@@ -149,9 +149,60 @@ public class NetworkAPICall {
 //                        un = "anujbhargava94@gmail.com";
 //                        pw = "password1";
 //                    }
-                    LoginRequest lin = new LoginRequest();
-                    lin.setUsername(un);
-                    lin.setPassword(pw);
+                    LoginRequest lin = new LoginRequest(un,pw);
+                    Gson gson = new Gson();
+                    String linReq = gson.toJson(lin);
+                    return linReq == null ? null : linReq.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                    return null;
+                }
+            }
+        };
+        Log.d("login1", "making call");
+        NetworkAPICall.getInstance(ctx).addToRequestQueue(postRequest);
+    }
+
+
+    public static void makeRegister(Context ctx, final String username, final String password, Response.Listener<String>
+            listener, Response.ErrorListener errorListener) {
+        String url = baseURL + "registerDevice";
+        Log.d("login1", "api called" + url);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                listener, errorListener) {
+
+            @Override
+            public String getBodyContentType() {
+                Log.d("login1", "body content type");
+                return super.getBodyContentType();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Log.d("login1", "map");
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String mRequestBody = null;
+                try {
+                    Log.d("login1", "credentials entered");
+                    String un = username;
+                    String pw = password;
+
+                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                        un = "manalips30@gmail.com";
+                        pw = "password1";
+                    }
+//                    if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+//                        un = "anujbhargava94@gmail.com";
+//                        pw = "password1";
+//                    }
+                    LoginRequest lin = new LoginRequest(un,pw);
                     Gson gson = new Gson();
                     String linReq = gson.toJson(lin);
                     return linReq == null ? null : linReq.getBytes("utf-8");

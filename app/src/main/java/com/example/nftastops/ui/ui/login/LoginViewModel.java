@@ -12,6 +12,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.LoginJwt;
+import com.example.nftastops.model.LoginRequest;
+import com.example.nftastops.model.LoginResponse;
 import com.example.nftastops.ui.data.LoginRepository;
 import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.NetworkAPICall;
@@ -45,7 +47,48 @@ public class LoginViewModel extends ViewModel {
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
         //Result<LoggedInUser> result = loginRepository.login(context, username, password);
-        dologinJwt(context, username, password);
+       // dologinJwt(context, username, password);
+        doRegister(context, username, password);
+    }
+
+    private void doRegister(final Context context,final String username,final String password) {
+        apiCAll.makeRegister(context, username, password,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                //String results = response;
+                Log.d("jwt", "Login response" + response);
+                LoginResponse results = new LoginResponse();
+                try {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<LoginResponse>() {
+                    }.getType();
+                    results = gson.fromJson(response, type);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (results.getUsername() != null) {
+                    Log.d("login", "Logged In");
+                    SharedPrefUtil.saveTasksToSharedPrefs(context, results.getUsername(), Constants.USERNAMEKEY);
+                    dologinJwt(context,results.getUsername(),Constants.NFTAPWD);
+                   // loginResult.setValue(new LoginResult(new LoggedInUserView(username)));
+
+                } else {
+                    loginResult.setValue(new LoginResult(R.string.login_failed));
+                }
+                //IMPORTANT: set data here and notify
+                //Call constructor of ServiceRequestFragment
+                //new ServiceRequestFragment(serviceRequests);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String errorString = "Error in Login";
+                loginResult.setValue(new LoginResult(R.string.login_failed));
+                Log.d("login", "LogIn Failed");
+            }
+        });
     }
 
     public void loginDataChanged(String username, String password) {

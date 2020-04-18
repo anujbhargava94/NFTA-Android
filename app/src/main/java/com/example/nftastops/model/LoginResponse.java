@@ -2,22 +2,13 @@ package com.example.nftastops.model;
 
 public class LoginResponse {
 
-    private String message;
-    private boolean status;
+    private String username;
 
-    public String getMessage() {
-        return message;
+    public String getUsername() {
+        return username;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

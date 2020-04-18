@@ -22,6 +22,8 @@ public final class Constants {
     public static final String COUNTY = "county";
     public static final String ROUTE = "route";
     public static final int MY_SOCKET_TIMEOUT_MS = 5000;
+    public static final String NFTAPWD = "NFTADevice";
+    public static final String USERNAMEKEY = "USERNAMEKEY";
 
     private Constants() {
     }

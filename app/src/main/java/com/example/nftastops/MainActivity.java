@@ -25,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.nftastops.model.LoginJwt;
 import com.example.nftastops.model.PingModel;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.ui.ui.login.LoginActivity;
@@ -86,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
             Intent startupIntent = new Intent(this, LoginActivity.class);
             startActivityForResult(startupIntent, 100);
         }
-        //dologinJwt(this);
+        String username = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.USERNAMEKEY);
+        dologinJwt(this,username,Constants.NFTAPWD);
 
 
         getDropDowns(this, Constants.DIRECTION);
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         getDropDowns(this, Constants.ROUTE);
         gpslocation = new GPSTracker(this);
         location = gpslocation.getLocation();
-        callPingAPI(Constants.PING);
+       // callPingAPI(Constants.PING);
     }
 
     private void callPingAPI(String url) {
@@ -131,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isLoggedIn() {
-        String token = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.TOKEN);
-        return (token != null && !token.isEmpty());
+        String username = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.USERNAMEKEY);
+        return (username != null && !username.isEmpty());
     }
 
 
@@ -231,5 +233,37 @@ public class MainActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request.
         }
+    }
+
+
+    private void dologinJwt(final Context context, final String username, final String password) {
+        apiCAll.makeLoginJwt(context, username, password, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                //String results = response;
+                Log.d("jwt", "Login response" + response);
+                LoginJwt results = new LoginJwt();
+                try {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<LoginJwt>() {
+                    }.getType();
+                    results = gson.fromJson(response, type);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (results.getToken() != null) {
+                    Log.d("login", "Logged In");
+                    SharedPrefUtil.saveTasksToSharedPrefs(context, results.getToken(), Constants.TOKEN);
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String errorString = "Error in Login";
+                Log.d("login", "LogIn Failed");
+            }
+        });
     }
 }
