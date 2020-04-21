@@ -52,7 +52,7 @@ public class NetworkAPICall {
         getRequestQueue().add(req);
     }
 
-    public static void makeGet(Context ctx, String query, Response.Listener<String>
+    public static void makeGet(final Context ctx, String query, Response.Listener<String>
             listener, Response.ErrorListener errorListener) {
         String url = baseURL + query;
         Log.d("login", "api called" + url);
@@ -64,6 +64,7 @@ public class NetworkAPICall {
                 Log.d("login1", "map");
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + token);
+                headers.put("device",SharedPrefUtil.getRawTasksFromSharedPrefs(ctx, Constants.USERNAMEKEY));
                 return headers;
             }
         };

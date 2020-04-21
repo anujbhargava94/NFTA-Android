@@ -4,6 +4,9 @@ import android.content.Context;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.example.nftastops.utilclasses.Constants;
+import com.example.nftastops.utilclasses.SharedPrefUtil;
+
 import java.util.List;
 
 public class StopTransactions extends BaseResponse {
@@ -36,6 +39,15 @@ public class StopTransactions extends BaseResponse {
     private String image0;
     private String image1;
     private String image2;
+    private String deviceName;
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
 
     public String getImage0() {
         return image0;
@@ -161,6 +173,7 @@ public class StopTransactions extends BaseResponse {
 
     public StopTransactions(Context context) {
 
+        this.deviceName = SharedPrefUtil.getRawTasksFromSharedPrefs(context, Constants.USERNAMEKEY);
         this.device_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         this.status = "In Progress";
         Toast.makeText(

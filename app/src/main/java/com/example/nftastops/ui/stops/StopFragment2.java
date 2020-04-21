@@ -425,7 +425,7 @@ public class StopFragment2 extends Fragment {
 
             MediaType mediaType = MediaType.parse("text/plain");
             count = 0;
-            int totalImages = imageCount>2?3:imageCount+1;
+            int totalImages = imageCount>2?3:imageCount;
             for (int i = 0; i < totalImages; i++) {
                 RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                         .addFormDataPart("upload_preset", "nftafolder")
@@ -468,7 +468,7 @@ public class StopFragment2 extends Fragment {
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
-            int totalImages = imageCount>2?3:(imageCount+1);
+            int totalImages = imageCount>2?3:(imageCount);
             if (count == totalImages) {
                 count = 0;
                 Gson gson = new Gson();
