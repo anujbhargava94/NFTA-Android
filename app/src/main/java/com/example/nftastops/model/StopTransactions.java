@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.SharedPrefUtil;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class StopTransactions extends BaseResponse {
@@ -229,7 +230,10 @@ public class StopTransactions extends BaseResponse {
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        Double n = new Double(latitude);
+        DecimalFormat df = new DecimalFormat(Constants.DECIMALPATTERN);
+        String lat = df.format(n);
+        this.latitude = Double.valueOf(lat);
     }
 
     public double getLongitude() {
@@ -237,7 +241,11 @@ public class StopTransactions extends BaseResponse {
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+
+        Double n = new Double(longitude);
+        DecimalFormat df = new DecimalFormat(Constants.DECIMALPATTERN);
+        String lon = df.format(n);
+        this.longitude = Double.valueOf(lon);
     }
 
     public String getLocation() {
@@ -396,11 +404,11 @@ public class StopTransactions extends BaseResponse {
         this.dropdowns = dropdowns;
     }
 
-    public String getRoutesString(){
+    public String getRoutesString() {
         String result = "";
-        if(route!=null && !route.isEmpty()){
-            for(Dropdowns ele:route){
-                result+=ele+",";
+        if (route != null && !route.isEmpty()) {
+            for (Dropdowns ele : route) {
+                result += ele + ",";
             }
         }
         return result;

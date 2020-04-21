@@ -24,6 +24,7 @@ public final class Constants {
     public static final int MY_SOCKET_TIMEOUT_MS = 5000;
     public static final String NFTAPWD = "NFTADevice";
     public static final String USERNAMEKEY = "USERNAMEKEY";
+    public static final String DECIMALPATTERN = "###.#######";
 
     private Constants() {
     }
