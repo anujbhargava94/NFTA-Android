@@ -91,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
         dologinJwt(this,username,Constants.NFTAPWD);
 
 
-        getDropDowns(this, Constants.DIRECTION);
-        getDropDowns(this, Constants.POSITION);
-        getDropDowns(this, Constants.FASTENED);
-        getDropDowns(this, Constants.COUNTY);
-        getDropDowns(this, Constants.ROUTE);
+//        getDropDowns(this, Constants.DIRECTION);
+//        getDropDowns(this, Constants.POSITION);
+//        getDropDowns(this, Constants.FASTENED);
+//        getDropDowns(this, Constants.COUNTY);
+//        getDropDowns(this, Constants.ROUTE);
         gpslocation = new GPSTracker(this);
         location = gpslocation.getLocation();
        // callPingAPI(Constants.PING);
@@ -255,6 +255,11 @@ public class MainActivity extends AppCompatActivity {
                 if (results.getToken() != null) {
                     Log.d("login", "Logged In");
                     SharedPrefUtil.saveTasksToSharedPrefs(context, results.getToken(), Constants.TOKEN);
+                    getDropDowns(context, Constants.DIRECTION);
+                    getDropDowns(context, Constants.POSITION);
+                    getDropDowns(context, Constants.FASTENED);
+                    getDropDowns(context, Constants.COUNTY);
+                    getDropDowns(context, Constants.ROUTE);
 
                 }
             }

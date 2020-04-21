@@ -72,12 +72,12 @@ public class HistoryFragment extends Fragment {
                 }
                 if (results.isEmpty()) {
                     StopTransactions e = new StopTransactions();
-                    e.setStop_id("Stop Id1");
+                    e.setStop_id("Stop Dummy");
                     e.setDate("14th Dec 2018");
                     e.setLocation("location 1");
                     e.setRequest_type("New");
                     StopTransactions e2 = new StopTransactions();
-                    e2.setStop_id("Stop Id2");
+                    e2.setStop_id("Stop Dummy 2");
                     e2.setDate("15th Dec 2019");
                     e2.setLocation("location 2");
                     e2.setRequest_type("Update");
