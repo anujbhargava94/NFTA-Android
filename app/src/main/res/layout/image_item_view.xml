@@ -10,9 +10,10 @@
 
     <TextView
         android:id="@+id/delete_img_item"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="end"
-        android:background="@drawable/text_view_circle"
+        android:background="@drawable/ic_highlight_off_24px"
+        android:backgroundTint="@color/red"
         android:gravity="center" />
 </FrameLayout>
