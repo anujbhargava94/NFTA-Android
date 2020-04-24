@@ -170,6 +170,11 @@ public class GPSTracker extends Service implements LocationListener {
         }
     }
 
+    public static double roundAvoid(double value, int places) {
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
+    }
+
 
     /**
      * Function to get latitude
@@ -180,7 +185,7 @@ public class GPSTracker extends Service implements LocationListener {
         }
 
         // return latitude
-        return latitude;
+        return roundAvoid(latitude, 7);
     }
 
 
@@ -193,7 +198,7 @@ public class GPSTracker extends Service implements LocationListener {
         }
 
         // return longitude
-        return longitude;
+        return roundAvoid(longitude, 7);
     }
 
     /**

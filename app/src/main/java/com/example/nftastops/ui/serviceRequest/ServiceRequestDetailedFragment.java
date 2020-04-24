@@ -149,7 +149,6 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
             String transactionItem = gson.toJson(stopTransactions);
             switch (request_type) {
                 case "New":
-                //case "new":
                     //fragment = StopFragment1.newInstance("new", "");
                     //replaceFragment(fragment);
                     //Gson gson = new Gson();
@@ -159,14 +158,12 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
                     break;
 
                 case "Remove":
-                //case "remove":
                     fragment = StopRemoveFragment.newInstance("remove", transactionItem);
                     replaceFragment(fragment);
 
                     break;
 
-                case "Update":
-                //case "update":
+                case "Repair":
                     fragment = StopFragment1.newInstance("update", transactionItem);
                     replaceFragment(fragment);
                     break;
