@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat;
 
 import com.example.nftastops.MainActivity;
 
+import java.text.DecimalFormat;
+
 public class GPSTracker extends Service implements LocationListener {
 
     private final Context mContext;
@@ -38,6 +40,8 @@ public class GPSTracker extends Service implements LocationListener {
     Location location; // Location
     double latitude; // Latitude
     double longitude; // Longitude
+
+    public static final String DECIMALPATTERN = "###.#######";
 
     //private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 1;
 
@@ -170,11 +174,12 @@ public class GPSTracker extends Service implements LocationListener {
         }
     }
 
-    public static double roundAvoid(double value, int places) {
-        double scale = Math.pow(10, places);
-        return Math.round(value * scale) / scale;
+    public static double roundAvoid(double value) {
+        Double n = new Double(value);
+        DecimalFormat df = new DecimalFormat(Constants.DECIMALPATTERN);
+        String lat = df.format(n);
+        return Double.valueOf(lat);
     }
-
 
     /**
      * Function to get latitude
@@ -185,7 +190,7 @@ public class GPSTracker extends Service implements LocationListener {
         }
 
         // return latitude
-        return roundAvoid(latitude, 7);
+        return roundAvoid(latitude);
     }
 
 
@@ -198,7 +203,7 @@ public class GPSTracker extends Service implements LocationListener {
         }
 
         // return longitude
-        return roundAvoid(longitude, 7);
+        return roundAvoid(longitude);
     }
 
     /**
