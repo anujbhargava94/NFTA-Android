@@ -30,12 +30,15 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.CloudinaryResponse;
 import com.example.nftastops.model.Dropdowns;
+import com.example.nftastops.model.ImageItem;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
@@ -43,6 +46,8 @@ import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.MultiSpinner;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.SharedPrefUtil;
+import com.example.nftastops.utilclasses.imageRecyclerView.ImageCustomAdapter;
+import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -92,37 +97,31 @@ public class StopFragment2 extends Fragment {
     private Button submitButton;
     StopTransactions stopTransactions;
     NetworkAPICall apiCAll;
-    ImageView[] locPics = new ImageView[3];
     private TextView addPhoto;
     ProgressDialog prgDialog;
-    String imgPath, fileName;
-    Bitmap bitmap;
+    String imgPath;
     String encodedString;
     Bitmap selectedImage;
     String currentPhotoPath;
-    String[] imageFileName = new String[3];
     String cloudImageUrl0;
     String cloudImageUrl1;
     String cloudImageUrl2;
     List<Dropdowns> routesDN;
-    int imageCount = 0;
     private int count = 0;
     LinearLayout picturesLL;
+    List<ImageItem> imageItem;
+    private RecyclerView imagerv;
+    ImageCustomAdapter adapter;
+    File photoFile;
+    Uri photoURI;
+
+    ImageItem currImage;
 
     public StopFragment2() {
         // Required empty public constructor
 
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StopFragment2.
-     */
-    // TODO: Rename and change types and number of parameters
     public static StopFragment2 newInstance(String param1, String param2) {
         StopFragment2 fragment = new StopFragment2();
         Bundle args = new Bundle();
@@ -159,15 +158,18 @@ public class StopFragment2 extends Fragment {
 
         submitButton = root.findViewById(R.id.fragment2Next);
         submitButton.setOnClickListener(submitClick);
-        locPics[0] = root.findViewById(R.id.mypics0);
-        locPics[1] = root.findViewById(R.id.mypics1);
-        locPics[2] = root.findViewById(R.id.mypics2);
         addPhoto = root.findViewById(R.id.add_photo);
         picturesLL = root.findViewById(R.id.pictures);
 
         addPhoto.setOnClickListener(addPhotoClickListner);
         prgDialog = new ProgressDialog(getActivity());
         prgDialog.setCancelable(false);
+        imagerv = root.findViewById(R.id.rv_image);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);;
+        imagerv.setLayoutManager(llm);
+        imageItem = new ArrayList<>();
+        adapter = new ImageCustomAdapter(imageItem);
+        imagerv.setAdapter(adapter);
 
 
         Gson gson = new Gson();
@@ -282,14 +284,21 @@ public class StopFragment2 extends Fragment {
         transaction.commit();
     }
 
-    File[] photoFile = new File[3];
-    Uri[] photoURI = new Uri[3];
+
 
     private void selectImage(Context context) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-
+        currImage = new ImageItem();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Choose your profile picture");
+        if (imageItem.size() < 3) {
+            builder.setTitle("Choose your profile picture");
+        } else {
+            Toast.makeText(
+                    getActivity(),
+                    "Can't allow more than 3 pictures", Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
 
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
@@ -300,14 +309,17 @@ public class StopFragment2 extends Fragment {
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                         try {
-                            photoFile[getImageCount()] = createImageFile();
+
+                            photoFile = createImageFile(currImage);
+                            currImage.setPhotoFile(photoFile);
                         } catch (IOException ex) {
                         }
                         if (photoFile != null) {
-                            photoURI[getImageCount()] = FileProvider.getUriForFile(getActivity(),
+                            photoURI = FileProvider.getUriForFile(getActivity(),
                                     "com.example.nftastops.fileprovider",
-                                    photoFile[getImageCount()]);
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI[getImageCount()]);
+                                    photoFile);
+                            currImage.setPhotoURI(photoURI);
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                             startActivityForResult(takePictureIntent, 0);
                         }
                     }
@@ -315,7 +327,6 @@ public class StopFragment2 extends Fragment {
                 } else if (options[item].equals("Choose from Gallery")) {
 
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     startActivityForResult(pickPhoto, 1);
 
                 } else if (options[item].equals("Cancel")) {
@@ -336,9 +347,9 @@ public class StopFragment2 extends Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap bitmap;
                         try {
-                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoURI[getImageCount()]);
+                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), currImage.getPhotoURI());
                             bitmap = cropAndScale(bitmap, 300); // if you mind scaling
-                            locPics[getImageCount()].setImageBitmap(bitmap);
+                            currImage.setImgBitmap(bitmap);
                             picturesLL.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
                             Log.d("image", "not working");
@@ -358,7 +369,8 @@ public class StopFragment2 extends Fragment {
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 imgPath = cursor.getString(columnIndex);
-                                locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                                //locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                                currImage.setImgBitmap(BitmapFactory.decodeFile(imgPath));
                                 picturesLL.setVisibility(View.VISIBLE);
                                 cursor.close();
                             }
@@ -367,7 +379,8 @@ public class StopFragment2 extends Fragment {
                     }
                     break;
             }
-            imageCount += 1;
+            imageItem.add(currImage);
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -415,8 +428,6 @@ public class StopFragment2 extends Fragment {
 
     public class OkHttpHandler extends AsyncTask<String, Void, Void> {
 
-        OkHttpClient client = new OkHttpClient();
-
         @Override
         protected Void doInBackground(String... params) {
 
@@ -425,12 +436,11 @@ public class StopFragment2 extends Fragment {
 
             MediaType mediaType = MediaType.parse("text/plain");
             count = 0;
-            int totalImages = imageCount>2?3:imageCount;
-            for (int i = 0; i < totalImages; i++) {
+            for (int i = 0; i < imageItem.size(); i++) {
                 RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                         .addFormDataPart("upload_preset", "nftafolder")
-                        .addFormDataPart("file", imageFileName[i],
-                                RequestBody.create(mediaType, photoFile[i]))
+                        .addFormDataPart("file", imageItem.get(i).getImageFileName(),
+                                RequestBody.create(mediaType, imageItem.get(i).getPhotoFile()))
                         .build();
 
                 Request request = new Request.Builder()
@@ -440,8 +450,6 @@ public class StopFragment2 extends Fragment {
                         .build();
                 try {
                     okhttp3.Response response = client.newCall(request).execute();
-                    //Log.d("response", "image response : " + i + " " + response.body().string());
-
                     Gson gson = new Gson();
                     Type type = new TypeToken<CloudinaryResponse>() {
                     }.getType();
@@ -468,8 +476,7 @@ public class StopFragment2 extends Fragment {
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
-            int totalImages = imageCount>2?3:(imageCount);
-            if (count == totalImages) {
+            if (count == imageItem.size()) {
                 count = 0;
                 Gson gson = new Gson();
                 String transaction = gson.toJson(stopTransactions);
@@ -479,24 +486,22 @@ public class StopFragment2 extends Fragment {
     }
 
 
-    private File createImageFile() throws IOException {
+    private File createImageFile(ImageItem item) throws IOException {
         String stop_id = "";
         if (stopTransactions != null && stopTransactions.getStop_id() != null) {
             stop_id = stopTransactions.getStop_id();
         }
-        imageFileName[getImageCount()] = "Android_JPEG_" + "_" + stop_id;
-        imageFileName[getImageCount()] = imageFileName[getImageCount()].replace(" ", "");
+        String imageFileName;
+        imageFileName = "Android_JPEG_" + "_" + stop_id;
+        imageFileName = imageFileName.replace(" ", "");
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName[getImageCount()],  /* prefix */
+                imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
+        item.setImageFileName(imageFileName);
         currentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-    private int getImageCount() {
-        return imageCount % 3;
     }
 }

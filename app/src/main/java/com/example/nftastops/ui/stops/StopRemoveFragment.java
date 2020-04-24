@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,18 +25,21 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.nftastops.R;
 import com.example.nftastops.model.CloudinaryResponse;
-import com.example.nftastops.model.Dropdowns;
+import com.example.nftastops.model.ImageItem;
 import com.example.nftastops.model.ServiceRequests;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.home.HomeFragment;
 import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.GPSTracker;
 import com.example.nftastops.utilclasses.NetworkAPICall;
+import com.example.nftastops.utilclasses.imageRecyclerView.ImageCustomAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -45,6 +47,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -74,28 +77,24 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     private TextInputLayout reason;
     private ImageView ivLat;
     private ImageView ivLong;
-    private Button fetchButton;
     GPSTracker gpslocation;
-    ImageView[] locPics = new ImageView[3];
     private TextView addPhoto;
     NetworkAPICall apiCAll;
     Button nextButton;
-    String imgPath, fileName;
-    Bitmap bitmap;
-    String encodedString;
-    Bitmap selectedImage;
+    String imgPath;
     String currentPhotoPath;
-    String[] imageFileName = new String[3];
     String cloudImageUrl0;
     String cloudImageUrl1;
     String cloudImageUrl2;
-    List<Dropdowns> routesDN;
-    int imageCount = 0;
     private int count = 0;
     LinearLayout picturesLL;
+    List<ImageItem> imageItem;
+    private RecyclerView imagerv;
+    ImageCustomAdapter adapter;
+    File photoFile;
+    Uri photoURI;
+    ImageItem currImage;
 
-    File[] photoFile = new File[3];
-    Uri[] photoURI = new Uri[3];
     public StopRemoveFragment() {
         // Required empty public constructor
 
@@ -142,19 +141,20 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         stopTransactions = new StopTransactions(getActivity());
         ivLat = root.findViewById(R.id.icLat);
         ivLong = root.findViewById(R.id.icLong);
-        //fetchButton = root.findViewById(R.id.fetchButton);
         apiCAll = NetworkAPICall.getInstance(getActivity());
         ivLat.setOnClickListener(latOnclickListner);
         ivLong.setOnClickListener(longOnclickListner);
         reason = root.findViewById(R.id.reason);
-        locPics[0] = root.findViewById(R.id.mypicsr0);
-        locPics[1] = root.findViewById(R.id.mypicsr1);
-        locPics[2] = root.findViewById(R.id.mypicsr2);
         addPhoto = root.findViewById(R.id.add_photo);
-        picturesLL = root.findViewById(R.id.pictures);
+        picturesLL = root.findViewById(R.id.pictures_sr);
         addPhoto = root.findViewById(R.id.add_photo);
         addPhoto.setOnClickListener(addPhotoClickListner);
-        //fetchButton.setOnClickListener(fetchOnClickListner);
+        imagerv = root.findViewById(R.id.rv_image_sr);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        imagerv.setLayoutManager(llm);
+        imageItem = new ArrayList<>();
+        adapter = new ImageCustomAdapter(imageItem);
+        imagerv.setAdapter(adapter);
 
         gpslocation = new GPSTracker(getActivity());
 
@@ -198,9 +198,9 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             } else {
                 stopTransactions.setWork_request(null);
             }
-            
+
             triggerImageUpload();
-            Log.d("custom","Submit button pressed");
+            Log.d("custom", "Submit button pressed");
         }
     };
 
@@ -244,9 +244,17 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
 
     private void selectImage(Context context) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-
+        currImage = new ImageItem();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Choose your profile picture");
+        if (imageItem.size() < 3) {
+            builder.setTitle("Choose your profile picture");
+        } else {
+            Toast.makeText(
+                    getActivity(),
+                    "Can't allow more than 3 pictures", Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
 
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
@@ -257,14 +265,17 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                         try {
-                            photoFile[getImageCount()] = createImageFile();
+
+                            photoFile = createImageFile(currImage);
+                            currImage.setPhotoFile(photoFile);
                         } catch (IOException ex) {
                         }
                         if (photoFile != null) {
-                            photoURI[getImageCount()] = FileProvider.getUriForFile(getActivity(),
+                            photoURI = FileProvider.getUriForFile(getActivity(),
                                     "com.example.nftastops.fileprovider",
-                                    photoFile[getImageCount()]);
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI[getImageCount()]);
+                                    photoFile);
+                            currImage.setPhotoURI(photoURI);
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                             startActivityForResult(takePictureIntent, 0);
                         }
                     }
@@ -272,7 +283,6 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                 } else if (options[item].equals("Choose from Gallery")) {
 
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     startActivityForResult(pickPhoto, 1);
 
                 } else if (options[item].equals("Cancel")) {
@@ -295,8 +305,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             @Override
             public void onResponse(String response) {
 
-                String results = response;
-                Log.d("response remove",response);
+                Log.d("response remove", response);
                 Toast.makeText(
                         getContext(),
                         "Transaction added successfully", Toast.LENGTH_SHORT
@@ -329,9 +338,9 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap bitmap;
                         try {
-                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoURI[getImageCount()]);
+                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), currImage.getPhotoURI());
                             bitmap = cropAndScale(bitmap, 300); // if you mind scaling
-                            locPics[getImageCount()].setImageBitmap(bitmap);
+                            currImage.setImgBitmap(bitmap);
                             picturesLL.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
                             Log.d("image", "not working");
@@ -351,7 +360,8 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 imgPath = cursor.getString(columnIndex);
-                                locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                                //locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                                currImage.setImgBitmap(BitmapFactory.decodeFile(imgPath));
                                 picturesLL.setVisibility(View.VISIBLE);
                                 cursor.close();
                             }
@@ -360,7 +370,8 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                     }
                     break;
             }
-            imageCount += 1;
+            imageItem.add(currImage);
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -381,8 +392,6 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
 
     public class OkHttpHandler extends AsyncTask<String, Void, Void> {
 
-        OkHttpClient client = new OkHttpClient();
-
         @Override
         protected Void doInBackground(String... params) {
 
@@ -391,12 +400,11 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
 
             MediaType mediaType = MediaType.parse("text/plain");
             count = 0;
-            int totalImages = imageCount > 2 ? 3 : imageCount;
-            for (int i = 0; i < totalImages; i++) {
+            for (int i = 0; i < imageItem.size(); i++) {
                 RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                         .addFormDataPart("upload_preset", "nftafolder")
-                        .addFormDataPart("file", imageFileName[i],
-                                RequestBody.create(mediaType, photoFile[i]))
+                        .addFormDataPart("file", imageItem.get(i).getImageFileName(),
+                                RequestBody.create(mediaType, imageItem.get(i).getPhotoFile()))
                         .build();
 
                 Request request = new Request.Builder()
@@ -406,8 +414,6 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                         .build();
                 try {
                     okhttp3.Response response = client.newCall(request).execute();
-                    //Log.d("response", "image response : " + i + " " + response.body().string());
-
                     Gson gson = new Gson();
                     Type type = new TypeToken<CloudinaryResponse>() {
                     }.getType();
@@ -430,11 +436,11 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
-            int totalImages = imageCount>2?3:(imageCount);
-            if (count == totalImages) {
+            if (count == imageItem.size()) {
                 count = 0;
                 Gson gson = new Gson();
                 String transaction = gson.toJson(stopTransactions);
@@ -443,25 +449,23 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         }
     }
 
-    private File createImageFile() throws IOException {
+    private File createImageFile(ImageItem item) throws IOException {
         String stop_id = "";
         if (stopTransactions != null && stopTransactions.getStop_id() != null) {
             stop_id = stopTransactions.getStop_id();
         }
-        imageFileName[getImageCount()] = "Android_JPEG_" + "_" + stop_id;
-        imageFileName[getImageCount()] = imageFileName[getImageCount()].replace(" ", "");
+        String imageFileName;
+        imageFileName = "Android_JPEG_" + "_" + stop_id;
+        imageFileName = imageFileName.replace(" ", "");
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName[getImageCount()],  /* prefix */
+                imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
+        item.setImageFileName(imageFileName);
         currentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-    private int getImageCount() {
-        return imageCount % 3;
     }
 
 

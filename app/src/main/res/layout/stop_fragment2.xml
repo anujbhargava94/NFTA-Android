@@ -110,38 +110,19 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:adjustViewBounds="true"
-            app:layout_collapseMode="parallax"
-            app:layout_collapseParallaxMultiplier="0.7"
+            android:orientation="horizontal"
             android:visibility="gone"
             android:weightSum="3"
-            android:orientation="horizontal">
+            app:layout_collapseMode="parallax"
+            app:layout_collapseParallaxMultiplier="0.7">
 
-            <ImageView
-                android:id="@+id/mypics0"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                app:layout_collapseMode="parallax"
-                android:layout_weight="1"
-                app:layout_collapseParallaxMultiplier="0.7" />
-
-            <ImageView
-                android:id="@+id/mypics1"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                app:layout_collapseMode="parallax"
-                android:layout_weight="1"
-                app:layout_collapseParallaxMultiplier="0.7" />
-
-            <ImageView
-                android:id="@+id/mypics2"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                app:layout_collapseMode="parallax"
-                android:layout_weight="1"
-                app:layout_collapseParallaxMultiplier="0.7" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
 
         </LinearLayout>
 
@@ -156,21 +137,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <!--        <com.google.android.material.textfield.TextInputEditText-->
-        <!--            android:id="@+id/admin_comments"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="100dp"-->
-        <!--            android:hint="@string/add_comments"-->
-        <!--            android:textSize="@dimen/text_size"-->
-        <!--            android:layout_margin="@dimen/layout_padding_2"/>-->
 
         <Button
             android:id="@+id/fragment2Next"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height"
+            android:layout_margin="@dimen/layout_padding_2"
             android:text="@string/submit"
-            android:textSize="@dimen/text_size"
-            android:layout_margin="@dimen/layout_padding_2"/>
             android:textSize="@dimen/text_size" />
 
         <ProgressBar
@@ -182,13 +155,13 @@
             android:layout_marginTop="64dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="64dp"
+            android:textSize="@dimen/text_size"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/trashCanId"
             app:layout_constraintStart_toStartOf="@+id/trashCanId"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            android:textSize="@dimen/text_size" />
+            app:layout_constraintVertical_bias="0.3" />
     </LinearLayout>
 
 
