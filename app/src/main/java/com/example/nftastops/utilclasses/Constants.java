@@ -25,6 +25,7 @@ public final class Constants {
     public static final String NFTAPWD = "NFTADevice";
     public static final String USERNAMEKEY = "USERNAMEKEY";
     public static final String DECIMALPATTERN = "###.#######";
+    public static final String SELECTDN = "--Select--";
 
     private Constants() {
     }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -148,21 +149,21 @@ public class StopFragment1 extends Fragment {
         if (directionDN == null) {
             directionDN = new ArrayList<>();
         }
-        directionDN.add(0, new Dropdowns("--Select--"));
+        directionDN.add(0, new Dropdowns(Constants.SELECTDN));
 
         if (countyDN == null) {
             countyDN = new ArrayList<>();
         }
-        countyDN.add(0, new Dropdowns("--Select--"));
+        countyDN.add(0, new Dropdowns(Constants.SELECTDN));
 
         if (positionDN == null) {
             positionDN = new ArrayList<>();
         }
-        positionDN.add(0, new Dropdowns("--Select--"));
+        positionDN.add(0, new Dropdowns(Constants.SELECTDN));
         if (fastenedToDN == null) {
             fastenedToDN = new ArrayList<>();
         }
-        fastenedToDN.add(0, new Dropdowns("--Select--"));
+        fastenedToDN.add(0, new Dropdowns(Constants.SELECTDN));
 
 
         //String[] directions = getResources().getStringArray(R.array.direction);
@@ -216,6 +217,9 @@ public class StopFragment1 extends Fragment {
     View.OnClickListener nextOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if(!verifyFields()){
+                return;
+            }
             stopTransactions.setStop_id(stopIdET.getEditText().getText().toString());
             stopTransactions.setStreet_on(streetOnET.getEditText().getText().toString());
             stopTransactions.setNearest_cross_street(nearestCSET.getEditText().getText().toString());
@@ -237,6 +241,31 @@ public class StopFragment1 extends Fragment {
             replaceFragment(stopFragment2);
         }
     };
+
+    private boolean verifyFields() {
+        boolean verified = true;
+        Dropdowns dir = (Dropdowns) acdirection.getSelectedItem();
+        Dropdowns fto = (Dropdowns) acfastenedTo.getSelectedItem();
+        Dropdowns cou = (Dropdowns) acounty.getSelectedItem();
+        Dropdowns pos = (Dropdowns) acposition.getSelectedItem();
+        if (dir.getDisplay_name().contains(Constants.SELECTDN)) {
+            verified = false;
+            ((TextView) acdirection.getSelectedView()).setError("Enter direction");
+        }
+        if (fto.getDisplay_name().contains(Constants.SELECTDN)) {
+            verified = false;
+            ((TextView) acfastenedTo.getSelectedView()).setError("Enter fastenedTo");
+        }
+        if (cou.getDisplay_name().contains(Constants.SELECTDN)) {
+            verified = false;
+            ((TextView) acounty.getSelectedView()).setError("Enter County");
+        }
+        if (pos.getDisplay_name().contains(Constants.SELECTDN)) {
+            verified = false;
+            ((TextView) acposition.getSelectedView()).setError("Enter Position");
+        }
+        return verified;
+    }
 
     View.OnClickListener latOnclickListner = new View.OnClickListener() {
         @Override

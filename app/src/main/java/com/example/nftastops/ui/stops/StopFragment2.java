@@ -202,6 +202,9 @@ public class StopFragment2 extends Fragment {
     View.OnClickListener submitClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if(!verifyFields()){
+                return;
+            }
             submitButton.setEnabled(false);
             stopTransactions.setShelter(shelter.isChecked());
             stopTransactions.setAdvertisement(advertisement.isChecked());
@@ -241,6 +244,10 @@ public class StopFragment2 extends Fragment {
             triggerImageUpload();
         }
     };
+
+    private boolean verifyFields() {
+        return true;
+    }
 
     View.OnClickListener addPhotoClickListner = new View.OnClickListener() {
         @Override
