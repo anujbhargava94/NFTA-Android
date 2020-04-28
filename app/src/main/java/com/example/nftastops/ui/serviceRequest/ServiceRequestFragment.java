@@ -134,10 +134,17 @@ public class ServiceRequestFragment extends Fragment {
             stopTransaction.setRequest_id(serviceRequest.getRequest_id());
             stopTransaction.setAdmin_user_id(serviceRequest.getAdmin_user_id());
             stopTransaction.setRequested_user(serviceRequest.getRequested_user());
-            //stopTransaction.setRoutes(serviceRequest.getRoutes());
+            stopTransaction.setRoutes(serviceRequest.getRoutes());
             stopTransaction.setReason(serviceRequest.getReason());
             stopTransaction.setAdditional_information(serviceRequest.getAdditional_information());
             stopTransaction.setStatus(serviceRequest.getStatus());
+            stopTransaction.setImage0(serviceRequest.getImage0());
+            stopTransaction.setImage1(serviceRequest.getImage1());
+            stopTransaction.setImage2(serviceRequest.getImage2());
+            stopTransaction.setPosition(serviceRequest.getPosition());
+            stopTransaction.setFastened_to(serviceRequest.getFastened_to());
+            stopTransaction.setCounty(serviceRequest.getCounty());
+
             if (serviceRequest != null
                     && serviceRequest.getStatus() != null
                     && serviceRequest.getStatus().equals(Constants.OPEN)) {
