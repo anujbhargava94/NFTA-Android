@@ -45,6 +45,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -281,11 +283,21 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                     }
 
                 } else if (options[item].equals("Choose from Gallery")) {
+                    try {
 
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, 1);
-
-                } else if (options[item].equals("Cancel")) {
+                        photoFile = createImageFile(currImage);
+                        currImage.setPhotoFile(photoFile);
+                    } catch (IOException ex) {
+                    }
+                    if (photoFile != null) {
+                        photoURI = FileProvider.getUriForFile(getActivity(),
+                                "com.example.nftastops.fileprovider",
+                                photoFile);
+                        currImage.setPhotoURI(photoURI);
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, photoURI);
+                        startActivityForResult(pickPhoto, 1);
+                    }
+                }else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -339,7 +351,8 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                         Bitmap bitmap;
                         try {
                             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), currImage.getPhotoURI());
-                            bitmap = cropAndScale(bitmap, 300); // if you mind scaling
+                            bitmap = cropAndScale(bitmap, 64); // if you mind scaling
+                            //bitmap = decodeFile(currImage.getPhotoFile());
                             currImage.setImgBitmap(bitmap);
                             picturesLL.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
@@ -361,6 +374,8 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 imgPath = cursor.getString(columnIndex);
                                 //locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                               // Bitmap bitmap = decodeFile(currImage.getPhotoFile());
+                                //currImage.setImgBitmap(bitmap);
                                 currImage.setImgBitmap(BitmapFactory.decodeFile(imgPath));
                                 picturesLL.setVisibility(View.VISIBLE);
                                 cursor.close();
@@ -466,6 +481,32 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
         item.setImageFileName(imageFileName);
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    private Bitmap decodeFile(File f) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = 32;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {
+        }
+        return null;
     }
 
 

@@ -54,6 +54,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -165,7 +167,8 @@ public class StopFragment2 extends Fragment {
         prgDialog = new ProgressDialog(getActivity());
         prgDialog.setCancelable(false);
         imagerv = root.findViewById(R.id.rv_image);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);;
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        ;
         imagerv.setLayoutManager(llm);
         imageItem = new ArrayList<>();
         adapter = new ImageCustomAdapter(imageItem);
@@ -202,7 +205,7 @@ public class StopFragment2 extends Fragment {
     View.OnClickListener submitClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(!verifyFields()){
+            if (!verifyFields()) {
                 return;
             }
             submitButton.setEnabled(false);
@@ -292,7 +295,6 @@ public class StopFragment2 extends Fragment {
     }
 
 
-
     private void selectImage(Context context) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
         currImage = new ImageItem();
@@ -332,9 +334,20 @@ public class StopFragment2 extends Fragment {
                     }
 
                 } else if (options[item].equals("Choose from Gallery")) {
+                    try {
 
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, 1);
+                        photoFile = createImageFile(currImage);
+                        currImage.setPhotoFile(photoFile);
+                    } catch (IOException ex) {
+                    }
+                    if (photoFile != null) {
+                        photoURI = FileProvider.getUriForFile(getActivity(),
+                                "com.example.nftastops.fileprovider",
+                                photoFile);
+                        currImage.setPhotoURI(photoURI);
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, photoURI);
+                        startActivityForResult(pickPhoto, 1);
+                    }
 
                 } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -355,7 +368,8 @@ public class StopFragment2 extends Fragment {
                         Bitmap bitmap;
                         try {
                             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), currImage.getPhotoURI());
-                            bitmap = cropAndScale(bitmap, 300); // if you mind scaling
+                            bitmap = cropAndScale(bitmap, 64); // if you mind scaling
+                            //bitmap = decodeFile(currImage.getPhotoFile());
                             currImage.setImgBitmap(bitmap);
                             picturesLL.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
@@ -377,6 +391,8 @@ public class StopFragment2 extends Fragment {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 imgPath = cursor.getString(columnIndex);
                                 //locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
+                               // Bitmap bitmap = decodeFile(currImage.getPhotoFile());
+                                //currImage.setImgBitmap(bitmap);
                                 currImage.setImgBitmap(BitmapFactory.decodeFile(imgPath));
                                 picturesLL.setVisibility(View.VISIBLE);
                                 cursor.close();
@@ -510,5 +526,31 @@ public class StopFragment2 extends Fragment {
         item.setImageFileName(imageFileName);
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    private Bitmap decodeFile(File f) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = 32;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {
+        }
+        return null;
     }
 }
