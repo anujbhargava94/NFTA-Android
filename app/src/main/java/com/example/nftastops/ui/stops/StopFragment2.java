@@ -262,7 +262,7 @@ public class StopFragment2 extends Fragment {
 
         //List<Dropdowns> routes = (List<Dropdowns>) acroutes.getSelectedItem();
         String routeSelection = acroutes.buildSelectedItemString();
-        if(routeSelection.equals("")){
+        if (routeSelection == null || routeSelection.isEmpty() || routeSelection.equals(Constants.SELECTDN)) {
             verified = false;
             ((TextView) acroutes.getSelectedView()).setError("Enter routes");
         }
@@ -397,25 +397,25 @@ public class StopFragment2 extends Fragment {
 
                     break;
                 case 1:
-                        if (resultCode == RESULT_OK) {
-                            try {
-                                final Uri imageUri = data.getData();
-                                final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
-                                Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                                bitmap = cropAndScale(bitmap, 500);
-                                currImage.setImgBitmap(bitmap);
-                                ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(imageUri, "r");
-                                InputStream inputStream = new FileInputStream(parcelFileDescriptor.getFileDescriptor());
-                                File file = new File(getActivity().getCacheDir(), currImage.getImageFileName());
-                                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                                IOUtils.copyStream(inputStream,fileOutputStream);
-                                currImage.setPhotoFile(file);
-                                picturesLL.setVisibility(View.VISIBLE);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
+                    if (resultCode == RESULT_OK) {
+                        try {
+                            final Uri imageUri = data.getData();
+                            final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
+                            Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+                            bitmap = cropAndScale(bitmap, 500);
+                            currImage.setImgBitmap(bitmap);
+                            ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(imageUri, "r");
+                            InputStream inputStream = new FileInputStream(parcelFileDescriptor.getFileDescriptor());
+                            File file = new File(getActivity().getCacheDir(), currImage.getImageFileName());
+                            FileOutputStream fileOutputStream = new FileOutputStream(file);
+                            IOUtils.copyStream(inputStream, fileOutputStream);
+                            currImage.setPhotoFile(file);
+                            picturesLL.setVisibility(View.VISIBLE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
+                    }
                     break;
             }
             imageItem.add(currImage);
@@ -506,7 +506,7 @@ public class StopFragment2 extends Fragment {
         String imageFileName;
         Date date = new Date();
         long time = date.getTime();
-        imageFileName = "Android_JPEG_" + "_" + stop_id+time;
+        imageFileName = "Android_JPEG_" + "_" + stop_id + time;
         imageFileName = imageFileName.replace(" ", "");
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
