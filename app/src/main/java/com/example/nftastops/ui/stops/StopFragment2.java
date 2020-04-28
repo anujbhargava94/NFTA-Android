@@ -219,7 +219,7 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
 
-            stopTransactions.setRoute((List<Dropdowns>) acroutes.getSelectedItems());
+            stopTransactions.setRoute(acroutes.getSelectedItems());
 
             stopTransactions.setStatus(Constants.INPROGRESS);
             if (stopTransactions.getRequest_id() != null) {
