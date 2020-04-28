@@ -8,7 +8,7 @@ public class ServiceRequests extends BaseResponse{
     private String requested_user;
     private String location;
     private Dropdowns direction;
-    private List<Dropdowns> route;
+    private List<Dropdowns> routes;
     private String reason;
     private String stop_id;
     private String additional_information;
@@ -34,12 +34,12 @@ public class ServiceRequests extends BaseResponse{
         this.direction = direction;
     }
 
-    public List<Dropdowns> getRoute() {
-        return route;
+    public List<Dropdowns> getRoutes() {
+        return routes;
     }
 
-    public void setRoute(List<Dropdowns> route) {
-        this.route = route;
+    public void setRoutes(List<Dropdowns> routes) {
+        this.routes = routes;
     }
 
     public Dropdowns getPosition() {

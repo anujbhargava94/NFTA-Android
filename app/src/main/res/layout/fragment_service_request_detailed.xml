@@ -160,7 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/reasonbox">
     <TextView
-        android:id="@+id/route"
+        android:id="@+id/routes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

@@ -24,7 +24,7 @@ public class StopTransactions extends BaseResponse {
     private Dropdowns county;
     private String status;
     private String admin_comments;
-    private List<Dropdowns> route;
+    private List<Dropdowns> routes;
     private boolean shelter;
     private boolean advertisement;
     private boolean bench;
@@ -352,12 +352,12 @@ public class StopTransactions extends BaseResponse {
         this.county = county;
     }
 
-    public List<Dropdowns> getRoute() {
-        return route;
+    public List<Dropdowns> getRoutes() {
+        return routes;
     }
 
-    public void setRoute(List<Dropdowns> route) {
-        this.route = route;
+    public void setRoutes(List<Dropdowns> routes) {
+        this.routes = routes;
     }
 
     public boolean isShelter() {
@@ -406,8 +406,8 @@ public class StopTransactions extends BaseResponse {
 
     public String getRoutesString() {
         String result = "";
-        if (route != null && !route.isEmpty()) {
-            for (Dropdowns ele : route) {
+        if (routes != null && !routes.isEmpty()) {
+            for (Dropdowns ele : routes) {
                 result += ele + ",";
             }
         }

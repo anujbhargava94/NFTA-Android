@@ -147,7 +147,7 @@ public class HistoryDetailedFragment extends Fragment implements IOnBackPressed 
         trash_can.setText(Boolean.toString(stopTransactions.getTrash_can()));
         time_table.setText(Boolean.toString(stopTransactions.getTime_table()));
         system_map.setText(Boolean.toString(stopTransactions.getSystem_map()));
-        if(stopTransactions.getRoute()!=null && !stopTransactions.getRoute().isEmpty())
+        if(stopTransactions.getRoutes()!=null && !stopTransactions.getRoutes().isEmpty())
             route.setText(stopTransactions.getRoutesString());
 
 

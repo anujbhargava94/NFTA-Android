@@ -266,6 +266,9 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if(error!=null && error.toString()!=null && error.toString().equals("com.android.volley.AuthFailureError")){
+                    openLogin();
+                }
                 String errorString = "Error in Login";
                 Log.d("login", "LogIn Failed");
             }

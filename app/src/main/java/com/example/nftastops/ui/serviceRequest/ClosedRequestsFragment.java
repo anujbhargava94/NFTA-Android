@@ -115,7 +115,7 @@ public class ClosedRequestsFragment extends Fragment {
 //                    e.setDirection("Direction");
 //                    e.setReason("Reason");
 //                    e.setLocation("Location");
-//                    e.setRoute("Route");
+//                    e.setRoutes("Route");
 //                    e.setStop_id(0);
 //                    results.add(e);
 //                }
@@ -150,7 +150,7 @@ public class ClosedRequestsFragment extends Fragment {
 //                stopTransaction.setRequest_id(serviceRequest.getRequest_id());
 //                stopTransaction.setAdmin_user_id(serviceRequest.getAdmin_user_id());
 //                stopTransaction.setRequested_user(serviceRequest.getRequested_user());
-//                //stopTransaction.setRoute(serviceRequest.getRoute());
+//                //stopTransaction.setRoutes(serviceRequest.getRoutes());
 //                stopTransaction.setReason(serviceRequest.getReason());
 //                stopTransaction.setAdditional_information(serviceRequest.getAdditional_information());
 //                stopTransaction.setStatus(serviceRequest.getStatus());

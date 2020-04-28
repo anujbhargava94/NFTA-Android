@@ -12,18 +12,17 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +47,7 @@ import com.example.nftastops.utilclasses.MultiSpinner;
 import com.example.nftastops.utilclasses.NetworkAPICall;
 import com.example.nftastops.utilclasses.SharedPrefUtil;
 import com.example.nftastops.utilclasses.imageRecyclerView.ImageCustomAdapter;
-import com.example.nftastops.utilclasses.recyclerView.RVAdapter;
+import com.google.android.gms.common.util.IOUtils;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,9 +56,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -222,7 +224,7 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
 
-            stopTransactions.setRoute(acroutes.getSelectedItems());
+            stopTransactions.setRoutes(acroutes.getSelectedItems());
 
             stopTransactions.setStatus(Constants.INPROGRESS);
             if (stopTransactions.getRequest_id() != null) {
@@ -236,11 +238,11 @@ public class StopFragment2 extends Fragment {
             if (stopTransactions.getDirection().getDropdown_id() == null) {
                 stopTransactions.setDirection(null);
             }
-            if (stopTransactions.getRoute() == null
-                    || stopTransactions.getRoute().isEmpty()
-                    || stopTransactions.getRoute().get(0) == null
-                    || stopTransactions.getRoute().get(0).getDropdown_id() == null) {
-                stopTransactions.setRoute(null);
+            if (stopTransactions.getRoutes() == null
+                    || stopTransactions.getRoutes().isEmpty()
+                    || stopTransactions.getRoutes().get(0) == null
+                    || stopTransactions.getRoutes().get(0).getDropdown_id() == null) {
+                stopTransactions.setRoutes(null);
             }
             if (stopTransactions.getPosition().getDropdown_id() == null) {
                 stopTransactions.setPosition(null);
@@ -353,6 +355,7 @@ public class StopFragment2 extends Fragment {
                                 photoFile);
                         currImage.setPhotoURI(photoURI);
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK, photoURI);
+                        pickPhoto.setType("image/*");
                         startActivityForResult(pickPhoto, 1);
                     }
 
@@ -371,12 +374,11 @@ public class StopFragment2 extends Fragment {
             switch (requestCode) {
 
                 case 0:
-                    if (resultCode == RESULT_OK && data != null) {
+                    if (resultCode == RESULT_OK) {
                         Bitmap bitmap;
                         try {
                             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), currImage.getPhotoURI());
-                            bitmap = cropAndScale(bitmap, 64); // if you mind scaling
-                            //bitmap = decodeFile(currImage.getPhotoFile());
+                            bitmap = cropAndScale(bitmap, 300); // if you mind scaling
                             currImage.setImgBitmap(bitmap);
                             picturesLL.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
@@ -386,27 +388,25 @@ public class StopFragment2 extends Fragment {
 
                     break;
                 case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                                    filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                imgPath = cursor.getString(columnIndex);
-                                //locPics[getImageCount()].setImageBitmap(BitmapFactory.decodeFile(imgPath));
-                               // Bitmap bitmap = decodeFile(currImage.getPhotoFile());
-                                //currImage.setImgBitmap(bitmap);
-                                currImage.setImgBitmap(BitmapFactory.decodeFile(imgPath));
+                        if (resultCode == RESULT_OK) {
+                            try {
+                                final Uri imageUri = data.getData();
+                                final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
+                                Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+                                bitmap = cropAndScale(bitmap, 500);
+                                currImage.setImgBitmap(bitmap);
+                                ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(imageUri, "r");
+                                InputStream inputStream = new FileInputStream(parcelFileDescriptor.getFileDescriptor());
+                                File file = new File(getActivity().getCacheDir(), currImage.getImageFileName());
+                                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                                IOUtils.copyStream(inputStream,fileOutputStream);
+                                currImage.setPhotoFile(file);
                                 picturesLL.setVisibility(View.VISIBLE);
-                                cursor.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }
 
-                    }
+                        }
                     break;
             }
             imageItem.add(currImage);
@@ -422,33 +422,6 @@ public class StopFragment2 extends Fragment {
         source = Bitmap.createBitmap(source, x, y, factor, factor);
         source = Bitmap.createScaledBitmap(source, scale, scale, false);
         return source;
-    }
-
-    public class encodeImage extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-            BitmapFactory.Options options = null;
-            options = new BitmapFactory.Options();
-            options.inSampleSize = 3;
-            if (imgPath != null) {
-                selectedImage = BitmapFactory.decodeFile(imgPath,
-                        options);
-            }
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            // Must compress the Image to reduce image size to make upload easy
-            selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, stream);
-            byte[] byte_arr = stream.toByteArray();
-            // Encode Image to String
-            encodedString = Base64.encodeToString(byte_arr, 0);
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String msg) {
-            prgDialog.setMessage("Calling Upload");
-            triggerImageUpload();
-        }
     }
 
     private void triggerImageUpload() {
@@ -522,7 +495,9 @@ public class StopFragment2 extends Fragment {
             stop_id = stopTransactions.getStop_id();
         }
         String imageFileName;
-        imageFileName = "Android_JPEG_" + "_" + stop_id;
+        Date date = new Date();
+        long time = date.getTime();
+        imageFileName = "Android_JPEG_" + "_" + stop_id+time;
         imageFileName = imageFileName.replace(" ", "");
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -533,31 +508,5 @@ public class StopFragment2 extends Fragment {
         item.setImageFileName(imageFileName);
         currentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-    private Bitmap decodeFile(File f) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 32;
-
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
-                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                scale *= 2;
-            }
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-        } catch (FileNotFoundException e) {
-        }
-        return null;
     }
 }
