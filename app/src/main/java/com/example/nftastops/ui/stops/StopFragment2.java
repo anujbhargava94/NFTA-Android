@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -93,7 +94,7 @@ public class StopFragment2 extends Fragment {
     private CheckBox timeTable;
     private CheckBox systemMap;
     private TextInputLayout comments;
-    private Spinner acroutes;
+    private MultiSpinner acroutes;
     private Button submitButton;
     StopTransactions stopTransactions;
     NetworkAPICall apiCAll;
@@ -153,7 +154,7 @@ public class StopFragment2 extends Fragment {
         timeTable = root.findViewById(R.id.timetableId);
         systemMap = root.findViewById(R.id.systemMapId);
         comments = root.findViewById(R.id.admin_comments);
-        MultiSpinner acroutes = (MultiSpinner) root.findViewById(R.id.autocomplete_route);
+        acroutes = root.findViewById(R.id.autocomplete_route);
 
 
         submitButton = root.findViewById(R.id.fragment2Next);
@@ -183,15 +184,18 @@ public class StopFragment2 extends Fragment {
         }
         routesDN.add(0, new Dropdowns("--Select--"));
 
-        //ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
-        //        (getActivity(), android.R.layout.simple_list_item_1, routesDN);
-        //acroutes.setAdapter(routesAdapter);
+//        ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
+//                (getActivity(), android.R.layout.simple_list_item_1, routesDN);
+//        acroutes.setAdapter(routesAdapter);
 
-        List<String> routeNames = new ArrayList<String>();
-        for (int i = 0; i < routesDN.size(); i++) {
-            routeNames.add(routesDN.get(i).getDisplay_name());
-        }
-        acroutes.setItems(routeNames);
+
+        acroutes.setItems(routesDN);
+
+//        List<String> routeNames = new ArrayList<String>();
+//        for (int i = 0; i < routesDN.size(); i++) {
+//            routeNames.add(routesDN.get(i).getDisplay_name());
+//        }
+        //acroutes.setItems(routeNames);
 
         String stopTransactionJson = getArguments().getString("stopTransaction");
         stopTransactions = gson.fromJson(stopTransactionJson, StopTransactions.class);
@@ -214,6 +218,9 @@ public class StopFragment2 extends Fragment {
             stopTransactions.setTime_table(timeTable.isChecked());
             stopTransactions.setSystem_map(systemMap.isChecked());
             stopTransactions.setAdmin_comments(comments.getEditText().getText().toString());
+
+            stopTransactions.setRoute((List<Dropdowns>) acroutes.getSelectedItems());
+
             stopTransactions.setStatus(Constants.INPROGRESS);
             if (stopTransactions.getRequest_id() != null) {
                 ServiceRequests serviceRequests = new ServiceRequests();
