@@ -169,9 +169,6 @@ public class StopTransactions extends BaseResponse {
     //private ServiceRequest work_request;
 
 
-    public StopTransactions() {
-    }
-
     public StopTransactions(Context context) {
 
         this.deviceName = SharedPrefUtil.getRawTasksFromSharedPrefs(context, Constants.USERNAMEKEY);

@@ -71,12 +71,12 @@ public class HistoryFragment extends Fragment {
                     e.printStackTrace();
                 }
                 if (results.isEmpty()) {
-                    StopTransactions e = new StopTransactions();
+                    StopTransactions e = new StopTransactions(getActivity());
                     e.setStop_id("Stop Dummy");
                     e.setDate("14th Dec 2018");
                     e.setLocation("location 1");
                     e.setRequest_type("New");
-                    StopTransactions e2 = new StopTransactions();
+                    StopTransactions e2 = new StopTransactions(getActivity());
                     e2.setStop_id("Stop Dummy 2");
                     e2.setDate("15th Dec 2019");
                     e2.setLocation("location 2");
