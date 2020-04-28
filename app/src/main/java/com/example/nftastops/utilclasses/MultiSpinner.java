@@ -26,13 +26,13 @@ public class MultiSpinner extends AppCompatSpinner implements
     boolean[] mSelection = null;
 
     ArrayAdapter<String> tough_adapter;
-    ArrayAdapter<Dropdowns> simple_adapter;
+    ArrayAdapter<String> simple_adapter;
 
     public MultiSpinner(Context context)
     {
         super(context);
 
-        simple_adapter = new ArrayAdapter<Dropdowns>(context,
+        simple_adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item);
 
         super.setAdapter(simple_adapter);
@@ -41,7 +41,7 @@ public class MultiSpinner extends AppCompatSpinner implements
     public MultiSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        simple_adapter = new ArrayAdapter<Dropdowns>(context,
+        simple_adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_item);
         super.setAdapter(simple_adapter);
     }
@@ -54,7 +54,7 @@ public class MultiSpinner extends AppCompatSpinner implements
             List<Dropdowns> dp = new ArrayList<>();
             dp = buildSelectedItem();
             for(Dropdowns item:dp){
-                simple_adapter.add(item);}
+                simple_adapter.add(item.toString());}
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
@@ -78,7 +78,7 @@ public class MultiSpinner extends AppCompatSpinner implements
             @Override
             public void onClick(DialogInterface arg0, int arg1)
             {
-
+                simple_adapter.notifyDataSetChanged();
             }
         });
 
@@ -108,7 +108,7 @@ public class MultiSpinner extends AppCompatSpinner implements
         _items = items.toArray(new Dropdowns[items.size()]);
         mSelection = new boolean[_items.length];
         simple_adapter.clear();
-        simple_adapter.add(_items[0]);
+        simple_adapter.add(_items[0].toString());
         Arrays.fill(mSelection, false);
     }
 
@@ -133,8 +133,8 @@ public class MultiSpinner extends AppCompatSpinner implements
             throw new IllegalArgumentException("Index " + index
                     + " is out of bounds.");
         }
-        tough_adapter.clear();
-        tough_adapter.add(buildSelectedItemString());
+        simple_adapter.clear();
+        simple_adapter.add(buildSelectedItemString());
     }
 
 
@@ -154,7 +154,7 @@ public class MultiSpinner extends AppCompatSpinner implements
         List<Dropdowns> dp = new ArrayList<>();
         dp = buildSelectedItem();
         for(Dropdowns item:dp){
-            simple_adapter.add(item);}
+            simple_adapter.add(item.toString());}
     }
 
 
@@ -187,7 +187,7 @@ public class MultiSpinner extends AppCompatSpinner implements
         List<Dropdowns> dp = new ArrayList<>();
         dp = buildSelectedItem();
         for(Dropdowns item:dp){
-            simple_adapter.add(item);}
+            simple_adapter.add(item.toString());}
     }
 
     public List<String> getSelectedStrings() {
