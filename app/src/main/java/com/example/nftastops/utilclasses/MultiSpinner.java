@@ -106,7 +106,7 @@ public class MultiSpinner extends AppCompatSpinner implements
     }
 
 
-    private String buildSelectedItemString() {
+    public String buildSelectedItemString() {
         StringBuilder sb = new StringBuilder();
         boolean foundOne = false;
 

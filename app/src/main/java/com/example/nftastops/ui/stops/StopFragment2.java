@@ -258,7 +258,16 @@ public class StopFragment2 extends Fragment {
     };
 
     private boolean verifyFields() {
-        return true;
+        boolean verified = true;
+
+        //List<Dropdowns> routes = (List<Dropdowns>) acroutes.getSelectedItem();
+        String routeSelection = acroutes.buildSelectedItemString();
+        if(routeSelection.equals("")){
+            verified = false;
+            ((TextView) acroutes.getSelectedView()).setError("Enter routes");
+        }
+
+        return verified;
     }
 
     View.OnClickListener addPhotoClickListner = new View.OnClickListener() {
