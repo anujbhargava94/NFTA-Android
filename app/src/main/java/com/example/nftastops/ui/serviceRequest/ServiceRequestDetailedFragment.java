@@ -6,11 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nftastops.MainActivity;
 import com.example.nftastops.R;
 import com.example.nftastops.model.StopTransactions;
 import com.example.nftastops.ui.stops.StopFragment1;
@@ -19,6 +23,7 @@ import com.example.nftastops.utilclasses.Constants;
 import com.example.nftastops.utilclasses.IOnBackPressed;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 
@@ -47,6 +52,11 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
     private TextView stopId;
     private TextView additional_information;
     private TextView request_type;
+    LinearLayout picturesLL;
+    private RecyclerView imagerv;
+    private ImageView image1;
+    private ImageView image2;
+    private ImageView image3;
     private Button proceedButton;
 
 
@@ -98,6 +108,9 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         reason = root.findViewById(R.id.reasonval);
         route = root.findViewById(R.id.routeval);
         additional_information = root.findViewById(R.id.additionalinformationval);
+        image1 = root.findViewById(R.id.image1);
+        image2 = root.findViewById(R.id.image2);
+        image3 = root.findViewById(R.id.image3);
         proceedButton = root.findViewById(R.id.proceedbutton);
         proceedButton.setOnClickListener(proceedOnClick);
         String serviceRequest = getArguments().getString("serviceRequest");
@@ -116,16 +129,25 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         if (stopTransactions.getDirection() != null) {
             direction.setText(stopTransactions.getDirection().getDisplay_name());
         }
-        if(!stopTransactions.getLocation().equals("")){
+        if(!stopTransactions.getLocation().isEmpty()){
         location.setText(stopTransactions.getLocation());}
-        if(!stopTransactions.getRequest_type().equals("")){
+        if(!stopTransactions.getRequest_type().isEmpty()){
         request_type.setText(stopTransactions.getRequest_type());}
         if(stopTransactions.getReason() != null){
         reason.setText(stopTransactions.getReason());}
-        if(!stopTransactions.getRoutesString().equals("")){
+        if(!stopTransactions.getRoutesString().isEmpty()){
         route.setText(stopTransactions.getRoutesString());}
-        if(!stopTransactions.getAdditional_information().equals("")){
+        if(!stopTransactions.getAdditional_information().isEmpty()){
         additional_information.setText(stopTransactions.getAdditional_information());}
+        if(!stopTransactions.getImage0().isEmpty()){
+            Picasso.get().load(stopTransactions.getImage0()).into(image1);
+        }
+        if(!stopTransactions.getImage1().isEmpty()){
+            Picasso.get().load(stopTransactions.getImage0()).into(image2);
+        }
+        if(!stopTransactions.getImage2().isEmpty()){
+            Picasso.get().load(stopTransactions.getImage0()).into(image3);
+        }
 
 
         if (stopTransactions.getStatus() != null
