@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 //        getDropDowns(this, Constants.COUNTY);
 //        getDropDowns(this, Constants.ROUTE);
         gpslocation = new GPSTracker(this);
-        location = gpslocation.getLocation();
        // callPingAPI(Constants.PING);
     }
 
@@ -209,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
     public void requestPermission(){
         ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 MY_PERMISSIONS_REQUEST_READ_LOCATION);
+        ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                MY_PERMISSIONS_REQUEST_READ_LOCATION);
     }
 
     @Override
@@ -219,8 +220,6 @@ public class MainActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
                     Log.d("custom","Permission granted");
                     //isGPSEnabled = true;
                 } else {
@@ -230,8 +229,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
 
