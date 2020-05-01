@@ -2,10 +2,12 @@ package com.example.nftastops.utilclasses;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,13 +18,27 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.nftastops.MainActivity;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.Executor;
 
 public class GPSTracker extends Service implements LocationListener {
 
@@ -51,6 +67,8 @@ public class GPSTracker extends Service implements LocationListener {
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
+    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
@@ -72,9 +90,48 @@ public class GPSTracker extends Service implements LocationListener {
             isNetworkEnabled = locationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetworkEnabled) {
+            if(!isGPSEnabled && !isNetworkEnabled){
                 // No network provider is enabled
                 Log.d("custom","GPS disabled");
+
+                LocationRequest locationRequest = LocationRequest.create();
+                locationRequest.setInterval(10000);
+                locationRequest.setFastestInterval(5000);
+                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+                LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                        .addLocationRequest(locationRequest);
+
+
+                SettingsClient client = LocationServices.getSettingsClient(mContext);
+                Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+                task.addOnSuccessListener(MainActivity.getInstance(), new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+
+                    }
+                });
+
+                task.addOnFailureListener(MainActivity.getInstance(), new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof ResolvableApiException) {
+                            // Location settings are not satisfied, but this can be fixed
+                            // by showing the user a dialog.
+                            try {
+                                // Show the dialog by calling startResolutionForResult(),
+                                // and check the result in onActivityResult().
+                                ResolvableApiException resolvable = (ResolvableApiException) e;
+                                resolvable.startResolutionForResult(MainActivity.getInstance(),
+                                        REQUEST_CHECK_SETTINGS);
+                            } catch (IntentSender.SendIntentException sendEx) {
+                                // Ignore the error.
+                            }
+                        }
+                    }
+                });
+
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
