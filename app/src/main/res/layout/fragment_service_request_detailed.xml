@@ -3,6 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     android:fitsSystemWindows="true">
 
@@ -203,12 +204,46 @@
         android:text="--"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/loadpictures"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:adjustViewBounds="true"
+        android:orientation="horizontal"
+        android:layout_below="@+id/additionalinformationbox"
+        android:weightSum="3"
+        android:visibility="gone"
+        app:layout_collapseMode="parallax"
+        app:layout_collapseParallaxMultiplier="0.7">
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_below="@+id/additionalinformationbox"
+            android:layout_weight="1" />
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_below="@+id/additionalinformationbox"
+            android:layout_weight="1" />
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_below="@+id/additionalinformationbox"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/proceedbutton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/additionalinformationbox"
+        android:layout_below="@+id/loadpictures"
         android:layout_margin="@dimen/layout_padding"
         android:text="@string/proceed"
         android:visibility="gone"/>
