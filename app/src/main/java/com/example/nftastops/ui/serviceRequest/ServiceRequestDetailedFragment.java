@@ -52,8 +52,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
     private TextView stopId;
     private TextView additional_information;
     private TextView request_type;
-    LinearLayout picturesLL;
-    private RecyclerView imagerv;
+    LinearLayout loadpictures;
     private ImageView image1;
     private ImageView image2;
     private ImageView image3;
@@ -108,6 +107,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         reason = root.findViewById(R.id.reasonval);
         route = root.findViewById(R.id.routeval);
         additional_information = root.findViewById(R.id.additionalinformationval);
+        loadpictures = root.findViewById(R.id.loadpictures);
         image1 = root.findViewById(R.id.image1);
         image2 = root.findViewById(R.id.image2);
         image3 = root.findViewById(R.id.image3);
@@ -140,6 +140,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         if(!stopTransactions.getAdditional_information().isEmpty()){
         additional_information.setText(stopTransactions.getAdditional_information());}
         if(!stopTransactions.getImage0().isEmpty()){
+            loadpictures.setVisibility(View.VISIBLE);
             Picasso.get().load(stopTransactions.getImage0()).into(image1);
         }
         if(!stopTransactions.getImage1().isEmpty()){
