@@ -2,6 +2,7 @@ package com.example.nftastops.ui.serviceRequest;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,18 +83,6 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ServiceRequestDetailedFragment fragment = new ServiceRequestDetailedFragment();
-        FragmentTransaction t = getFragmentManager().beginTransaction();
-        t.add(fragment, "service_request_detailed_fragment");
-        //FragmentTransaction.add(ServiceRequestDetailedFragment fragment, String tag );
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,14 +128,14 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         route.setText(stopTransactions.getRoutesString());}
         if(!stopTransactions.getAdditional_information().isEmpty()){
         additional_information.setText(stopTransactions.getAdditional_information());}
-        if(!stopTransactions.getImage0().isEmpty()){
+        if(stopTransactions.getImage0()!=null && !stopTransactions.getImage0().isEmpty()){
             loadpictures.setVisibility(View.VISIBLE);
             Picasso.get().load(stopTransactions.getImage0()).into(image1);
         }
-        if(!stopTransactions.getImage1().isEmpty()){
+        if(stopTransactions.getImage1() !=null && !stopTransactions.getImage1().isEmpty()){
             Picasso.get().load(stopTransactions.getImage0()).into(image2);
         }
-        if(!stopTransactions.getImage2().isEmpty()){
+        if(stopTransactions.getImage2() !=null && !stopTransactions.getImage2().isEmpty()){
             Picasso.get().load(stopTransactions.getImage0()).into(image3);
         }
 
@@ -156,6 +145,21 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
             proceedButton.setVisibility(View.VISIBLE);
 
         }
+
+
+
+        root.setFocusableInTouchMode(true);
+        root.requestFocus();
+        root.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                    getFragmentManager().popBackStack(null, getFragmentManager().POP_BACK_STACK_INCLUSIVE);
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         // Inflate the layout for this fragment
@@ -204,14 +208,8 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
 
     @Override
     public boolean onBackPressed() {
-        //if (myCondition) {
-        //action not popBackStack
         Log.d("custom", "onBackPressed");
-        //   return true;
-        //} else {
-        //    return false;
-        //}
-        getActivity().onBackPressed();
+       // getActivity().onBackPressed();
         return true;
     }
 

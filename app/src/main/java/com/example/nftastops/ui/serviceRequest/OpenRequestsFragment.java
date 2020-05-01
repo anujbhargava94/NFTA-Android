@@ -43,7 +43,6 @@ public class OpenRequestsFragment extends Fragment {
         this.stopTransactions = mstopTransactions;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.open_requests, container, false);
@@ -95,7 +94,7 @@ public class OpenRequestsFragment extends Fragment {
     public void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, someFragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
