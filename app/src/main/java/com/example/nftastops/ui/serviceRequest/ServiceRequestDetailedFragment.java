@@ -188,6 +188,7 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         //} else {
         //    return false;
         //}
+        getActivity().onBackPressed();
         return true;
     }
 

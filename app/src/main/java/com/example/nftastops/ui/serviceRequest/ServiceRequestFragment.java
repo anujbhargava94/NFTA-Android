@@ -107,10 +107,6 @@ public class ServiceRequestFragment extends Fragment {
                 SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), serviceRequests_str, Constants.SRKEY);
                 SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), openStopTransactions_str, Constants.OPENSRKEY);
                 SharedPrefUtil.saveTasksToSharedPrefs(getActivity(), closedStopTransactions_str, Constants.CLOSESRKEY);
-                //adapter.notifyCustomAdapterChange();
-                //adapter.notifyDataSetChanged();
-                //Call constructor of ServiceRequestFragment
-                //new ServiceRequestFragment(serviceRequests);
 
             }
         }, new Response.ErrorListener() {

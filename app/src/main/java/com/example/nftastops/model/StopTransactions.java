@@ -171,13 +171,11 @@ public class StopTransactions extends BaseResponse {
 
     public StopTransactions(Context context) {
 
-        this.deviceName = SharedPrefUtil.getRawTasksFromSharedPrefs(context, Constants.USERNAMEKEY);
-        this.device_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        if (context != null) {
+            this.deviceName = SharedPrefUtil.getRawTasksFromSharedPrefs(context, Constants.USERNAMEKEY);
+            this.device_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
         this.status = "In Progress";
-        Toast.makeText(
-                context,
-                this.device_id, Toast.LENGTH_SHORT
-        ).show();
     }
 
 

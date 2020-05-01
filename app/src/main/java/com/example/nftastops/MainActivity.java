@@ -90,12 +90,6 @@ public class MainActivity extends AppCompatActivity {
         String username = SharedPrefUtil.getRawTasksFromSharedPrefs(this, Constants.USERNAMEKEY);
         dologinJwt(this,username,Constants.NFTAPWD);
 
-
-//        getDropDowns(this, Constants.DIRECTION);
-//        getDropDowns(this, Constants.POSITION);
-//        getDropDowns(this, Constants.FASTENED);
-//        getDropDowns(this, Constants.COUNTY);
-//        getDropDowns(this, Constants.ROUTE);
         gpslocation = new GPSTracker(this);
         location = gpslocation.getLocation();
        // callPingAPI(Constants.PING);
@@ -273,5 +267,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("login", "LogIn Failed");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+      //  this.getSupportFragmentManager().popBackStackImmediate();
     }
 }
