@@ -209,7 +209,6 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
     @Override
     public boolean onBackPressed() {
         Log.d("custom", "onBackPressed");
-       // getActivity().onBackPressed();
         return true;
     }
 

@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,8 +13,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +49,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -171,7 +166,6 @@ public class StopFragment2 extends Fragment {
         prgDialog.setCancelable(false);
         imagerv = root.findViewById(R.id.rv_image);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        ;
         imagerv.setLayoutManager(llm);
         imageItem = new ArrayList<>();
         adapter = new ImageCustomAdapter(imageItem);
@@ -189,18 +183,7 @@ public class StopFragment2 extends Fragment {
         }
         routesDN.add(0, new Dropdowns("--Select--"));
 
-//        ArrayAdapter<Dropdowns> routesAdapter = new ArrayAdapter<>
-//                (getActivity(), android.R.layout.simple_list_item_1, routesDN);
-//        acroutes.setAdapter(routesAdapter);
-
-
         acroutes.setItems(routesDN);
-
-//        List<String> routeNames = new ArrayList<String>();
-//        for (int i = 0; i < routesDN.size(); i++) {
-//            routeNames.add(routesDN.get(i).getDisplay_name());
-//        }
-        //acroutes.setItems(routeNames);
 
         String stopTransactionJson = getArguments().getString("stopTransaction");
         stopTransactions = gson.fromJson(stopTransactionJson, StopTransactions.class);
@@ -260,7 +243,6 @@ public class StopFragment2 extends Fragment {
     private boolean verifyFields() {
         boolean verified = true;
 
-        //List<Dropdowns> routes = (List<Dropdowns>) acroutes.getSelectedItem();
         String routeSelection = acroutes.buildSelectedItemString();
         if (routeSelection == null || routeSelection.isEmpty() || routeSelection.equals(Constants.SELECTDN)) {
             verified = false;
