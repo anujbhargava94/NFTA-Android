@@ -270,30 +270,35 @@ public class StopFragment1 extends Fragment {
     View.OnClickListener latOnclickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location loc = null;
             double latitude = 0.0;
+            double longitude = 0.0;
             if (gpslocation.canGetLocation()) {
 
 
                 latitude = gpslocation.getLatitude();
+                longitude = gpslocation.getLongitude();
             } else {
                 gpslocation.showSettingsAlert();
             }
             latET.getEditText().setText(String.valueOf(latitude));
+            longET.getEditText().setText(String.valueOf(longitude));
         }
     };
 
     View.OnClickListener longOnclickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location loc = null;
+            double latitude = 0.0;
             double longitude = 0.0;
             if (gpslocation.canGetLocation()) {
+
+
+                latitude = gpslocation.getLatitude();
                 longitude = gpslocation.getLongitude();
             } else {
                 gpslocation.showSettingsAlert();
             }
-
+            latET.getEditText().setText(String.valueOf(latitude));
             longET.getEditText().setText(String.valueOf(longitude));
         }
     };

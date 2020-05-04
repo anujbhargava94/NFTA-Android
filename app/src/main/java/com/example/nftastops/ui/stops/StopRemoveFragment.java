@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,7 +46,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -214,30 +211,34 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
     View.OnClickListener latOnclickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location loc = null;
             double latitude = 0.0;
+            double longitude = 0.0;
             if (gpslocation.canGetLocation()) {
 
 
                 latitude = gpslocation.getLatitude();
+                longitude = gpslocation.getLongitude();
             } else {
                 gpslocation.showSettingsAlert();
             }
             latET.getEditText().setText(String.valueOf(latitude));
-        }
+            longET.getEditText().setText(String.valueOf(longitude));
     };
 
     View.OnClickListener longOnclickListner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location loc = null;
+            double latitude = 0.0;
             double longitude = 0.0;
             if (gpslocation.canGetLocation()) {
+
+
+                latitude = gpslocation.getLatitude();
                 longitude = gpslocation.getLongitude();
             } else {
                 gpslocation.showSettingsAlert();
             }
-
+            latET.getEditText().setText(String.valueOf(latitude));
             longET.getEditText().setText(String.valueOf(longitude));
         }
     };

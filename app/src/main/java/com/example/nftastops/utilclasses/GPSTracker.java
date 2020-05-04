@@ -171,7 +171,7 @@ public class GPSTracker extends Service implements LocationListener {
                 }
                 // If GPS enabled, get latitude/longitude using GPS Services
                 if (isGPSEnabled) {
-                    if (location == null) {
+
                         locationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
@@ -185,7 +185,7 @@ public class GPSTracker extends Service implements LocationListener {
                                 longitude = location.getLongitude();
                             }
                         }
-                    }
+
                 }
             }
         }
