@@ -207,35 +207,33 @@
     <LinearLayout
         android:id="@+id/loadpictures"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
         android:orientation="horizontal"
         android:layout_below="@+id/additionalinformationbox"
         android:weightSum="3"
-        android:visibility="gone"
-        app:layout_collapseMode="parallax"
-        app:layout_collapseParallaxMultiplier="0.7">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/image1"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="250dp"
             android:layout_gravity="center"
-            android:layout_below="@+id/additionalinformationbox"
+            android:layout_margin="2dp"
             android:layout_weight="1" />
         <ImageView
             android:id="@+id/image2"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="250dp"
+            android:layout_margin="2dp"
             android:layout_gravity="center"
-            android:layout_below="@+id/additionalinformationbox"
             android:layout_weight="1" />
         <ImageView
             android:id="@+id/image3"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="250dp"
+            android:layout_margin="2dp"
             android:layout_gravity="center"
-            android:layout_below="@+id/additionalinformationbox"
             android:layout_weight="1" />
     </LinearLayout>
 

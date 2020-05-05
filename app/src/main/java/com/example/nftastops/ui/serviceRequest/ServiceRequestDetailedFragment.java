@@ -130,13 +130,14 @@ public class ServiceRequestDetailedFragment extends Fragment implements IOnBackP
         additional_information.setText(stopTransactions.getAdditional_information());}
         if(stopTransactions.getImage0()!=null && !stopTransactions.getImage0().isEmpty()){
             loadpictures.setVisibility(View.VISIBLE);
-            Picasso.get().load(stopTransactions.getImage0()).into(image1);
+            Picasso.get()
+                    .load(stopTransactions.getImage0()).resize(250, 250).centerCrop().into(image1);
         }
         if(stopTransactions.getImage1() !=null && !stopTransactions.getImage1().isEmpty()){
-            Picasso.get().load(stopTransactions.getImage0()).into(image2);
+            Picasso.get().load(stopTransactions.getImage1()).resize(250, 250).centerCrop().into(image2);
         }
         if(stopTransactions.getImage2() !=null && !stopTransactions.getImage2().isEmpty()){
-            Picasso.get().load(stopTransactions.getImage0()).into(image3);
+            Picasso.get().load(stopTransactions.getImage2()).resize(250, 250).centerCrop().into(image3);
         }
 
 

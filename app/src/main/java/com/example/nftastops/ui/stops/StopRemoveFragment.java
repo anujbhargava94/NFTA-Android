@@ -223,6 +223,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             }
             latET.getEditText().setText(String.valueOf(latitude));
             longET.getEditText().setText(String.valueOf(longitude));
+        }
     };
 
     View.OnClickListener longOnclickListner = new View.OnClickListener() {
@@ -240,6 +241,7 @@ public class StopRemoveFragment extends androidx.fragment.app.Fragment {
             }
             latET.getEditText().setText(String.valueOf(latitude));
             longET.getEditText().setText(String.valueOf(longitude));
+
         }
     };
 
